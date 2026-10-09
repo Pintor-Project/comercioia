@@ -1,0 +1,3 @@
+Geist and Geist Mono: Copyright Vercel, Inc. SIL Open Font License 1.1. https://github.com/vercel/geist-font
+Atkinson Hyperlegible: Copyright Braille Institute of America. SIL Open Font License 1.1. https://www.brailleinstitute.org/freefont
+Full license text: https://openfontlicense.org/open-font-license-official-text/

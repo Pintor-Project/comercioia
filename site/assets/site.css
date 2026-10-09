@@ -1,12 +1,22 @@
 /* Comercio IA
    International-standard restraint; one Chilean signature: the red RUT box. */
 
+/* Self-hosted fonts (SIL OFL 1.1, see /assets/fonts/LICENSE.txt): no request reaches a third party. */
+@font-face { font-family: 'Atkinson Hyperlegible'; font-style: normal; font-weight: 400; font-display: swap; src: url('/assets/fonts/atkinson-hyperlegible-400-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Atkinson Hyperlegible'; font-style: normal; font-weight: 700; font-display: swap; src: url('/assets/fonts/atkinson-hyperlegible-700-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Geist'; font-style: normal; font-weight: 400; font-display: swap; src: url('/assets/fonts/geist-400-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Geist'; font-style: normal; font-weight: 500; font-display: swap; src: url('/assets/fonts/geist-400-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Geist'; font-style: normal; font-weight: 600; font-display: swap; src: url('/assets/fonts/geist-400-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Geist Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/assets/fonts/geist-mono-400-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Geist Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('/assets/fonts/geist-mono-400-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Geist Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/assets/fonts/geist-mono-400-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
 :root {
   --bg: #FFFFFF;
   --bg-2: #F5F5F3;
   --ink: #0F1012;
   --ink-2: #4A4D53;
-  --ink-3: #7B7F86;
+  --ink-3: #666A71;
   --line: #E3E3DF;
   --line-strong: #0F1012;
   --red: #C8102E;
@@ -255,3 +265,46 @@ h1 .sub, h2 .sub { display: block; color: var(--ink-3); }
   .road b, .road .d { grid-column: 2; }
   .footer .wrap { grid-template-columns: 1fr; }
 }
+
+/* ---------- Reading settings (accessibility) ---------- */
+.a11y-fab { position: fixed; z-index: 26; left: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px) + var(--consent-h, 0px)); width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; padding: 0; background: var(--ink); color: var(--bg); border: 2px solid var(--bg); box-shadow: 0 8px 20px -8px rgba(0,0,0,.45); cursor: pointer; }
+.a11y-fab:hover, .a11y-fab[aria-expanded="true"] { background: var(--red); }
+.a11y-panel { position: fixed; z-index: 30; left: 16px; bottom: calc(76px + env(safe-area-inset-bottom, 0px) + var(--consent-h, 0px)); max-height: calc(100vh - 100px - var(--consent-h, 0px)); overflow-y: auto; width: min(340px, calc(100vw - 32px)); background: var(--bg); color: var(--ink); border: 1px solid var(--line-strong); border-radius: 10px; padding: 18px; box-shadow: 0 20px 40px -20px rgba(0,0,0,.35); display: grid; gap: 12px; font-size: 15px; }
+.a11y-panel h2 { font-size: 18px; letter-spacing: -0.01em; }
+.a11y-panel .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); padding-top: 10px; }
+.a11y-panel .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.a11y-panel .seg button { font: inherit; font-size: 14px; background: var(--bg); color: var(--ink); border: 0; padding: 6px 10px; cursor: pointer; }
+.a11y-panel .seg button + button { border-left: 1px solid var(--line); }
+.a11y-panel button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.a11y-panel .switch { font: inherit; font-size: 13px; min-width: 64px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; }
+.a11y-panel .foot { display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+.a11y-panel .foot a { color: var(--ink-2); }
+.linkish { font: inherit; background: none; border: 0; padding: 0; color: inherit; text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 3px; cursor: pointer; }
+
+html.a11y-size-1 body { zoom: 1.15; }
+html.a11y-size-2 body { zoom: 1.3; }
+html.a11y-readable body, html.a11y-readable .mono, html.a11y-readable code, html.a11y-readable pre, html.a11y-readable .nav, html.a11y-readable .label, html.a11y-readable th, html.a11y-readable .toc, html.a11y-readable .kv dt, html.a11y-readable .btn, html.a11y-readable .btn-alt, html.a11y-readable .tag, html.a11y-readable .rut { font-family: "Atkinson Hyperlegible", Verdana, sans-serif; letter-spacing: 0; }
+html.a11y-spacing p, html.a11y-spacing li, html.a11y-spacing dd, html.a11y-spacing td { line-height: 1.9; letter-spacing: 0.04em; word-spacing: 0.12em; }
+html.a11y-links a { text-decoration: underline !important; text-decoration-thickness: 2px !important; text-decoration-color: currentColor !important; }
+html.a11y-contrast { --ink-2: var(--ink); --ink-3: var(--ink); --line: var(--ink-2); }
+html.a11y-contrast h1 .sub, html.a11y-contrast h2 .sub { color: var(--ink); }
+html.a11y-still *, html.a11y-still *::before, html.a11y-still *::after { animation: none !important; transition: none !important; }
+html.a11y-still .receipt .ln { opacity: 1 !important; }
+
+/* ---------- Cookie notice ---------- */
+.consent { position: fixed; z-index: 25; left: 16px; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); max-width: 760px; margin: 0 auto; background: var(--bg); color: var(--ink); border: 1px solid var(--line-strong); border-radius: 10px; padding: 16px 18px; box-shadow: 0 20px 40px -20px rgba(0,0,0,.35); display: grid; gap: 12px; font-size: 15px; }
+.consent p { color: var(--ink-2); }
+.consent .actions-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.consent .btn-alt { display: inline-flex; align-items: center; font-size: 14px; padding: 12px 18px; border-radius: 6px; background: var(--bg); color: var(--ink); border: 1px solid var(--ink); cursor: pointer; font-family: "Geist Mono", ui-monospace, monospace; }
+.consent .btn { cursor: pointer; }
+.footer .links { display: flex; gap: 6px 14px; flex-wrap: wrap; font-size: 13px; }
+
+
+[hidden] { display: none !important; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.footer .links { grid-column: 1 / -1; }
+.footer .links a, .footer .links .linkish { color: var(--ink-2); }
+.seq-text { margin-top: 18px; font-size: 15px; color: var(--ink-2); }
+.seq-text summary { cursor: pointer; font-family: "Geist Mono", ui-monospace, monospace; font-size: 13.5px; color: var(--ink); width: fit-content; }
+.seq-text ol { margin: 12px 0 0; padding-left: 1.6em; display: grid; gap: 4px; }
+.spec-body dl.kv + p { margin-top: 16px; }

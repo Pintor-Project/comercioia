@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accesibilidad · Comercio IA</title>
+<meta name="description" content="Cómo hacemos que comercioia.cl se pueda leer con cualquier capacidad: ajustes de lectura, pautas WCAG 2.2 AA, limitaciones conocidas y contacto.">
+<link rel="alternate" hreflang="es-CL" href="https://comercioia.cl/accesibilidad/">
+<link rel="alternate" hreflang="en" href="https://comercioia.cl/en/accessibility/">
+<link rel="alternate" hreflang="x-default" href="https://comercioia.cl/accesibilidad/">
+<link rel="canonical" href="https://comercioia.cl/accesibilidad/">
+<!-- seo -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Comercio IA">
+<meta property="og:title" content="Accesibilidad · Comercio IA">
+<meta property="og:description" content="Cómo hacemos que comercioia.cl se pueda leer con cualquier capacidad: ajustes de lectura, pautas WCAG 2.2 AA, limitaciones conocidas y contacto.">
+<meta property="og:url" content="https://comercioia.cl/accesibilidad/">
+<meta property="og:locale" content="es_CL">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://comercioia.cl/assets/og-es.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Comercio IA: boleta, retracto y medios de pago chilenos para agentes de IA">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://comercioia.cl/accesibilidad/","url":"https://comercioia.cl/accesibilidad/","name":"Accesibilidad · Comercio IA","description":"Cómo hacemos que comercioia.cl se pueda leer con cualquier capacidad: ajustes de lectura, pautas WCAG 2.2 AA, limitaciones conocidas y contacto.","inLanguage":"es-CL","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"}}]}</script>
+<script src="/assets/site.js" defer></script>
+<!-- /seo -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='6' width='28' height='20' fill='white' stroke='%23C8102E' stroke-width='3'/%3E%3Ctext x='16' y='21' font-family='monospace' font-size='12' font-weight='700' fill='%23C8102E' text-anchor='middle'%3Ecl%3C/text%3E%3C/svg%3E">
+<link rel="preload" href="/assets/fonts/geist-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/geist-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<header class="masthead">
+  <div class="wrap">
+    <a class="logo" href="/" aria-label="Comercio IA"><span class="rut">cl.<b>comercioia</b></span></a>
+    <nav class="nav" aria-label="Principal">
+      <a href="/spec/">Especificación</a>
+      <a href="/spec/#esquemas">Esquemas</a>
+      <a href="/cumplimiento/">Cumplimiento</a>
+      <a href="/#participa">Participa</a>
+      <a class="ext" href="https://github.com/Pintor-Project/comercioia">GitHub</a>
+      <a class="lang" href="/en/accessibility/" hreflang="en" lang="en">English</a>
+    </nav>
+  </div>
+</header>
+<button type="button" class="a11y-fab" id="a11y-btn" aria-expanded="false" aria-label="Ajustes de accesibilidad" title="Ajustes de accesibilidad" hidden><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10.4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="6.7" r="1.6" fill="currentColor"/><path d="M6.6 9.3l5.4 1.2 5.4-1.2M12 10.5v3.7m0 0l-2.5 4.9m2.5-4.9l2.5 4.9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+<div class="wrap spec">
+  <nav class="toc" aria-label="Contenido">
+    <ol>
+      <li><a href="#ajustes">Ajustes de lectura</a></li>
+      <li><a href="#como">Qué hicimos</a></li>
+      <li><a href="#limites">Limitaciones conocidas</a></li>
+      <li><a href="#marco">Marco de referencia</a></li>
+      <li><a href="#contacto">Cuéntanos</a></li>
+    </ol>
+  </nav>
+
+  <main id="main" class="spec-body">
+    <section id="intro">
+      <p class="status">Evaluación propia del 9 de octubre de 2026</p>
+      <h1>Accesibilidad<span class="sub">Una especificación abierta tiene que poder leerla cualquiera.</span></h1>
+      <p class="lede">Seguimos las pautas WCAG 2.2 nivel AA y agregamos ajustes de lectura propios, sin herramientas de terceros. Si algo no te funciona, cuéntanos.</p>
+    </section>
+    <section id="ajustes">
+      <h2>Ajustes de lectura</h2>
+      <p>El botón redondo con el símbolo de accesibilidad, abajo a la izquierda, abre estos ajustes. Se guardan en tu navegador y se aplican en todas las páginas.</p><dl class="kv"><dt>Tamaño del texto</dt><dd>Agranda el texto un 15 % o un 30 %, además del zoom del navegador.</dd><dt>Fuente más legible</dt><dd>Cambia a Atkinson Hyperlegible, diseñada por el Braille Institute para personas con baja visión.</dd><dt>Más espacio</dt><dd>Aumenta el interlineado y el espacio entre letras y palabras.</dd><dt>Subrayar enlaces</dt><dd>Marca todos los enlaces, sin depender del color.</dd><dt>Alto contraste</dt><dd>Lleva todo el texto secundario al color principal.</dd><dt>Detener animaciones</dt><dd>Quita todo movimiento. El sitio ya respeta la opción «reducir movimiento» de tu sistema.</dd></dl><p>No usamos superposiciones de accesibilidad de terceros. Estos ajustes son parte del sitio y no reemplazan las herramientas de tu sistema, como el lector de pantalla o la lupa.</p>
+    </section>
+    <section id="como">
+      <h2>Qué hicimos</h2>
+      <ul><li>HTML semántico con encabezados en orden, regiones y un enlace para saltar al contenido.</li><li>Todo se puede usar con teclado, con el foco siempre visible.</li><li>Contraste de al menos 4,5:1 en el texto, en modo claro y oscuro.</li><li>Idioma declarado en cada página y en cada fragmento en otro idioma.</li><li>Texto alternativo en las imágenes y el diagrama de una compra también como lista de pasos.</li><li>Se lee bien con zoom de 200 % y en pantallas de 320 px de ancho.</li><li>Fuentes alojadas en el propio sitio: nada se carga desde terceros antes de tu consentimiento.</li></ul>
+    </section>
+    <section id="limites">
+      <h2>Limitaciones conocidas</h2>
+      <ul><li>Los esquemas JSON son archivos técnicos para programas; su explicación está en la especificación.</li><li>Algunos bloques de código de la especificación son anchos y se desplazan horizontalmente.</li><li>Esta declaración se basa en una evaluación propia, sin auditoría externa todavía.</li></ul>
+    </section>
+    <section id="marco">
+      <h2>Marco de referencia</h2>
+      <p>En Chile, la Ley 20.422 establece normas sobre igualdad de oportunidades e inclusión social de personas con discapacidad, y la norma técnica para sitios web del Estado (DS N° 1 de 2015) se basa en las pautas WCAG. Comercio IA no es un sitio del Estado, pero sigue esas pautas de forma voluntaria.</p>
+    </section>
+    <section id="contacto">
+      <h2>Cuéntanos</h2>
+      <p>Si encuentras una barrera o necesitas el contenido en otro formato, escribe a <a href="mailto:contacto@comercioia.cl?subject=Accesibilidad">contacto@comercioia.cl</a> con el asunto «Accesibilidad». Te respondemos en un máximo de 10 días hábiles.</p>
+    </section>
+  </main>
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <p>Iniciativa abierta impulsada por <a href="https://pintorproject.cl">Pintor Project</a>. Implementación de referencia: <a href="https://synaptiktech.com/es/product/checkout-ia">Synaptik Checkout IA</a>.</p>
+    <p class="mono"><a href="/spec/">Especificación</a> · <a href="/spec/#esquemas">Esquemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
+    <p class="links"><a href="/privacidad/">Privacidad</a> <a href="/accesibilidad/">Accesibilidad</a> <button type="button" class="linkish" data-cookie-settings hidden>Preferencias de cookies</button></p>
+    <p class="legal">Especificación y esquemas bajo licencia Apache-2.0. No es asesoría legal. Comercio IA no está afiliado a Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu ni al SII, ni cuenta con su respaldo; las marcas pertenecen a sus dueños.</p>
+  </div>
+</footer>
+</body>
+</html>

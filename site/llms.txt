@@ -1,0 +1,27 @@
+# Comercio IA
+
+> The open Chilean extension for UCP (Universal Commerce Protocol) and ACP (Agentic Commerce Protocol). It adds what Chilean law requires and the standards don't cover, so any AI agent can complete a legal sale in Chile: an SII boleta (consumers) or factura (businesses), the right of withdrawal (retracto), the legal warranty, credit notes (DTE 61) and Chilean payment methods. Open proposal, version 2026-10-09, Apache-2.0. Namespace `cl.comercioia.*`. Requires UCP 2026-08-25.
+
+## Specification
+
+- [Especificación (español)](https://comercioia.cl/spec/): full specification
+- [Specification (English)](https://comercioia.cl/en/spec/): full specification
+- [Guía de cumplimiento](https://comercioia.cl/cumplimiento/): six Chilean tax and consumer rules for AI sales, with official sources
+- [Compliance guide (English)](https://comercioia.cl/en/compliance/)
+
+## Schemas
+
+- [cl.comercioia.shopping.tax_document](https://comercioia.cl/ucp/schemas/tax_document/2026-10-09.json): boleta or factura at checkout; SII documents on the order
+- [cl.comercioia.shopping.consumer_terms](https://comercioia.cl/ucp/schemas/consumer_terms/2026-10-09.json): seller identity, AI notice, delivery, installments, written confirmation; retracto and legal warranty policies
+- [cl.comercioia.shopping.credit_note](https://comercioia.cl/ucp/schemas/credit_note/2026-10-09.json): credit note on every order adjustment
+- [cl.comercioia.webpay_plus](https://comercioia.cl/ucp/handlers/webpay_plus/2026-10-09.json): Webpay Plus (Transbank)
+- [cl.comercioia.oneclick_mall](https://comercioia.cl/ucp/handlers/oneclick_mall/2026-10-09.json): Oneclick Mall (Transbank), proposed
+- [cl.comercioia.mercadopago](https://comercioia.cl/ucp/handlers/mercadopago/2026-10-09.json): Mercado Pago Checkout
+- [cl.comercioia.getnet](https://comercioia.cl/ucp/handlers/getnet/2026-10-09.json): Getnet Web Checkout
+- [cl.comercioia.khipu](https://comercioia.cl/ucp/handlers/khipu/2026-10-09.json): Khipu (bank transfer)
+
+## Optional
+
+- [Repository](https://github.com/Pintor-Project/comercioia): source, examples, issues and changelog
+- Contact: contacto@comercioia.cl
+- Not legal advice. Not affiliated with or endorsed by Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu or the SII.

@@ -1,11 +1,14 @@
 """Builds the Comercio IA landing pages (es, en), the timbre patterns, and
-refreshes header/footer/fonts on the spec pages. Usage: python3 build.py <site_dir>"""
-import os, random, re, sys
+refreshes header/footer/fonts/metadata on the hand-written pages, and writes the
+privacy and accessibility pages and the sitemap. Usage: python3 build.py <site_dir>"""
+import html, json, os, random, re, sys
 
 SITE = sys.argv[1]
-FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
-         '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
-         '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap">')
+BASE = "https://comercioia.cl"
+LASTMOD = "2026-10-09"
+# Self-hosted (assets/fonts, OFL): no request leaves for a font CDN before consent.
+FONTS = ('<link rel="preload" href="/assets/fonts/geist-400-latin.woff2" as="font" type="font/woff2" crossorigin>\n'
+         '<link rel="preload" href="/assets/fonts/geist-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin>')
 ICON = ("<link rel=\"icon\" href=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E"
         "%3Crect x='2' y='6' width='28' height='20' fill='white' stroke='%23C8102E' stroke-width='3'/%3E"
         "%3Ctext x='16' y='21' font-family='monospace' font-size='12' font-weight='700' fill='%23C8102E' text-anchor='middle'%3Ecl%3C/text%3E%3C/svg%3E\">")
@@ -83,17 +86,39 @@ def seq_svg(lang):
     p.append("</svg>")
     return "\n".join(p)
 
+def seq_text(lang):
+    lanes = (["Comprador", "Agente de IA", "Tienda", "Proveedor de pago", "SII"] if lang == "es"
+             else ["Buyer", "AI agent", "Store", "Payment provider", "SII"])
+    items = "\n".join(f'            <li>{lanes[a]} → {lanes[b]}: {(es if lang == "es" else en).replace("&", "&amp;")}</li>'
+                      for a, b, _, es, en in STEPS)
+    summary = "Ver los pasos como texto" if lang == "es" else "Show the steps as text"
+    return f'''<details class="seq-text">
+          <summary>{summary}</summary>
+          <ol>
+{items}
+          </ol>
+        </details>'''
+
 # ---------------------------------------------------------------- shared chrome
+# Universal access symbol. The button sits outside the header: the header's backdrop-filter
+# would otherwise become the containing block of a position:fixed child.
+A11Y_ICON = ('<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" focusable="false">'
+             '<circle cx="12" cy="12" r="10.4" fill="none" stroke="currentColor" stroke-width="1.5"/>'
+             '<circle cx="12" cy="6.7" r="1.6" fill="currentColor"/>'
+             '<path d="M6.6 9.3l5.4 1.2 5.4-1.2M12 10.5v3.7m0 0l-2.5 4.9m2.5-4.9l2.5 4.9" fill="none" stroke="currentColor" '
+             'stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>')
+
 def masthead(lang, current):
     if lang == "es":
         links = [("/spec/", "Especificación", "spec"), ("/spec/#esquemas", "Esquemas", "schemas"), ("/cumplimiento/", "Cumplimiento", "compliance"), ("/#participa", "Participa", "join")]
-        other = {"spec": "/en/spec/", "compliance": "/en/compliance/"}.get(current, "/en/")
+        other = {"spec": "/en/spec/", "compliance": "/en/compliance/", "privacy": "/en/privacy/", "accessibility": "/en/accessibility/"}.get(current, "/en/")
         home, other_label, other_lang = "/", "English", "en"
     else:
         links = [("/en/spec/", "Specification", "spec"), ("/en/spec/#schemas", "Schemas", "schemas"), ("/en/compliance/", "Compliance", "compliance"), ("/en/#participate", "Participate", "join")]
-        other = {"spec": "/spec/", "compliance": "/cumplimiento/"}.get(current, "/")
+        other = {"spec": "/spec/", "compliance": "/cumplimiento/", "privacy": "/privacidad/", "accessibility": "/accesibilidad/"}.get(current, "/")
         home, other_label, other_lang = "/en/", "Español", "es-CL"
     cur = ' aria-current="page"'
+    a11y_label = "Ajustes de accesibilidad" if lang == "es" else "Accessibility settings"
     nav = "\n      ".join(f'<a href="{h}"{cur if k == current else ""}>{t}</a>' for h, t, k in links)
     return f'''<a class="skip" href="#main">{"Saltar al contenido" if lang == "es" else "Skip to content"}</a>
 <header class="masthead">
@@ -105,7 +130,8 @@ def masthead(lang, current):
       <a class="lang" href="{other}" hreflang="{other_lang}" lang="{other_lang}">{other_label}</a>
     </nav>
   </div>
-</header>'''
+</header>
+<button type="button" class="a11y-fab" id="a11y-btn" aria-expanded="false" aria-label="{a11y_label}" title="{a11y_label}" hidden>{A11Y_ICON}</button>'''
 
 def footer(lang):
     if lang == "es":
@@ -113,6 +139,7 @@ def footer(lang):
   <div class="wrap">
     <p>Iniciativa abierta impulsada por <a href="https://pintorproject.cl">Pintor Project</a>. Implementación de referencia: <a href="https://synaptiktech.com/es/product/checkout-ia">Synaptik Checkout IA</a>.</p>
     <p class="mono"><a href="/spec/">Especificación</a> · <a href="/spec/#esquemas">Esquemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
+    <p class="links"><a href="/privacidad/">Privacidad</a> <a href="/accesibilidad/">Accesibilidad</a> <button type="button" class="linkish" data-cookie-settings hidden>Preferencias de cookies</button></p>
     <p class="legal">Especificación y esquemas bajo licencia Apache-2.0. No es asesoría legal. Comercio IA no está afiliado a Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu ni al SII, ni cuenta con su respaldo; las marcas pertenecen a sus dueños.</p>
   </div>
 </footer>'''
@@ -120,6 +147,7 @@ def footer(lang):
   <div class="wrap">
     <p>An open initiative led by <a href="https://pintorproject.cl">Pintor Project</a>. Reference implementation: <a href="https://synaptiktech.com/en/product/checkout-ia">Synaptik Checkout IA</a>.</p>
     <p class="mono"><a href="/en/spec/">Specification</a> · <a href="/en/spec/#schemas">Schemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
+    <p class="links"><a href="/en/privacy/">Privacy</a> <a href="/en/accessibility/">Accessibility</a> <button type="button" class="linkish" data-cookie-settings hidden>Cookie preferences</button></p>
     <p class="legal">Specification and schemas under the Apache-2.0 license. Not legal advice. Comercio IA is not affiliated with or endorsed by Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu or the SII; trademarks belong to their owners.</p>
   </div>
 </footer>'''
@@ -164,7 +192,47 @@ def receipt(lang):
         <figcaption class="receipt-note">{note}</figcaption>
       </figure>'''
 
-def head(lang, title, desc, canonical, alt_es, alt_en):
+ORG = {"@type": "Organization", "@id": BASE + "/#org", "name": "Pintor Project SpA", "alternateName": "Pintor Project",
+       "url": "https://pintorproject.cl", "email": "contacto@comercioia.cl",
+       "address": {"@type": "PostalAddress", "streetAddress": "San Pío X 2460", "addressLocality": "Providencia",
+                   "addressRegion": "Región Metropolitana", "postalCode": "7510041", "addressCountry": "CL"}}
+WEBSITE = {"@type": "WebSite", "@id": BASE + "/#website", "name": "Comercio IA", "url": BASE + "/",
+           "inLanguage": ["es-CL", "en"], "publisher": {"@id": BASE + "/#org"}}
+OG_ALT = {"es": "Comercio IA: boleta, retracto y medios de pago chilenos para agentes de IA",
+          "en": "Comercio IA: Chilean tax receipts, withdrawal rights and payment methods for AI agents"}
+
+def seo(lang, title, desc, url, kind):
+    """kind: home | article | page. Wrapped in markers so the hand-written pages can be refreshed in place."""
+    es = lang == "es"
+    title_t, desc_t = html.unescape(title), html.unescape(desc)
+    page = {"@type": {"home": "WebPage", "article": "TechArticle", "page": "WebPage"}[kind], "@id": url, "url": url,
+            "name": title_t, "description": desc_t, "inLanguage": "es-CL" if es else "en",
+            "isPartOf": {"@id": BASE + "/#website"}, "publisher": {"@id": BASE + "/#org"}}
+    if kind == "article":
+        page.update(headline=title_t.split(" · ")[0], datePublished="2026-10-09", dateModified=LASTMOD,
+                    author={"@id": BASE + "/#org"}, license="https://www.apache.org/licenses/LICENSE-2.0")
+    graph = [ORG, WEBSITE, page] if kind == "home" else [page]
+    ld = json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False, separators=(",", ":"))
+    return f'''<!-- seo -->
+<meta property="og:type" content="{"article" if kind == "article" else "website"}">
+<meta property="og:site_name" content="Comercio IA">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{desc}">
+<meta property="og:url" content="{url}">
+<meta property="og:locale" content="{"es_CL" if es else "en_US"}">
+<meta property="og:locale:alternate" content="{"en_US" if es else "es_CL"}">
+<meta property="og:image" content="{BASE}/assets/og-{lang}.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{OG_ALT[lang]}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<script type="application/ld+json">{ld}</script>
+<script src="/assets/site.js" defer></script>
+<!-- /seo -->'''
+
+def head(lang, title, desc, canonical, alt_es, alt_en, kind="home"):
     return f'''<!doctype html>
 <html lang="{"es-CL" if lang == "es" else "en"}">
 <head>
@@ -174,10 +242,9 @@ def head(lang, title, desc, canonical, alt_es, alt_en):
 <meta name="description" content="{desc}">
 <link rel="alternate" hreflang="es-CL" href="{alt_es}">
 <link rel="alternate" hreflang="en" href="{alt_en}">
+<link rel="alternate" hreflang="x-default" href="{alt_es}">
 <link rel="canonical" href="{canonical}">
-<meta property="og:title" content="{title}">
-<meta property="og:description" content="{desc}">
-<meta property="og:url" content="{canonical}">
+{seo(lang, title, desc, canonical, kind)}
 {ICON}
 {FONTS}
 <link rel="stylesheet" href="/assets/site.css">
@@ -369,6 +436,7 @@ def landing(lang):
         <div class="seq">
 {seq_svg(lang)}
         </div>
+        {seq_text(lang)}
         <p class="legend"><span>{S["leg"][0]}</span><span class="ours">{S["leg"][1]}</span></p>
         <p class="fine">{S["fine"]}</p>
       </div>
@@ -420,17 +488,241 @@ open(os.path.join(SITE, "index.html"), "w").write(landing("es"))
 os.makedirs(os.path.join(SITE, "en"), exist_ok=True)
 open(os.path.join(SITE, "en", "index.html"), "w").write(landing("en"))
 
-# ---------------------------------------------------------------- spec pages + 404: new chrome
-FONT_RE = re.compile(r'<link rel="preconnect" href="https://fonts.googleapis.com">\s*<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\s*<link rel="stylesheet" href="https://fonts.googleapis.com/css2\?[^"]+">', re.S)
+# ---------------------------------------------------------------- privacy + accessibility pages
+GA_COOKIE = "_ga_CCFR41KLL9"
+DOCS = {
+    ("es", "privacy"): dict(
+        path="privacidad/index.html", url=BASE + "/privacidad/", alt=BASE + "/en/privacy/",
+        title="Política de privacidad · Comercio IA",
+        desc="Qué datos trata comercioia.cl, para qué, con qué proveedores y cómo ejercer tus derechos. Analítica solo con tu consentimiento.",
+        status="Vigente desde el 9 de octubre de 2026", h1="Política de privacidad", sub="Sin cookies hasta que digas que sí.",
+        lede="Este sitio publica una especificación técnica. No tiene cuentas, formularios ni publicidad. Solo usamos analítica para saber qué páginas se leen, y solo si la aceptas.",
+        sections=[
+            ("responsable", "Quién es responsable",
+             "<p>Pintor Project SpA, San Pío X 2460, Providencia, Santiago, Chile, impulsa Comercio IA y es responsable de los datos que se tratan en comercioia.cl. Escríbenos a <a href=\"mailto:contacto@comercioia.cl\">contacto@comercioia.cl</a>.</p>"),
+            ("datos", "Qué datos tratamos",
+             "<dl class=\"kv\">"
+             "<dt>Al visitar el sitio</dt><dd>Nuestro proveedor de alojamiento, Microsoft Azure, procesa tu dirección IP y los datos técnicos de cada solicitud para entregarte las páginas y proteger el servicio. Nosotros no guardamos registros de visitas.</dd>"
+             "<dt>Si aceptas la analítica</dt><dd>Google Analytics 4 registra las páginas que ves, el desplazamiento, los clics en enlaces externos, de dónde llegaste, tu tipo de dispositivo, navegador e idioma, y tu ubicación aproximada (país y ciudad). Google Analytics 4 no registra ni guarda direcciones IP. Desactivamos Google Signals y la personalización de anuncios.</dd>"
+             "<dt>Tus preferencias</dt><dd>Tu decisión sobre la analítica y tus ajustes de lectura se guardan en tu propio navegador (<code>cia-consent</code> y <code>cia-a11y</code>). No se envían a nadie.</dd>"
+             "<dt>Si nos escribes</dt><dd>Usamos tu correo y lo que nos cuentes para responderte y dar seguimiento a tus comentarios sobre la especificación. El correo está alojado en Microsoft 365.</dd>"
+             "<dt>En GitHub</dt><dd>Los issues y pull requests del repositorio son públicos y se rigen por la política de privacidad de GitHub.</dd>"
+             "</dl>"),
+            ("cookies", "Cookies",
+             "<p>Sin tu consentimiento el sitio no instala cookies. Si aceptas la analítica, Google Analytics instala estas dos:</p>"
+             "<dl class=\"kv\">"
+             f"<dt><code>_ga</code></dt><dd>Distingue visitantes de forma anónima. Dura 2 años.</dd>"
+             f"<dt><code>{GA_COOKIE}</code></dt><dd>Mantiene el estado de la sesión. Dura 2 años.</dd>"
+             "</dl>"
+             "<p>Puedes cambiar tu decisión cuando quieras: <button type=\"button\" class=\"linkish\" data-cookie-settings hidden>preferencias de cookies</button>. Si la retiras, borramos estas cookies de tu navegador.</p>"),
+            ("finalidad", "Para qué y con qué base",
+             "<dl class=\"kv\">"
+             "<dt>Analítica</dt><dd>Saber qué partes de la especificación se leen y mejorarlas. Base: tu consentimiento, que puedes retirar.</dd>"
+             "<dt>Funcionamiento y seguridad</dt><dd>Entregar las páginas y protegerlas de abusos. Base: es necesario para prestar el servicio.</dd>"
+             "<dt>Correos</dt><dd>Responderte. Base: tu propia solicitud.</dd>"
+             "</dl>"
+             "<p>No vendemos ni cedemos datos, no hacemos perfiles y no tomamos decisiones automatizadas sobre ti.</p>"),
+            ("proveedores", "Proveedores y transferencias",
+             "<p>Google LLC (analítica) y Microsoft Corporation (alojamiento y correo) pueden tratar los datos fuera de Chile, incluso en Estados Unidos, bajo sus términos de tratamiento de datos. Conservamos los datos de analítica durante 14 meses, y los correos mientras sean necesarios para responder y dar seguimiento a la especificación.</p>"),
+            ("derechos", "Tus derechos",
+             "<p>Puedes pedir acceso, rectificación, cancelación u oposición respecto de tus datos (Ley 19.628). Desde el 1 de diciembre de 2026, con la Ley 21.719, también puedes pedir su portabilidad o su bloqueo, y reclamar ante la Agencia de Protección de Datos Personales. Escribe a <a href=\"mailto:contacto@comercioia.cl\">contacto@comercioia.cl</a>; respondemos dentro de los plazos legales.</p>"),
+            ("cambios", "Cambios",
+             "<p>Si cambiamos esta política, publicaremos aquí la nueva versión con su fecha. El historial completo está en el <a href=\"https://github.com/Pintor-Project/comercioia\">repositorio público</a>.</p>"),
+        ]),
+    ("en", "privacy"): dict(
+        path="en/privacy/index.html", url=BASE + "/en/privacy/", alt=BASE + "/privacidad/",
+        title="Privacy policy · Comercio IA",
+        desc="What data comercioia.cl processes, why, with which providers and how to exercise your rights. Analytics only with your consent.",
+        status="In force from 9 October 2026", h1="Privacy policy", sub="No cookies until you say yes.",
+        lede="This site publishes a technical specification. It has no accounts, forms or ads. We only use analytics to learn which pages are read, and only if you accept it.",
+        sections=[
+            ("controller", "Who is responsible",
+             "<p>Pintor Project SpA, San Pío X 2460, Providencia, Santiago, Chile, leads Comercio IA and is responsible for the data processed on comercioia.cl. Write to us at <a href=\"mailto:contacto@comercioia.cl\">contacto@comercioia.cl</a>.</p>"),
+            ("data", "What data we process",
+             "<dl class=\"kv\">"
+             "<dt>When you visit</dt><dd>Our hosting provider, Microsoft Azure, processes your IP address and the technical data of each request to serve the pages and protect the service. We keep no visit logs ourselves.</dd>"
+             "<dt>If you accept analytics</dt><dd>Google Analytics 4 records the pages you view, scrolling, clicks on outbound links, where you came from, your device type, browser and language, and your approximate location (country and city). Google Analytics 4 does not log or store IP addresses. We turned off Google Signals and ad personalization.</dd>"
+             "<dt>Your preferences</dt><dd>Your analytics choice and your reading settings are stored in your own browser (<code>cia-consent</code> and <code>cia-a11y</code>). They are not sent anywhere.</dd>"
+             "<dt>If you email us</dt><dd>We use your address and what you tell us to reply and follow up on your comments about the specification. Email is hosted on Microsoft 365.</dd>"
+             "<dt>On GitHub</dt><dd>Issues and pull requests in the repository are public and governed by GitHub's privacy policy.</dd>"
+             "</dl>"),
+            ("cookies", "Cookies",
+             "<p>Without your consent the site sets no cookies. If you accept analytics, Google Analytics sets these two:</p>"
+             "<dl class=\"kv\">"
+             f"<dt><code>_ga</code></dt><dd>Tells visitors apart anonymously. Lasts 2 years.</dd>"
+             f"<dt><code>{GA_COOKIE}</code></dt><dd>Keeps the session state. Lasts 2 years.</dd>"
+             "</dl>"
+             "<p>You can change your choice at any time: <button type=\"button\" class=\"linkish\" data-cookie-settings hidden>cookie preferences</button>. If you withdraw it, we delete these cookies from your browser.</p>"),
+            ("purpose", "Why, and on what basis",
+             "<dl class=\"kv\">"
+             "<dt>Analytics</dt><dd>To learn which parts of the specification are read and improve them. Basis: your consent, which you can withdraw.</dd>"
+             "<dt>Operation and security</dt><dd>To serve the pages and protect them from abuse. Basis: necessary to provide the service.</dd>"
+             "<dt>Email</dt><dd>To reply to you. Basis: your own request.</dd>"
+             "</dl>"
+             "<p>We do not sell or share data, build profiles, or make automated decisions about you.</p>"),
+            ("providers", "Providers and transfers",
+             "<p>Google LLC (analytics) and Microsoft Corporation (hosting and email) may process data outside Chile, including in the United States, under their data processing terms. We keep analytics data for 14 months, and emails for as long as needed to reply and follow up on the specification.</p>"),
+            ("rights", "Your rights",
+             "<p>You can request access to, correction, deletion of, or object to the processing of your data (Chilean Ley 19.628). From 1 December 2026, under Ley 21.719, you can also request portability or blocking, and complain to the Chilean Personal Data Protection Agency. Write to <a href=\"mailto:contacto@comercioia.cl\">contacto@comercioia.cl</a>; we reply within the legal deadlines.</p>"),
+            ("changes", "Changes",
+             "<p>If we change this policy, we will publish the new version here with its date. The full history is in the <a href=\"https://github.com/Pintor-Project/comercioia\">public repository</a>.</p>"),
+        ]),
+    ("es", "accessibility"): dict(
+        path="accesibilidad/index.html", url=BASE + "/accesibilidad/", alt=BASE + "/en/accessibility/",
+        title="Accesibilidad · Comercio IA",
+        desc="Cómo hacemos que comercioia.cl se pueda leer con cualquier capacidad: ajustes de lectura, pautas WCAG 2.2 AA, limitaciones conocidas y contacto.",
+        status="Evaluación propia del 9 de octubre de 2026", h1="Accesibilidad", sub="Una especificación abierta tiene que poder leerla cualquiera.",
+        lede="Seguimos las pautas WCAG 2.2 nivel AA y agregamos ajustes de lectura propios, sin herramientas de terceros. Si algo no te funciona, cuéntanos.",
+        sections=[
+            ("ajustes", "Ajustes de lectura",
+             "<p>El botón redondo con el símbolo de accesibilidad, abajo a la izquierda, abre estos ajustes. Se guardan en tu navegador y se aplican en todas las páginas.</p>"
+             "<dl class=\"kv\">"
+             "<dt>Tamaño del texto</dt><dd>Agranda el texto un 15 % o un 30 %, además del zoom del navegador.</dd>"
+             "<dt>Fuente más legible</dt><dd>Cambia a Atkinson Hyperlegible, diseñada por el Braille Institute para personas con baja visión.</dd>"
+             "<dt>Más espacio</dt><dd>Aumenta el interlineado y el espacio entre letras y palabras.</dd>"
+             "<dt>Subrayar enlaces</dt><dd>Marca todos los enlaces, sin depender del color.</dd>"
+             "<dt>Alto contraste</dt><dd>Lleva todo el texto secundario al color principal.</dd>"
+             "<dt>Detener animaciones</dt><dd>Quita todo movimiento. El sitio ya respeta la opción «reducir movimiento» de tu sistema.</dd>"
+             "</dl>"
+             "<p>No usamos superposiciones de accesibilidad de terceros. Estos ajustes son parte del sitio y no reemplazan las herramientas de tu sistema, como el lector de pantalla o la lupa.</p>"),
+            ("como", "Qué hicimos",
+             "<ul>"
+             "<li>HTML semántico con encabezados en orden, regiones y un enlace para saltar al contenido.</li>"
+             "<li>Todo se puede usar con teclado, con el foco siempre visible.</li>"
+             "<li>Contraste de al menos 4,5:1 en el texto, en modo claro y oscuro.</li>"
+             "<li>Idioma declarado en cada página y en cada fragmento en otro idioma.</li>"
+             "<li>Texto alternativo en las imágenes y el diagrama de una compra también como lista de pasos.</li>"
+             "<li>Se lee bien con zoom de 200 % y en pantallas de 320 px de ancho.</li>"
+             "<li>Fuentes alojadas en el propio sitio: nada se carga desde terceros antes de tu consentimiento.</li>"
+             "</ul>"),
+            ("limites", "Limitaciones conocidas",
+             "<ul>"
+             "<li>Los esquemas JSON son archivos técnicos para programas; su explicación está en la especificación.</li>"
+             "<li>Algunos bloques de código de la especificación son anchos y se desplazan horizontalmente.</li>"
+             "<li>Esta declaración se basa en una evaluación propia, sin auditoría externa todavía.</li>"
+             "</ul>"),
+            ("marco", "Marco de referencia",
+             "<p>En Chile, la Ley 20.422 establece normas sobre igualdad de oportunidades e inclusión social de personas con discapacidad, y la norma técnica para sitios web del Estado (DS N° 1 de 2015) se basa en las pautas WCAG. Comercio IA no es un sitio del Estado, pero sigue esas pautas de forma voluntaria.</p>"),
+            ("contacto", "Cuéntanos",
+             "<p>Si encuentras una barrera o necesitas el contenido en otro formato, escribe a <a href=\"mailto:contacto@comercioia.cl?subject=Accesibilidad\">contacto@comercioia.cl</a> con el asunto «Accesibilidad». Te respondemos en un máximo de 10 días hábiles.</p>"),
+        ]),
+    ("en", "accessibility"): dict(
+        path="en/accessibility/index.html", url=BASE + "/en/accessibility/", alt=BASE + "/accesibilidad/",
+        title="Accessibility · Comercio IA",
+        desc="How we make comercioia.cl readable for everyone: reading settings, WCAG 2.2 AA, known limitations and contact.",
+        status="Self-assessed on 9 October 2026", h1="Accessibility", sub="An open specification has to be readable by anyone.",
+        lede="We follow WCAG 2.2 level AA and add our own reading settings, with no third-party tools. If something doesn't work for you, tell us.",
+        sections=[
+            ("settings", "Reading settings",
+             "<p>The round button with the accessibility symbol, bottom left, opens these settings. They are stored in your browser and apply on every page.</p>"
+             "<dl class=\"kv\">"
+             "<dt>Text size</dt><dd>Enlarges text by 15% or 30%, on top of browser zoom.</dd>"
+             "<dt>More legible font</dt><dd>Switches to Atkinson Hyperlegible, designed by the Braille Institute for people with low vision.</dd>"
+             "<dt>More spacing</dt><dd>Increases line, letter and word spacing.</dd>"
+             "<dt>Underline links</dt><dd>Marks every link without relying on color.</dd>"
+             "<dt>High contrast</dt><dd>Brings all secondary text to the main text color.</dd>"
+             "<dt>Stop animations</dt><dd>Removes all motion. The site already respects your system's “reduce motion” setting.</dd>"
+             "</dl>"
+             "<p>We use no third-party accessibility overlays. These settings are part of the site and don't replace your system's tools, such as a screen reader or magnifier.</p>"),
+            ("how", "What we did",
+             "<ul>"
+             "<li>Semantic HTML with headings in order, landmarks and a skip-to-content link.</li>"
+             "<li>Everything works with a keyboard, with focus always visible.</li>"
+             "<li>Text contrast of at least 4.5:1, in light and dark mode.</li>"
+             "<li>Language declared on every page and on every passage in another language.</li>"
+             "<li>Alternative text on images, and the purchase diagram also as a list of steps.</li>"
+             "<li>Reads well at 200% zoom and on 320 px wide screens.</li>"
+             "<li>Fonts hosted on the site itself: nothing loads from third parties before your consent.</li>"
+             "</ul>"),
+            ("limits", "Known limitations",
+             "<ul>"
+             "<li>The JSON schemas are technical files for programs; the specification explains them.</li>"
+             "<li>Some code blocks in the specification are wide and scroll horizontally.</li>"
+             "<li>The example receipt on the home page is in Spanish, as a Chilean store would issue it.</li>"
+             "<li>This statement is based on a self-assessment, with no external audit yet.</li>"
+             "</ul>"),
+            ("framework", "Framework",
+             "<p>In Chile, Ley 20.422 sets rules on equal opportunities and social inclusion for people with disabilities, and the technical standard for government websites (DS No. 1 of 2015) is based on WCAG. Comercio IA is not a government site, but follows those guidelines voluntarily.</p>"),
+            ("contact", "Tell us",
+             "<p>If you find a barrier or need the content in another format, write to <a href=\"mailto:contacto@comercioia.cl?subject=Accessibility\">contacto@comercioia.cl</a> with the subject “Accessibility”. We reply within 10 business days.</p>"),
+        ]),
+}
+
+def doc_page(lang, kind, d):
+    es = lang == "es"
+    toc = "\n".join(f'      <li><a href="#{i}">{h}</a></li>' for i, h, _ in d["sections"])
+    body = "\n".join(f'    <section id="{i}">\n      <h2>{h}</h2>\n      {b}\n    </section>' for i, h, b in d["sections"])
+    alt_es, alt_en = (d["url"], d["alt"]) if es else (d["alt"], d["url"])
+    return f'''{head(lang, d["title"], d["desc"], d["url"], alt_es, alt_en, "page")}
+<body>
+{masthead(lang, kind)}
+
+<div class="wrap spec">
+  <nav class="toc" aria-label="{"Contenido" if es else "Contents"}">
+    <ol>
+{toc}
+    </ol>
+  </nav>
+
+  <main id="main" class="spec-body">
+    <section id="intro">
+      <p class="status">{d["status"]}</p>
+      <h1>{d["h1"]}<span class="sub">{d["sub"]}</span></h1>
+      <p class="lede">{d["lede"]}</p>
+    </section>
+{body}
+  </main>
+</div>
+
+{footer(lang)}
+</body>
+</html>
+'''
+
+for (lang, kind), d in DOCS.items():
+    path = os.path.join(SITE, d["path"])
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    open(path, "w").write(doc_page(lang, kind, d))
+
+# ---------------------------------------------------------------- hand-written pages: chrome + metadata
+FONT_RE = re.compile(r'(?:<link rel="preconnect" href="https://fonts.googleapis.com">\s*<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\s*<link rel="stylesheet" href="https://fonts.googleapis.com/css2\?[^"]+">'
+                     r'|<link rel="preload" href="/assets/fonts/geist-400-latin.woff2"[^>]*>\s*<link rel="preload" href="/assets/fonts/geist-mono-400-latin.woff2"[^>]*>)', re.S)
 ICON_RE = re.compile(r'<link rel="icon" href="data:image/svg\+xml,[^"]+">')
+SEO_RE = re.compile(r'<!-- seo -->.*?<!-- /seo -->', re.S)
 for rel, lang, cur in (("spec/index.html", "es", "spec"), ("en/spec/index.html", "en", "spec"), ("cumplimiento/index.html", "es", "compliance"), ("en/compliance/index.html", "en", "compliance")):
     path = os.path.join(SITE, rel)
     s = open(path).read()
     s = FONT_RE.sub(lambda m: FONTS, s)
     s = ICON_RE.sub(lambda m: ICON, s)
-    s = re.sub(r'<a class="skip".*?</header>', lambda m: masthead(lang, cur), s, flags=re.S)
+    title = re.search(r"<title>(.*?)</title>", s).group(1)
+    desc = re.search(r'<meta name="description" content="([^"]*)">', s).group(1)
+    url = re.search(r'<link rel="canonical" href="([^"]+)">', s).group(1)
+    block = seo(lang, title, desc, url, "article")
+    if SEO_RE.search(s):
+        s = SEO_RE.sub(lambda m: block, s)
+    else:
+        s = re.sub(r'(<link rel="canonical" href="[^"]+">)', lambda m: m.group(1) + "\n" + block, s, count=1)
+    if 'hreflang="x-default"' not in s:
+        es_alt = re.search(r'<link rel="alternate" hreflang="es-CL" href="([^"]+)">', s).group(1)
+        s = s.replace('<link rel="canonical"', f'<link rel="alternate" hreflang="x-default" href="{es_alt}">\n<link rel="canonical"', 1)
+    s = re.sub(r'<a class="skip".*?</header>(?:\s*<button type="button" class="a11y-fab".*?</button>)?', lambda m: masthead(lang, cur), s, flags=re.S)
     s = re.sub(r'<footer class="[^"]*">.*?</footer>', lambda m: footer(lang), s, flags=re.S)
     open(path, "w").write(s)
+
+# ---------------------------------------------------------------- sitemap
+PAIRS = [("/", "/en/"), ("/spec/", "/en/spec/"), ("/cumplimiento/", "/en/compliance/"),
+         ("/privacidad/", "/en/privacy/"), ("/accesibilidad/", "/en/accessibility/")]
+urls = []
+for es_p, en_p in PAIRS:
+    alts = (f'    <xhtml:link rel="alternate" hreflang="es-CL" href="{BASE}{es_p}"/>\n'
+            f'    <xhtml:link rel="alternate" hreflang="en" href="{BASE}{en_p}"/>\n'
+            f'    <xhtml:link rel="alternate" hreflang="x-default" href="{BASE}{es_p}"/>')
+    for loc in (es_p, en_p):
+        urls.append(f"  <url>\n    <loc>{BASE}{loc}</loc>\n    <lastmod>{LASTMOD}</lastmod>\n{alts}\n  </url>")
+open(os.path.join(SITE, "sitemap.xml"), "w").write(
+    '<?xml version="1.0" encoding="UTF-8"?>\n'
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
+    + "\n".join(urls) + "\n</urlset>\n")
 
 nf = f'''<!doctype html>
 <html lang="es-CL">
@@ -442,6 +734,7 @@ nf = f'''<!doctype html>
 {ICON}
 {FONTS}
 <link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/site.js" defer></script>
 </head>
 <body>
 {masthead("es", "")}

@@ -7,14 +7,29 @@
 <meta name="description" content="Chilean tax receipts, right of withdrawal, legal warranty, credit notes and payment methods, so any AI agent can complete a legal sale in Chile, on top of UCP and ACP.">
 <link rel="alternate" hreflang="es-CL" href="https://comercioia.cl/">
 <link rel="alternate" hreflang="en" href="https://comercioia.cl/en/">
+<link rel="alternate" hreflang="x-default" href="https://comercioia.cl/">
 <link rel="canonical" href="https://comercioia.cl/en/">
+<!-- seo -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Comercio IA">
 <meta property="og:title" content="Comercio IA · The open Chilean extension for UCP and ACP">
 <meta property="og:description" content="Chilean tax receipts, right of withdrawal, legal warranty, credit notes and payment methods, so any AI agent can complete a legal sale in Chile, on top of UCP and ACP.">
 <meta property="og:url" content="https://comercioia.cl/en/">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="es_CL">
+<meta property="og:image" content="https://comercioia.cl/assets/og-en.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Comercio IA: Chilean tax receipts, withdrawal rights and payment methods for AI agents">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://comercioia.cl/#org","name":"Pintor Project SpA","alternateName":"Pintor Project","url":"https://pintorproject.cl","email":"contacto@comercioia.cl","address":{"@type":"PostalAddress","streetAddress":"San Pío X 2460","addressLocality":"Providencia","addressRegion":"Región Metropolitana","postalCode":"7510041","addressCountry":"CL"}},{"@type":"WebSite","@id":"https://comercioia.cl/#website","name":"Comercio IA","url":"https://comercioia.cl/","inLanguage":["es-CL","en"],"publisher":{"@id":"https://comercioia.cl/#org"}},{"@type":"WebPage","@id":"https://comercioia.cl/en/","url":"https://comercioia.cl/en/","name":"Comercio IA · The open Chilean extension for UCP and ACP","description":"Chilean tax receipts, right of withdrawal, legal warranty, credit notes and payment methods, so any AI agent can complete a legal sale in Chile, on top of UCP and ACP.","inLanguage":"en","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"}}]}</script>
+<script src="/assets/site.js" defer></script>
+<!-- /seo -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='6' width='28' height='20' fill='white' stroke='%23C8102E' stroke-width='3'/%3E%3Ctext x='16' y='21' font-family='monospace' font-size='12' font-weight='700' fill='%23C8102E' text-anchor='middle'%3Ecl%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap">
+<link rel="preload" href="/assets/fonts/geist-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/geist-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
@@ -32,6 +47,7 @@
     </nav>
   </div>
 </header>
+<button type="button" class="a11y-fab" id="a11y-btn" aria-expanded="false" aria-label="Accessibility settings" title="Accessibility settings" hidden><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10.4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="6.7" r="1.6" fill="currentColor"/><path d="M6.6 9.3l5.4 1.2 5.4-1.2M12 10.5v3.7m0 0l-2.5 4.9m2.5-4.9l2.5 4.9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 
 <main id="main">
   <section class="hero">
@@ -183,6 +199,22 @@
 <text class="lbl ours" x="445" y="523" text-anchor="middle"><tspan class="num">11</tspan>  order with tax_documents[]</text>
 </svg>
         </div>
+        <details class="seq-text">
+          <summary>Show the steps as text</summary>
+          <ol>
+            <li>Buyer → AI agent: “I'll take it”</li>
+            <li>AI agent → Store: create_checkout · asks for a boleta</li>
+            <li>Store → AI agent: totals, legal notices, payment methods</li>
+            <li>AI agent → Store: complete_checkout · Webpay Plus</li>
+            <li>Store → Payment provider: creates the payment on the store's account</li>
+            <li>Store → AI agent: requires_escalation + continue_url</li>
+            <li>Buyer → Payment provider: pays on the provider's page</li>
+            <li>Payment provider → Store: payment confirmation</li>
+            <li>Store → SII: boleta 39, within 1 hour</li>
+            <li>Store → Buyer: boleta + contract copy</li>
+            <li>Store → AI agent: order with tax_documents[]</li>
+          </ol>
+        </details>
         <p class="legend"><span>UCP/ACP core and payment provider</span><span class="ours">What Comercio IA adds</span></p>
         <p class="fine">Neither standard yet defines how to return the buyer to the agent after paying on an external page (UCP proposal #486), so the agent learns about the payment from the order. When a company buys, step 02 asks for a factura with its RUT and line of business, step 09 issues a factura (33), and the right of withdrawal generally does not apply, except when the buyer is a micro or small business (Ley 20.416).</p>
       </div>
@@ -245,6 +277,7 @@
   <div class="wrap">
     <p>An open initiative led by <a href="https://pintorproject.cl">Pintor Project</a>. Reference implementation: <a href="https://synaptiktech.com/en/product/checkout-ia">Synaptik Checkout IA</a>.</p>
     <p class="mono"><a href="/en/spec/">Specification</a> · <a href="/en/spec/#schemas">Schemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
+    <p class="links"><a href="/en/privacy/">Privacy</a> <a href="/en/accessibility/">Accessibility</a> <button type="button" class="linkish" data-cookie-settings hidden>Cookie preferences</button></p>
     <p class="legal">Specification and schemas under the Apache-2.0 license. Not legal advice. Comercio IA is not affiliated with or endorsed by Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu or the SII; trademarks belong to their owners.</p>
   </div>
 </footer>
