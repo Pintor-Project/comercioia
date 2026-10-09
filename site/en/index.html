@@ -55,7 +55,7 @@
     <div class="wrap">
       <div class="hero-grid">
         <div>
-          <p class="label"><span class="dot"></span>Open proposal · version 2026-10-09</p>
+          <p class="label"><span class="dot"></span>Open proposal · version 2026-10-16</p>
           <h1>Comercio IA<span class="sub">A boleta for consumers, a factura for businesses. For any AI agent.</span></h1>
           <p class="lead" style="margin-top:28px">An open extension to UCP (Google and Shopify) and ACP (OpenAI and Stripe). It adds what Chilean law requires and the standards don't cover: an SII boleta or factura depending on who buys, the right of withdrawal and legal warranty in consumer sales, credit notes and local payment methods.</p>
           <div class="actions">
@@ -131,7 +131,7 @@
         <table class="ledger">
           <thead><tr><th>Name</th><th>What it does</th><th>Legal basis</th></tr></thead>
           <tbody>
-          <tr><td class="n">cl.comercioia.shopping.<span class="k">tax_document</span></td><td class="w"><b>Boleta or factura</b><span>A boleta for consumers; a factura with RUT and line of business for companies. The order returns the folio, issuer RUT and SII status.</span></td><td class="s">DL 825 · SII Res. 74/2020</td></tr>
+          <tr><td class="n">cl.comercioia.shopping.<span class="k">tax_document</span></td><td class="w"><b>Boleta or factura</b><span>A boleta for consumers, with RUT and name above 135 UF; a factura with RUT, line of business and references (purchase order, HES) for companies. The order returns the folio, issuer RUT and SII status.</span></td><td class="s">DL 825 · SII Res. 74/2020 and 44/2025</td></tr>
           <tr><td class="n">cl.comercioia.shopping.<span class="k">consumer_terms</span></td><td class="w"><b>Consumer information</b><span>In consumer sales: seller identity, notice that the purchase is made through AI, delivery, installments with CAE and written confirmation.</span></td><td class="s">Ley 19.496 · DS 6/2021 · SERNAC Res. 33/2022</td></tr>
           <tr><td class="n">cl.comercioia.shopping.<span class="k">credit_note</span></td><td class="w"><b>Credit notes</b><span>Every refund or withdrawal carries its DTE 61, referencing the original document.</span></td><td class="s">DL 825 arts. 21 and 70</td></tr>
           <tr><td class="n">cl.comercioia.policy.<span class="k">retracto</span></td><td class="w"><b>Right of withdrawal</b><span>10 days from receipt, 90 without written confirmation, refund within 45 days.</span></td><td class="s">Ley 19.496 art. 3 bis</td></tr>
@@ -239,13 +239,13 @@
       <div class="section-head"><p class="label">05 · Status</p><h2>Ready to implement. <span class="sub">Stable after the first real sale.</span></h2></div>
       <div class="section-body status-grid">
         <dl class="kv">
-          <dt>Version</dt><dd><code>2026-10-09</code></dd>
+          <dt>Version</dt><dd><code>2026-10-16</code>: <a href="/en/spec/#references">B2B references</a> (purchase order, HES, contract) and <a href="/en/spec/#boleta-135-uf">boletas above 135 UF</a></dd>
           <dt>Status</dt><dd>Open proposal: ready to implement and comment on</dd>
           <dt>Namespace</dt><dd><code>cl.comercioia.*</code></dd>
           <dt>Requires</dt><dd>UCP <code>2026-08-25</code> or later</dd>
           <dt>License</dt><dd>Apache-2.0</dd>
           <dt>Stable release</dt><dd>January 2027, once the path to 1.0 is complete</dd>
-          <dt>Next version</dt><dd><code>2026-10-16</code>: <a href="https://github.com/Pintor-Project/comercioia/issues/1">B2B references</a> (purchase order, HES, contract)</dd>
+          <dt>Previous version</dt><dd><code>2026-10-09</code>, still published (<a href="https://github.com/Pintor-Project/comercioia/blob/main/CHANGELOG.md">history</a>)</dd>
           <dt>Contact</dt><dd><a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></dd>
         </dl>
         <ul class="asks">

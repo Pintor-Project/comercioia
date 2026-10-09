@@ -1,6 +1,6 @@
 # Comercio IA
 
-> The open Chilean extension for UCP (Universal Commerce Protocol) and ACP (Agentic Commerce Protocol). It adds what Chilean law requires and the standards don't cover, so any AI agent can complete a legal sale in Chile: an SII boleta (consumers) or factura (businesses), the right of withdrawal (retracto), the legal warranty, credit notes (DTE 61) and Chilean payment methods. Open proposal, version 2026-10-09, Apache-2.0. Namespace `cl.comercioia.*`. Requires UCP 2026-08-25.
+> The open Chilean extension for UCP (Universal Commerce Protocol) and ACP (Agentic Commerce Protocol). It adds what Chilean law requires and the standards don't cover, so any AI agent can complete a legal sale in Chile: an SII boleta (consumers) or factura (businesses), the right of withdrawal (retracto), the legal warranty, credit notes (DTE 61) and Chilean payment methods. Open proposal, version 2026-10-16, Apache-2.0. Namespace `cl.comercioia.*`. Requires UCP 2026-08-25.
 
 ## Specification
 
@@ -11,7 +11,7 @@
 
 ## Schemas
 
-- [cl.comercioia.shopping.tax_document](https://comercioia.cl/ucp/schemas/tax_document/2026-10-09.json): boleta or factura at checkout; SII documents on the order
+- [cl.comercioia.shopping.tax_document](https://comercioia.cl/ucp/schemas/tax_document/2026-10-16.json): boleta or factura at checkout, with B2B references (purchase order, HES) and buyer identification above 135 UF; SII documents on the order (previous: [2026-10-09](https://comercioia.cl/ucp/schemas/tax_document/2026-10-09.json))
 - [cl.comercioia.shopping.consumer_terms](https://comercioia.cl/ucp/schemas/consumer_terms/2026-10-09.json): seller identity, AI notice, delivery, installments, written confirmation; retracto and legal warranty policies
 - [cl.comercioia.shopping.credit_note](https://comercioia.cl/ucp/schemas/credit_note/2026-10-09.json): credit note on every order adjustment
 - [cl.comercioia.webpay_plus](https://comercioia.cl/ucp/handlers/webpay_plus/2026-10-09.json): Webpay Plus (Transbank)

@@ -5,7 +5,7 @@ import html, json, os, random, re, sys
 
 SITE = sys.argv[1]
 BASE = "https://comercioia.cl"
-LASTMOD = "2026-10-09"
+LASTMOD = "2026-10-16"
 # Self-hosted (assets/fonts, OFL): no request leaves for a font CDN before consent.
 FONTS = ('<link rel="preload" href="/assets/fonts/geist-400-latin.woff2" as="font" type="font/woff2" crossorigin>\n'
          '<link rel="preload" href="/assets/fonts/geist-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin>')
@@ -261,7 +261,7 @@ def landing(lang):
         T.update(
             title="Comercio IA · La extensión chilena abierta para UCP y ACP",
             desc="Boleta, retracto, garantía legal, notas de crédito y medios de pago chilenos para que cualquier agente de IA cierre una venta legal en Chile, sobre UCP y ACP.",
-            label="Propuesta abierta · versión 2026-10-09",
+            label="Propuesta abierta · versión 2026-10-16",
             h1="Comercio IA", h1sub="Boleta para personas, factura para empresas. Para cualquier agente de IA.",
             lead="Una extensión abierta de UCP (Google y Shopify) y ACP (OpenAI y Stripe). Agrega lo que la ley chilena exige y los estándares no traen: boleta o factura del SII según quién compra, derecho a retracto y garantía legal en ventas a personas, notas de crédito y medios de pago locales.",
             cta="Leer la especificación", cta_href="/spec/", alt_link="Ver los esquemas", alt_href="/spec/#esquemas",
@@ -273,7 +273,7 @@ def landing(lang):
         T.update(
             title="Comercio IA · The open Chilean extension for UCP and ACP",
             desc="Chilean tax receipts, withdrawal rights, legal warranty, credit notes and payment methods, so any AI agent can make a legal sale in Chile. On UCP and ACP.",
-            label="Open proposal · version 2026-10-09",
+            label="Open proposal · version 2026-10-16",
             h1="Comercio IA", h1sub="A boleta for consumers, a factura for businesses. For any AI agent.",
             lead="An open extension to UCP (Google and Shopify) and ACP (OpenAI and Stripe). It adds what Chilean law requires and the standards don't cover: an SII boleta or factura depending on who buys, the right of withdrawal and legal warranty in consumer sales, credit notes and local payment methods.",
             cta="Read the specification", cta_href="/en/spec/", alt_link="See the schemas", alt_href="/en/spec/#schemas",
@@ -287,7 +287,7 @@ def landing(lang):
         gap_left = ["Catálogo y búsqueda", "Carro y checkout", "Pedido y ajustes", "Políticas y avisos", "Medios de pago enchufables"]
         gap_right = ["Boleta para personas, factura para empresas", "Derecho a retracto", "Garantía legal", "Notas de crédito", "Webpay, Mercado Pago, Getnet y Khipu"]
         rows = [
-            ledger_row("cl.comercioia.shopping.", "tax_document", "Boleta o factura", "Boleta para personas; factura con RUT y giro para empresas. El pedido devuelve folio, RUT del emisor y estado en el SII.", "DL 825 · Res. SII 74/2020"),
+            ledger_row("cl.comercioia.shopping.", "tax_document", "Boleta o factura", "Boleta para personas, con RUT y nombre sobre 135 UF; factura con RUT, giro y referencias (orden de compra, HES) para empresas. El pedido devuelve folio, RUT del emisor y estado en el SII.", "DL 825 · Res. SII 74/2020 y 44/2025"),
             ledger_row("cl.comercioia.shopping.", "consumer_terms", "Información al consumidor", "En ventas a personas: identidad del vendedor, aviso de que compra a través de IA, despacho, cuotas con CAE y confirmación escrita.", "Ley 19.496 · DS 6/2021 · Res. SERNAC 33/2022"),
             ledger_row("cl.comercioia.shopping.", "credit_note", "Notas de crédito", "Cada devolución o retracto lleva su DTE 61, con referencia al documento original.", "DL 825 arts. 21 y 70"),
             ledger_row("cl.comercioia.policy.", "retracto", "Derecho a retracto", "10 días desde la recepción, 90 sin confirmación escrita, devolución en 45 días.", "Ley 19.496 art. 3 bis"),
@@ -298,8 +298,8 @@ def landing(lang):
                ("UCP · ACP", "Plataformas y ERP", "Implementa los esquemas en tus endpoints y ofrécelo a todas tus tiendas con tu propia marca."),
                ("document_choice", "Agentes de IA", "Asistentes personales y agentes de compra de empresas: anuncia las extensiones que soportas, pide boleta o factura y muestra cada aviso legal sin ocultarlo."),
                ("payment_handlers", "Proveedores de pago", "Publicamos tu medio de pago hasta que publiques el tuyo. Revísalo, cofírmalo o asúmelo.")]
-        kv = [("Versión", "<code>2026-10-09</code>"), ("Estado", "Propuesta abierta: lista para implementar y comentar"), ("Espacio de nombres", "<code>cl.comercioia.*</code>"),
-              ("Requiere", "UCP <code>2026-08-25</code> o posterior"), ("Licencia", "Apache-2.0"), ("Versión estable", "Enero de 2027, al cumplir el camino a la 1.0"), ("Próxima versión", '<code>2026-10-16</code>: <a href="https://github.com/Pintor-Project/comercioia/issues/1">referencias B2B</a> (orden de compra, HES, contrato)'),
+        kv = [("Versión", '<code>2026-10-16</code>: <a href="/spec/#referencias">referencias B2B</a> (orden de compra, HES, contrato) y <a href="/spec/#boleta-135-uf">boletas sobre 135 UF</a>'), ("Estado", "Propuesta abierta: lista para implementar y comentar"), ("Espacio de nombres", "<code>cl.comercioia.*</code>"),
+              ("Requiere", "UCP <code>2026-08-25</code> o posterior"), ("Licencia", "Apache-2.0"), ("Versión estable", "Enero de 2027, al cumplir el camino a la 1.0"), ("Versión anterior", '<code>2026-10-09</code>, sigue publicada (<a href="https://github.com/Pintor-Project/comercioia/blob/main/CHANGELOG.md">historial</a>)'),
               ("Contacto", '<a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a>')]
         asks = [("Comenta.", "Errores, campos que faltan, casos de tu negocio. Todo comentario se responde antes de la versión estable."),
                 ("Cofirma.", "Plataformas, ERP, proveedores de pago y gremios pueden aparecer como cofirmantes de la versión estable."),
@@ -326,7 +326,7 @@ def landing(lang):
         gap_left = ["Catalog and search", "Cart and checkout", "Order and adjustments", "Policies and notices", "Pluggable payment methods"]
         gap_right = ["A boleta for consumers, a factura for businesses", "Right of withdrawal (retracto)", "Legal warranty", "Credit notes", "Webpay, Mercado Pago, Getnet and Khipu"]
         rows = [
-            ledger_row("cl.comercioia.shopping.", "tax_document", "Boleta or factura", "A boleta for consumers; a factura with RUT and line of business for companies. The order returns the folio, issuer RUT and SII status.", "DL 825 · SII Res. 74/2020"),
+            ledger_row("cl.comercioia.shopping.", "tax_document", "Boleta or factura", "A boleta for consumers, with RUT and name above 135 UF; a factura with RUT, line of business and references (purchase order, HES) for companies. The order returns the folio, issuer RUT and SII status.", "DL 825 · SII Res. 74/2020 and 44/2025"),
             ledger_row("cl.comercioia.shopping.", "consumer_terms", "Consumer information", "In consumer sales: seller identity, notice that the purchase is made through AI, delivery, installments with CAE and written confirmation.", "Ley 19.496 · DS 6/2021 · SERNAC Res. 33/2022"),
             ledger_row("cl.comercioia.shopping.", "credit_note", "Credit notes", "Every refund or withdrawal carries its DTE 61, referencing the original document.", "DL 825 arts. 21 and 70"),
             ledger_row("cl.comercioia.policy.", "retracto", "Right of withdrawal", "10 days from receipt, 90 without written confirmation, refund within 45 days.", "Ley 19.496 art. 3 bis"),
@@ -337,8 +337,8 @@ def landing(lang):
                ("UCP · ACP", "Platforms and ERPs", "Implement the schemas in your endpoints and offer it to all your stores under your own brand."),
                ("document_choice", "AI agents", "Personal assistants and corporate purchasing agents: announce the extensions you support, ask for a boleta or factura, and show every legal notice without hiding it."),
                ("payment_handlers", "Payment providers", "We publish your payment method until you publish your own. Review it, co-sign it or take it over.")]
-        kv = [("Version", "<code>2026-10-09</code>"), ("Status", "Open proposal: ready to implement and comment on"), ("Namespace", "<code>cl.comercioia.*</code>"),
-              ("Requires", "UCP <code>2026-08-25</code> or later"), ("License", "Apache-2.0"), ("Stable release", "January 2027, once the path to 1.0 is complete"), ("Next version", '<code>2026-10-16</code>: <a href="https://github.com/Pintor-Project/comercioia/issues/1">B2B references</a> (purchase order, HES, contract)'),
+        kv = [("Version", '<code>2026-10-16</code>: <a href="/en/spec/#references">B2B references</a> (purchase order, HES, contract) and <a href="/en/spec/#boleta-135-uf">boletas above 135 UF</a>'), ("Status", "Open proposal: ready to implement and comment on"), ("Namespace", "<code>cl.comercioia.*</code>"),
+              ("Requires", "UCP <code>2026-08-25</code> or later"), ("License", "Apache-2.0"), ("Stable release", "January 2027, once the path to 1.0 is complete"), ("Previous version", '<code>2026-10-09</code>, still published (<a href="https://github.com/Pintor-Project/comercioia/blob/main/CHANGELOG.md">history</a>)'),
               ("Contact", '<a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a>')]
         asks = [("Comment.", "Errors, missing fields, cases from your business. Every comment gets an answer before the stable release."),
                 ("Co-sign.", "Platforms, ERPs, payment providers and trade associations can be listed as co-signers of the stable release."),

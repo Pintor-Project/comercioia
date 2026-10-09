@@ -55,7 +55,7 @@
     <div class="wrap">
       <div class="hero-grid">
         <div>
-          <p class="label"><span class="dot"></span>Propuesta abierta · versión 2026-10-09</p>
+          <p class="label"><span class="dot"></span>Propuesta abierta · versión 2026-10-16</p>
           <h1>Comercio IA<span class="sub">Boleta para personas, factura para empresas. Para cualquier agente de IA.</span></h1>
           <p class="lead" style="margin-top:28px">Una extensión abierta de UCP (Google y Shopify) y ACP (OpenAI y Stripe). Agrega lo que la ley chilena exige y los estándares no traen: boleta o factura del SII según quién compra, derecho a retracto y garantía legal en ventas a personas, notas de crédito y medios de pago locales.</p>
           <div class="actions">
@@ -131,7 +131,7 @@
         <table class="ledger">
           <thead><tr><th>Nombre</th><th>Qué hace</th><th>Base legal</th></tr></thead>
           <tbody>
-          <tr><td class="n">cl.comercioia.shopping.<span class="k">tax_document</span></td><td class="w"><b>Boleta o factura</b><span>Boleta para personas; factura con RUT y giro para empresas. El pedido devuelve folio, RUT del emisor y estado en el SII.</span></td><td class="s">DL 825 · Res. SII 74/2020</td></tr>
+          <tr><td class="n">cl.comercioia.shopping.<span class="k">tax_document</span></td><td class="w"><b>Boleta o factura</b><span>Boleta para personas, con RUT y nombre sobre 135 UF; factura con RUT, giro y referencias (orden de compra, HES) para empresas. El pedido devuelve folio, RUT del emisor y estado en el SII.</span></td><td class="s">DL 825 · Res. SII 74/2020 y 44/2025</td></tr>
           <tr><td class="n">cl.comercioia.shopping.<span class="k">consumer_terms</span></td><td class="w"><b>Información al consumidor</b><span>En ventas a personas: identidad del vendedor, aviso de que compra a través de IA, despacho, cuotas con CAE y confirmación escrita.</span></td><td class="s">Ley 19.496 · DS 6/2021 · Res. SERNAC 33/2022</td></tr>
           <tr><td class="n">cl.comercioia.shopping.<span class="k">credit_note</span></td><td class="w"><b>Notas de crédito</b><span>Cada devolución o retracto lleva su DTE 61, con referencia al documento original.</span></td><td class="s">DL 825 arts. 21 y 70</td></tr>
           <tr><td class="n">cl.comercioia.policy.<span class="k">retracto</span></td><td class="w"><b>Derecho a retracto</b><span>10 días desde la recepción, 90 sin confirmación escrita, devolución en 45 días.</span></td><td class="s">Ley 19.496 art. 3 bis</td></tr>
@@ -239,13 +239,13 @@
       <div class="section-head"><p class="label">05 · Estado</p><h2>Lista para implementar. <span class="sub">Estable tras la primera venta real.</span></h2></div>
       <div class="section-body status-grid">
         <dl class="kv">
-          <dt>Versión</dt><dd><code>2026-10-09</code></dd>
+          <dt>Versión</dt><dd><code>2026-10-16</code>: <a href="/spec/#referencias">referencias B2B</a> (orden de compra, HES, contrato) y <a href="/spec/#boleta-135-uf">boletas sobre 135 UF</a></dd>
           <dt>Estado</dt><dd>Propuesta abierta: lista para implementar y comentar</dd>
           <dt>Espacio de nombres</dt><dd><code>cl.comercioia.*</code></dd>
           <dt>Requiere</dt><dd>UCP <code>2026-08-25</code> o posterior</dd>
           <dt>Licencia</dt><dd>Apache-2.0</dd>
           <dt>Versión estable</dt><dd>Enero de 2027, al cumplir el camino a la 1.0</dd>
-          <dt>Próxima versión</dt><dd><code>2026-10-16</code>: <a href="https://github.com/Pintor-Project/comercioia/issues/1">referencias B2B</a> (orden de compra, HES, contrato)</dd>
+          <dt>Versión anterior</dt><dd><code>2026-10-09</code>, sigue publicada (<a href="https://github.com/Pintor-Project/comercioia/blob/main/CHANGELOG.md">historial</a>)</dd>
           <dt>Contacto</dt><dd><a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></dd>
         </dl>
         <ul class="asks">

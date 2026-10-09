@@ -24,7 +24,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","@id":"https://comercioia.cl/cumplimiento/","url":"https://comercioia.cl/cumplimiento/","name":"Guía de cumplimiento · Comercio IA","description":"Seis reglas tributarias y de protección al consumidor de Chile que todo agente de IA debe respetar al vender, con su fuente oficial.","inLanguage":"es-CL","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"},"headline":"Guía de cumplimiento","datePublished":"2026-10-09","dateModified":"2026-10-09","author":{"@id":"https://comercioia.cl/#org"},"license":"https://www.apache.org/licenses/LICENSE-2.0"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","@id":"https://comercioia.cl/cumplimiento/","url":"https://comercioia.cl/cumplimiento/","name":"Guía de cumplimiento · Comercio IA","description":"Seis reglas tributarias y de protección al consumidor de Chile que todo agente de IA debe respetar al vender, con su fuente oficial.","inLanguage":"es-CL","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"},"headline":"Guía de cumplimiento","datePublished":"2026-10-09","dateModified":"2026-10-16","author":{"@id":"https://comercioia.cl/#org"},"license":"https://www.apache.org/licenses/LICENSE-2.0"}]}</script>
 <script src="/assets/site.js" defer></script>
 <!-- /seo -->
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -88,7 +88,7 @@
       <p>Si no se conoce el RUT del comprador, la boleta usa el RUT genérico 66.666.666-6. Desde el 1 de septiembre de 2025, una boleta cuyo total supera 135 UF debe llevar el RUT real del comprador, su nombre, el medio de pago y una descripción clara de los bienes. El 55.555.555-5 es para documentos de exportación, no para boletas.</p>
       <dl class="kv">
         <dt>Qué significa para una venta con IA</dt><dd>En compras grandes el agente debe pedir los datos del comprador antes de pagar; si faltan, la tienda no emite con el RUT genérico.</dd>
-        <dt>En el estándar</dt><dd><code>tax_document.receiver</code> (ver la <a href="https://github.com/Pintor-Project/comercioia/issues/1">propuesta 2026-10-16</a>)</dd>
+        <dt>En el estándar</dt><dd><code>tax_document.receiver</code> y <code>payment_method</code>, desde la versión 2026-10-16 (ver <a href="/spec/#boleta-135-uf">Boletas sobre 135 UF</a>)</dd>
       </dl>
       <h3>Fuentes</h3>
       <ul>
@@ -114,13 +114,13 @@
       <p>El comprador acepta o reclama la factura electrónica en el registro del SII dentro de 8 días corridos desde que el SII la recibe; si no hace nada, queda aceptada. El plazo de pago es de hasta 30 días corridos, salvo los acuerdos excepcionales que la ley permite. Referenciar la orden de compra, la HES o el contrato no es una exigencia legal, sino práctica de grandes compradores y del Estado.</p>
       <dl class="kv">
         <dt>Qué significa para una venta con IA</dt><dd>El acuse no lo da el agente de compras, sino la empresa compradora en el SII. Que el agente pueda pedir sus referencias evita rechazos comerciales.</dd>
-        <dt>En el estándar</dt><dd><code>tax_document.receiver</code>; referencias en la <a href="https://github.com/Pintor-Project/comercioia/issues/1">propuesta 2026-10-16</a></dd>
+        <dt>En el estándar</dt><dd><code>tax_document.receiver</code>; <code>tax_document.references[]</code>, desde la versión 2026-10-16 (ver <a href="/spec/#referencias">Ventas a empresas</a>)</dd>
       </dl>
       <h3>Fuentes</h3>
       <ul>
           <li><a href="https://www.bcn.cl/leychile/navegar?idNorma=233421">Ley 19.983 arts. 2, 3, 4 y 9</a></li>
           <li><a href="https://www.sii.cl/normativa_legislacion/circulares/2017/circu4.pdf">Circular SII N° 4 de 2017</a></li>
-          <li><a href="https://www.sii.cl/servicios_online/docs/formato_dte.pdf">SII, Formato DTE, zona de referencias</a></li>
+          <li><a href="https://www.sii.cl/factura_electronica/factura_mercado/formato_dte_202602.pdf">SII, Formato DTE v2.5, zona de referencias</a></li>
       </ul>
     </section>
     <section id="aviso-ia">
