@@ -258,7 +258,7 @@
         <dt>Crear</dt><dd><code>POST https://payment-api.khipu.com/v3/payments</code> con la API key de la tienda.</dd>
         <dt>Cómo paga</dt><dd>Desde su cuenta bancaria, en el <code>payment_url</code> devuelto.</dd>
         <dt>Confirmación</dt><dd>Webhook firmado (<code>x-khipu-signature</code>), que Khipu reintenta, más consulta de estado (<code>pending</code>, <code>verifying</code>, <code>done</code>).</dd>
-        <dt>Diseñar para</dt><dd>No hay clave de idempotencia documentada. Iniciar pagos desde cuentas bancarias es una actividad regulada: el registro lo tiene Khipu, no quien implementa esta especificación.</dd>
+        <dt>Diseñar para</dt><dd>No hay clave de idempotencia documentada. La iniciación de pagos desde cuentas bancarias quedará regulada por la CMF (Ley 21.521, régimen vigente desde julio de 2027). Quien implementa esta especificación solo crea el cobro como beneficiario y deriva al comprador a Khipu, sin capturar sus credenciales bancarias.</dd>
       </dl>
     </section>
 

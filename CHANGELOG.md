@@ -9,3 +9,4 @@ Primera versión pública. First public version.
 - Medios de pago · Payment handlers: `cl.comercioia.webpay_plus`, `cl.comercioia.oneclick_mall` (propuesto · proposed), `cl.comercioia.mercadopago`, `cl.comercioia.getnet`, `cl.comercioia.khipu`.
 - Requiere UCP `2026-08-25`. Equivalencias para ACP `2026-04-17`.
 - Mismo día de publicación: la descripción de los esquemas pasó de «draft» a «open proposal». Sin cambios de estructura. · Same day as publication: schema descriptions changed from "draft" to "open proposal". No structural change.
+- Mismo día: la descripción de `cl.comercioia.khipu` deja de afirmar que Khipu tiene un registro de iniciador de pagos (régimen CMF desde julio de 2027). Sin cambios de estructura. · Same day: the `cl.comercioia.khipu` description no longer states that Khipu holds a payment-initiation registration (CMF regime from July 2027). No structural change.

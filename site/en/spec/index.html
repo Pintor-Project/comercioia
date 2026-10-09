@@ -258,7 +258,7 @@
         <dt>Create</dt><dd><code>POST https://payment-api.khipu.com/v3/payments</code> with the store's API key.</dd>
         <dt>How the buyer pays</dt><dd>From their bank account, at the returned <code>payment_url</code>.</dd>
         <dt>Confirmation</dt><dd>Signed webhook (<code>x-khipu-signature</code>), retried by Khipu, plus status query (<code>pending</code>, <code>verifying</code>, <code>done</code>).</dd>
-        <dt>Design for</dt><dd>No idempotency key is documented. Initiating payments from bank accounts is a regulated activity: Khipu holds that registration, not whoever implements this specification.</dd>
+        <dt>Design for</dt><dd>No idempotency key is documented. Initiating payments from bank accounts will be regulated by the CMF (Ley 21.521, regime in force from July 2027). An implementer of this specification only creates the charge as the payee and hands the buyer off to Khipu, never capturing the buyer's bank credentials.</dd>
       </dl>
     </section>
 

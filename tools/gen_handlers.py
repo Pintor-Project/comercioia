@@ -18,7 +18,7 @@ H = [
   "Redirect payment on Getnet's Web Checkout (PlacetoPay platform). The business creates a session with its own credentials; the buyer pays at the returned processUrl. The notification is sent once, so businesses MUST also poll the session status. Features enabled for Chile must be confirmed with Getnet.",
   {"session_ttl_seconds": {"type": "integer", "examples": [1800], "description": "Session lifetime; the platform default is 30 minutes."}}),
  ("khipu", "Khipu (bank transfer)", "khipu", "Khipu",
-  "Bank-transfer payment initiated by Khipu. The business creates the payment with its own Khipu API key; the buyer pays from their bank account at the returned payment_url. Confirmation is by signed webhook (retried by Khipu) and status query. Khipu, not the handler author, carries any registration required for payment initiation.",
+  "Bank-transfer payment initiated by Khipu. The business creates the payment with its own Khipu API key; the buyer pays from their bank account at the returned payment_url. Confirmation is by signed webhook (retried by Khipu) and status query. Payment initiation from bank accounts is regulated under Ley 21.521 (CMF regime from July 2027); an implementer only creates the charge as payee and redirects the buyer to Khipu, never capturing the buyer's bank credentials.",
   {"payment_expires_at": {"type": "string", "format": "date-time", "description": "When the payment link expires, if set."}}),
 ]
 for key, title, anchor, provider, desc, resp_extra in H:
