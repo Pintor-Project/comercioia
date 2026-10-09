@@ -138,11 +138,14 @@
         <tr><td><code>sii_track_id</code>, <code>sii_status</code></td><td>Each boleta reaches the SII within one hour of issue.</td><td>SII Res. Ex. 74/2020</td></tr>
         <tr><td><code>representation_url</code></td><td>An https link to a representation the buyer can keep, delivered immediately by email, chat, link or QR.</td><td>SII Res. Ex. 74/2020</td></tr>
       </table></div>
+      <h3>Sales to companies</h3>
+      <p>A factura (33 or 34) is for VAT-registered buyers: the agent sends <code>document_choice: "factura"</code> and a <code>receiver</code> with the company's RUT, legal name, line of business, address and comuna. The consumer-law right of withdrawal and legal warranty do not apply to these sales, except the protections for micro and small businesses under Ley 20.416, which are under legal review.</p>
+      <p>Credit payment terms, for example net 30, use the UCP core extension <code>dev.ucp.common.payment.terms</code>. Version <code>2026-10-16</code> proposes adding the references large buyers require: purchase order (801), HES, contract (803) and dispatch guide (52). <a href="https://github.com/Pintor-Project/comercioia/issues/1">Comment on the proposal</a>.</p>
     </section>
 
     <section id="consumer-terms">
       <h2>4. Consumer terms <code>cl.comercioia.shopping.consumer_terms</code></h2>
-      <p>Extends checkout and order with the information a distance seller must give before and after the sale.</p>
+      <p>Extends checkout and order with the information a distance seller must give a consumer before and after the sale. It is used in consumer sales.</p>
       <div class="table-scroll"><table>
         <tr><th>Field</th><th>Rule</th><th>Source</th></tr>
         <tr><td><code>seller</code></td><td>The seller's <code>razon_social</code>, <code>rut</code>, <code>domicilio</code> and <code>contacto</code>, visible before payment; optional <code>platform_role</code> stating the role of any intermediary platform.</td><td>DS 6/2021</td></tr>

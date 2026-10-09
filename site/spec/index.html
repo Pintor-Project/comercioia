@@ -138,11 +138,14 @@
         <tr><td><code>sii_track_id</code>, <code>sii_status</code></td><td>Cada boleta se envía al SII dentro de una hora desde su emisión.</td><td>Res. Ex. SII 74/2020</td></tr>
         <tr><td><code>representation_url</code></td><td>Enlace https a una representación que el comprador pueda guardar, entregado de inmediato por correo, chat, enlace o QR.</td><td>Res. Ex. SII 74/2020</td></tr>
       </table></div>
+      <h3>Ventas a empresas</h3>
+      <p>La factura (33 o 34) es para compradores con inicio de actividades: el agente envía <code>document_choice: "factura"</code> y un <code>receiver</code> con el RUT, la razón social, el giro, la dirección y la comuna de la empresa. En estas ventas no aplican el retracto ni la garantía legal de la Ley del Consumidor, salvo las protecciones para mipymes de la Ley 20.416, que están en revisión legal.</p>
+      <p>Las condiciones de pago a crédito, por ejemplo a 30 días, usan la extensión del núcleo de UCP <code>dev.ucp.common.payment.terms</code>. La versión <code>2026-10-16</code> propone agregar las referencias que exigen los compradores grandes: orden de compra (801), HES, contrato (803) y guía de despacho (52). <a href="https://github.com/Pintor-Project/comercioia/issues/1">Comenta la propuesta</a>.</p>
     </section>
 
     <section id="consumer-terms">
       <h2>4. Términos del consumidor <code>cl.comercioia.shopping.consumer_terms</code></h2>
-      <p>Extiende checkout y pedido con la información que un vendedor a distancia debe dar antes y después de la venta.</p>
+      <p>Extiende checkout y pedido con la información que un vendedor a distancia debe dar a un consumidor antes y después de la venta. Se usa en ventas a personas.</p>
       <div class="table-scroll"><table>
         <tr><th>Campo</th><th>Regla</th><th>Fuente</th></tr>
         <tr><td><code>seller</code></td><td><code>razon_social</code>, <code>rut</code>, <code>domicilio</code> y <code>contacto</code> del vendedor, visibles antes de pagar; opcional <code>platform_role</code> con el rol de cualquier plataforma intermediaria.</td><td>DS 6/2021</td></tr>

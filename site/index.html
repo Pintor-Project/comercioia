@@ -38,8 +38,8 @@
       <div class="hero-grid">
         <div>
           <p class="label"><span class="dot"></span>Propuesta abierta · versión 2026-10-09</p>
-          <h1>Comercio IA<span class="sub">Boleta, retracto y pagos chilenos para cualquier agente de IA.</span></h1>
-          <p class="lead" style="margin-top:28px">Una extensión abierta de UCP (Google y Shopify) y ACP (OpenAI y Stripe). Agrega lo que la ley chilena exige y los estándares no traen: documentos del SII, derecho a retracto, garantía legal, notas de crédito y medios de pago locales.</p>
+          <h1>Comercio IA<span class="sub">Boleta para personas, factura para empresas. Para cualquier agente de IA.</span></h1>
+          <p class="lead" style="margin-top:28px">Una extensión abierta de UCP (Google y Shopify) y ACP (OpenAI y Stripe). Agrega lo que la ley chilena exige y los estándares no traen: boleta o factura del SII según quién compra, derecho a retracto y garantía legal en ventas a personas, notas de crédito y medios de pago locales.</p>
           <div class="actions">
             <a class="btn" href="/spec/">Leer la especificación <span aria-hidden="true">→</span></a>
             <a class="link-arrow" href="/spec/#esquemas">Ver los esquemas</a>
@@ -95,7 +95,7 @@
         <div>
           <p class="col-title red">Comercio IA agrega</p>
           <ul class="list-plain red">
-            <li>Boleta y factura del SII</li>
+            <li>Boleta para personas, factura para empresas</li>
             <li>Derecho a retracto</li>
             <li>Garantía legal</li>
             <li>Notas de crédito</li>
@@ -113,8 +113,8 @@
         <table class="ledger">
           <thead><tr><th>Nombre</th><th>Qué hace</th><th>Base legal</th></tr></thead>
           <tbody>
-          <tr><td class="n">cl.comercioia.shopping.<span class="k">tax_document</span></td><td class="w"><b>Boleta o factura</b><span>El comprador elige en el checkout. El pedido devuelve folio, RUT del emisor y estado en el SII.</span></td><td class="s">DL 825 · Res. SII 74/2020</td></tr>
-          <tr><td class="n">cl.comercioia.shopping.<span class="k">consumer_terms</span></td><td class="w"><b>Información al consumidor</b><span>Identidad del vendedor, aviso de que compra a través de IA, despacho, cuotas con CAE y confirmación escrita.</span></td><td class="s">Ley 19.496 · DS 6/2021</td></tr>
+          <tr><td class="n">cl.comercioia.shopping.<span class="k">tax_document</span></td><td class="w"><b>Boleta o factura</b><span>Boleta para personas; factura con RUT y giro para empresas. El pedido devuelve folio, RUT del emisor y estado en el SII.</span></td><td class="s">DL 825 · Res. SII 74/2020</td></tr>
+          <tr><td class="n">cl.comercioia.shopping.<span class="k">consumer_terms</span></td><td class="w"><b>Información al consumidor</b><span>En ventas a personas: identidad del vendedor, aviso de que compra a través de IA, despacho, cuotas con CAE y confirmación escrita.</span></td><td class="s">Ley 19.496 · DS 6/2021</td></tr>
           <tr><td class="n">cl.comercioia.shopping.<span class="k">credit_note</span></td><td class="w"><b>Notas de crédito</b><span>Cada devolución o retracto lleva su DTE 61, con referencia al documento original.</span></td><td class="s">DL 825 arts. 21 y 70</td></tr>
           <tr><td class="n">cl.comercioia.policy.<span class="k">retracto</span></td><td class="w"><b>Derecho a retracto</b><span>10 días desde la recepción, 90 sin confirmación escrita, devolución en 45 días.</span></td><td class="s">Ley 19.496 art. 3 bis</td></tr>
           <tr><td class="n">cl.comercioia.policy.<span class="k">garantia_legal</span></td><td class="w"><b>Garantía legal</b><span>6 meses desde la recepción: reparación, cambio o devolución, a elección del comprador.</span></td><td class="s">Ley 19.496 arts. 20 y 21</td></tr>
@@ -183,7 +183,7 @@
 </svg>
         </div>
         <p class="legend"><span>Núcleo de UCP/ACP y proveedor de pago</span><span class="ours">Lo que agrega Comercio IA</span></p>
-        <p class="fine">Ningún estándar define todavía cómo devolver al comprador al agente después de pagar en una página externa (propuesta UCP #486), así que el agente se entera del pago por el pedido.</p>
+        <p class="fine">Ningún estándar define todavía cómo devolver al comprador al agente después de pagar en una página externa (propuesta UCP #486), así que el agente se entera del pago por el pedido. Si compra una empresa, el paso 02 pide factura con su RUT y giro, el paso 09 emite una factura (33) y el retracto no aplica.</p>
       </div>
     </div>
   </section>
@@ -192,9 +192,9 @@
     <div class="wrap">
       <div class="section-head"><p class="label">04 · Para quién</p><h2>Cada uno implementa <span class="sub">su parte.</span></h2></div>
       <div class="section-body who">
-        <div><p class="tag">/.well-known/ucp</p><h3>Tiendas</h3><p>Declara la extensión y tus medios de pago en tu perfil. Si tu plataforma o ERP ya la implementa, solo la activas.</p></div>
+        <div><p class="tag">/.well-known/ucp</p><h3>Tiendas y proveedores</h3><p>Vendas a personas o a empresas, declara la extensión y tus medios de pago en tu perfil. Si tu plataforma o ERP ya la implementa, solo la activas.</p></div>
         <div><p class="tag">UCP · ACP</p><h3>Plataformas y ERP</h3><p>Implementa los esquemas en tus endpoints y ofrécelo a todas tus tiendas con tu propia marca.</p></div>
-        <div><p class="tag">document_choice</p><h3>Agentes de IA</h3><p>Anuncia las extensiones que soportas, pide boleta o factura y muestra cada aviso legal sin ocultarlo.</p></div>
+        <div><p class="tag">document_choice</p><h3>Agentes de IA</h3><p>Asistentes personales y agentes de compra de empresas: anuncia las extensiones que soportas, pide boleta o factura y muestra cada aviso legal sin ocultarlo.</p></div>
         <div><p class="tag">payment_handlers</p><h3>Proveedores de pago</h3><p>Publicamos tu medio de pago hasta que publiques el tuyo. Revísalo, cofírmalo o asúmelo.</p></div>
       </div>
     </div>
@@ -211,6 +211,7 @@
           <dt>Requiere</dt><dd>UCP <code>2026-08-25</code> o posterior</dd>
           <dt>Licencia</dt><dd>Apache-2.0</dd>
           <dt>Versión estable</dt><dd>Enero de 2027, al cumplir el camino a la 1.0</dd>
+          <dt>Próxima versión</dt><dd><code>2026-10-16</code>: <a href="https://github.com/Pintor-Project/comercioia/issues/1">referencias B2B</a> (orden de compra, HES, contrato)</dd>
           <dt>Contacto</dt><dd><a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></dd>
         </dl>
         <ul class="asks">

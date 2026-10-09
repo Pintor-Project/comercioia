@@ -38,8 +38,8 @@
       <div class="hero-grid">
         <div>
           <p class="label"><span class="dot"></span>Open proposal · version 2026-10-09</p>
-          <h1>Comercio IA<span class="sub">Chilean tax receipts, consumer law and payments for any AI agent.</span></h1>
-          <p class="lead" style="margin-top:28px">An open extension to UCP (Google and Shopify) and ACP (OpenAI and Stripe). It adds what Chilean law requires and the standards don't cover: SII tax documents, the right of withdrawal, the legal warranty, credit notes and local payment methods.</p>
+          <h1>Comercio IA<span class="sub">A boleta for consumers, a factura for businesses. For any AI agent.</span></h1>
+          <p class="lead" style="margin-top:28px">An open extension to UCP (Google and Shopify) and ACP (OpenAI and Stripe). It adds what Chilean law requires and the standards don't cover: an SII boleta or factura depending on who buys, the right of withdrawal and legal warranty in consumer sales, credit notes and local payment methods.</p>
           <div class="actions">
             <a class="btn" href="/en/spec/">Read the specification <span aria-hidden="true">→</span></a>
             <a class="link-arrow" href="/en/spec/#schemas">See the schemas</a>
@@ -95,7 +95,7 @@
         <div>
           <p class="col-title red">Comercio IA adds</p>
           <ul class="list-plain red">
-            <li>SII boleta and factura</li>
+            <li>A boleta for consumers, a factura for businesses</li>
             <li>Right of withdrawal (retracto)</li>
             <li>Legal warranty</li>
             <li>Credit notes</li>
@@ -113,8 +113,8 @@
         <table class="ledger">
           <thead><tr><th>Name</th><th>What it does</th><th>Legal basis</th></tr></thead>
           <tbody>
-          <tr><td class="n">cl.comercioia.shopping.<span class="k">tax_document</span></td><td class="w"><b>Boleta or factura</b><span>The buyer chooses at checkout. The order returns the folio, issuer RUT and SII status.</span></td><td class="s">DL 825 · SII Res. 74/2020</td></tr>
-          <tr><td class="n">cl.comercioia.shopping.<span class="k">consumer_terms</span></td><td class="w"><b>Consumer information</b><span>Seller identity, notice that the purchase is made through AI, delivery, installments with CAE and written confirmation.</span></td><td class="s">Ley 19.496 · DS 6/2021</td></tr>
+          <tr><td class="n">cl.comercioia.shopping.<span class="k">tax_document</span></td><td class="w"><b>Boleta or factura</b><span>A boleta for consumers; a factura with RUT and line of business for companies. The order returns the folio, issuer RUT and SII status.</span></td><td class="s">DL 825 · SII Res. 74/2020</td></tr>
+          <tr><td class="n">cl.comercioia.shopping.<span class="k">consumer_terms</span></td><td class="w"><b>Consumer information</b><span>In consumer sales: seller identity, notice that the purchase is made through AI, delivery, installments with CAE and written confirmation.</span></td><td class="s">Ley 19.496 · DS 6/2021</td></tr>
           <tr><td class="n">cl.comercioia.shopping.<span class="k">credit_note</span></td><td class="w"><b>Credit notes</b><span>Every refund or withdrawal carries its DTE 61, referencing the original document.</span></td><td class="s">DL 825 arts. 21 and 70</td></tr>
           <tr><td class="n">cl.comercioia.policy.<span class="k">retracto</span></td><td class="w"><b>Right of withdrawal</b><span>10 days from receipt, 90 without written confirmation, refund within 45 days.</span></td><td class="s">Ley 19.496 art. 3 bis</td></tr>
           <tr><td class="n">cl.comercioia.policy.<span class="k">garantia_legal</span></td><td class="w"><b>Legal warranty</b><span>6 months from receipt: repair, replacement or refund, at the buyer's choice.</span></td><td class="s">Ley 19.496 arts. 20 and 21</td></tr>
@@ -183,7 +183,7 @@
 </svg>
         </div>
         <p class="legend"><span>UCP/ACP core and payment provider</span><span class="ours">What Comercio IA adds</span></p>
-        <p class="fine">Neither standard yet defines how to return the buyer to the agent after paying on an external page (UCP proposal #486), so the agent learns about the payment from the order.</p>
+        <p class="fine">Neither standard yet defines how to return the buyer to the agent after paying on an external page (UCP proposal #486), so the agent learns about the payment from the order. When a company buys, step 02 asks for a factura with its RUT and line of business, step 09 issues a factura (33), and the right of withdrawal does not apply.</p>
       </div>
     </div>
   </section>
@@ -192,9 +192,9 @@
     <div class="wrap">
       <div class="section-head"><p class="label">04 · Who it's for</p><h2>Everyone implements <span class="sub">their part.</span></h2></div>
       <div class="section-body who">
-        <div><p class="tag">/.well-known/ucp</p><h3>Stores</h3><p>Declare the extension and your payment methods in your profile. If your platform or ERP already implements it, just turn it on.</p></div>
+        <div><p class="tag">/.well-known/ucp</p><h3>Stores and suppliers</h3><p>Whether you sell to consumers or to companies, declare the extension and your payment methods in your profile. If your platform or ERP already implements it, just turn it on.</p></div>
         <div><p class="tag">UCP · ACP</p><h3>Platforms and ERPs</h3><p>Implement the schemas in your endpoints and offer it to all your stores under your own brand.</p></div>
-        <div><p class="tag">document_choice</p><h3>AI agents</h3><p>Announce the extensions you support, ask for a boleta or factura, and show every legal notice without hiding it.</p></div>
+        <div><p class="tag">document_choice</p><h3>AI agents</h3><p>Personal assistants and corporate purchasing agents: announce the extensions you support, ask for a boleta or factura, and show every legal notice without hiding it.</p></div>
         <div><p class="tag">payment_handlers</p><h3>Payment providers</h3><p>We publish your payment method until you publish your own. Review it, co-sign it or take it over.</p></div>
       </div>
     </div>
@@ -211,6 +211,7 @@
           <dt>Requires</dt><dd>UCP <code>2026-08-25</code> or later</dd>
           <dt>License</dt><dd>Apache-2.0</dd>
           <dt>Stable release</dt><dd>January 2027, once the path to 1.0 is complete</dd>
+          <dt>Next version</dt><dd><code>2026-10-16</code>: <a href="https://github.com/Pintor-Project/comercioia/issues/1">B2B references</a> (purchase order, HES, contract)</dd>
           <dt>Contact</dt><dd><a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></dd>
         </dl>
         <ul class="asks">
