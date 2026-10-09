@@ -9,9 +9,8 @@ LASTMOD = "2026-10-09"
 # Self-hosted (assets/fonts, OFL): no request leaves for a font CDN before consent.
 FONTS = ('<link rel="preload" href="/assets/fonts/geist-400-latin.woff2" as="font" type="font/woff2" crossorigin>\n'
          '<link rel="preload" href="/assets/fonts/geist-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin>')
-ICON = ("<link rel=\"icon\" href=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E"
-        "%3Crect x='2' y='6' width='28' height='20' fill='white' stroke='%23C8102E' stroke-width='3'/%3E"
-        "%3Ctext x='16' y='21' font-family='monospace' font-size='12' font-weight='700' fill='%23C8102E' text-anchor='middle'%3Ecl%3C/text%3E%3C/svg%3E\">")
+ICON = ('<link rel="icon" href="/favicon.svg" type="image/svg+xml">\n'
+        '<link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">')
 
 # ---------------------------------------------------------------- timbre (PDF417-like)
 def pdf417_like(cols, rows, seed):
@@ -137,18 +136,18 @@ def footer(lang):
     if lang == "es":
         return '''<footer class="footer">
   <div class="wrap">
-    <p>Iniciativa abierta impulsada por <a href="https://pintorproject.cl">Pintor Project</a>. Implementación de referencia: <a href="https://synaptiktech.com/es/product/checkout-ia">Synaptik Checkout IA</a>.</p>
+    <p>Iniciativa abierta impulsada por <a href="https://pintorproject.cl">Pintor Project</a>. Implementación de referencia: <a href="https://synaptiktech.com/es/product/checkout-ia">Synaptik Checkout IA</a>, producto comercial de Pintor Project.</p>
     <p class="mono"><a href="/spec/">Especificación</a> · <a href="/spec/#esquemas">Esquemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
     <p class="links"><a href="/privacidad/">Privacidad</a> <a href="/accesibilidad/">Accesibilidad</a> <button type="button" class="linkish" data-cookie-settings hidden>Preferencias de cookies</button></p>
-    <p class="legal">Especificación y esquemas bajo licencia Apache-2.0. No es asesoría legal. Comercio IA no está afiliado a Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu ni al SII, ni cuenta con su respaldo; las marcas pertenecen a sus dueños.</p>
+    <p class="legal">Especificación y esquemas bajo licencia Apache-2.0. No es asesoría legal. Comercio IA no está afiliado a Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu, el SII ni el SERNAC, ni cuenta con su respaldo; las marcas pertenecen a sus dueños.</p>
   </div>
 </footer>'''
     return '''<footer class="footer">
   <div class="wrap">
-    <p>An open initiative led by <a href="https://pintorproject.cl">Pintor Project</a>. Reference implementation: <a href="https://synaptiktech.com/en/product/checkout-ia">Synaptik Checkout IA</a>.</p>
+    <p>An open initiative led by <a href="https://pintorproject.cl">Pintor Project</a>. Reference implementation: <a href="https://synaptiktech.com/en/product/checkout-ia">Synaptik Checkout IA</a>, a commercial product of Pintor Project.</p>
     <p class="mono"><a href="/en/spec/">Specification</a> · <a href="/en/spec/#schemas">Schemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
     <p class="links"><a href="/en/privacy/">Privacy</a> <a href="/en/accessibility/">Accessibility</a> <button type="button" class="linkish" data-cookie-settings hidden>Cookie preferences</button></p>
-    <p class="legal">Specification and schemas under the Apache-2.0 license. Not legal advice. Comercio IA is not affiliated with or endorsed by Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu or the SII; trademarks belong to their owners.</p>
+    <p class="legal">Specification and schemas under the Apache-2.0 license. Not legal advice. Comercio IA is not affiliated with or endorsed by Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu, the SII or SERNAC; trademarks belong to their owners.</p>
   </div>
 </footer>'''
 
@@ -185,8 +184,8 @@ def receipt(lang):
             else "Example of a Chilean electronic receipt issued after a purchase made through an AI agent")
     note = ("Ejemplo ilustrativo. La tienda emite la boleta y el agente la recibe en el pedido." if lang == "es"
             else "Illustrative example, in Spanish as a Chilean store would issue it. The agent receives it on the order.")
-    return f'''<figure class="receipt-wrap" role="img" aria-label="{aria}">
-        <div class="receipt">
+    return f'''<figure class="receipt-wrap">
+        <div class="receipt" role="img" aria-label="{aria}">
 {chr(10).join("          " + l for l in out)}
         </div>
         <figcaption class="receipt-note">{note}</figcaption>
@@ -273,7 +272,7 @@ def landing(lang):
     else:
         T.update(
             title="Comercio IA · The open Chilean extension for UCP and ACP",
-            desc="Chilean tax receipts, right of withdrawal, legal warranty, credit notes and payment methods, so any AI agent can complete a legal sale in Chile, on top of UCP and ACP.",
+            desc="Chilean tax receipts, withdrawal rights, legal warranty, credit notes and payment methods, so any AI agent can make a legal sale in Chile. On UCP and ACP.",
             label="Open proposal · version 2026-10-09",
             h1="Comercio IA", h1sub="A boleta for consumers, a factura for businesses. For any AI agent.",
             lead="An open extension to UCP (Google and Shopify) and ACP (OpenAI and Stripe). It adds what Chilean law requires and the standards don't cover: an SII boleta or factura depending on who buys, the right of withdrawal and legal warranty in consumer sales, credit notes and local payment methods.",
@@ -282,14 +281,14 @@ def landing(lang):
                    ("The store sells", "Payment goes to the store's own account. The specification never touches funds."),
                    ("Compatible", "An agent that doesn't know it keeps working, and the legal notices still reach it.")],
         )
-    facts = "\n".join(f'        <div><h3>{a}</h3><p>{b}</p></div>' for a, b in T["facts"])
+    facts = "\n".join(f'        <div><h2>{a}</h2><p>{b}</p></div>' for a, b in T["facts"])
 
     if es:
         gap_left = ["Catálogo y búsqueda", "Carro y checkout", "Pedido y ajustes", "Políticas y avisos", "Medios de pago enchufables"]
         gap_right = ["Boleta para personas, factura para empresas", "Derecho a retracto", "Garantía legal", "Notas de crédito", "Webpay, Mercado Pago, Getnet y Khipu"]
         rows = [
             ledger_row("cl.comercioia.shopping.", "tax_document", "Boleta o factura", "Boleta para personas; factura con RUT y giro para empresas. El pedido devuelve folio, RUT del emisor y estado en el SII.", "DL 825 · Res. SII 74/2020"),
-            ledger_row("cl.comercioia.shopping.", "consumer_terms", "Información al consumidor", "En ventas a personas: identidad del vendedor, aviso de que compra a través de IA, despacho, cuotas con CAE y confirmación escrita.", "Ley 19.496 · DS 6/2021"),
+            ledger_row("cl.comercioia.shopping.", "consumer_terms", "Información al consumidor", "En ventas a personas: identidad del vendedor, aviso de que compra a través de IA, despacho, cuotas con CAE y confirmación escrita.", "Ley 19.496 · DS 6/2021 · Res. SERNAC 33/2022"),
             ledger_row("cl.comercioia.shopping.", "credit_note", "Notas de crédito", "Cada devolución o retracto lleva su DTE 61, con referencia al documento original.", "DL 825 arts. 21 y 70"),
             ledger_row("cl.comercioia.policy.", "retracto", "Derecho a retracto", "10 días desde la recepción, 90 sin confirmación escrita, devolución en 45 días.", "Ley 19.496 art. 3 bis"),
             ledger_row("cl.comercioia.policy.", "garantia_legal", "Garantía legal", "6 meses desde la recepción: reparación, cambio o devolución, a elección del comprador.", "Ley 19.496 arts. 20 y 21"),
@@ -320,7 +319,7 @@ def landing(lang):
                   ("Hecho", "done", "Repositorio público y periodo de comentarios", "Comentarios abiertos hasta el 30 de noviembre de 2026."),
                   ("En diseño", "", "Implementación de referencia", "Synaptik Checkout IA: las tres extensiones y Webpay Plus, con boleta automática."),
                   ("Pendiente", "", "Primeras ventas reales", "Al menos una boleta, una factura y un retracto con nota de crédito."),
-                  ("Pendiente", "", "Revisión legal y validación externa", "Respuesta a las preguntas abiertas y un cofirmante o implementador externo.")],
+                  ("En curso", "", "Revisión legal y validación externa", "Respuesta a las preguntas abiertas y un cofirmante o implementador externo.")],
             road_note="Las extensiones y los medios de pago se versionan por separado: Oneclick Mall, Getnet y Khipu pueden seguir como propuesta cuando el resto ya sea estable.",
         )
     else:
@@ -328,7 +327,7 @@ def landing(lang):
         gap_right = ["A boleta for consumers, a factura for businesses", "Right of withdrawal (retracto)", "Legal warranty", "Credit notes", "Webpay, Mercado Pago, Getnet and Khipu"]
         rows = [
             ledger_row("cl.comercioia.shopping.", "tax_document", "Boleta or factura", "A boleta for consumers; a factura with RUT and line of business for companies. The order returns the folio, issuer RUT and SII status.", "DL 825 · SII Res. 74/2020"),
-            ledger_row("cl.comercioia.shopping.", "consumer_terms", "Consumer information", "In consumer sales: seller identity, notice that the purchase is made through AI, delivery, installments with CAE and written confirmation.", "Ley 19.496 · DS 6/2021"),
+            ledger_row("cl.comercioia.shopping.", "consumer_terms", "Consumer information", "In consumer sales: seller identity, notice that the purchase is made through AI, delivery, installments with CAE and written confirmation.", "Ley 19.496 · DS 6/2021 · SERNAC Res. 33/2022"),
             ledger_row("cl.comercioia.shopping.", "credit_note", "Credit notes", "Every refund or withdrawal carries its DTE 61, referencing the original document.", "DL 825 arts. 21 and 70"),
             ledger_row("cl.comercioia.policy.", "retracto", "Right of withdrawal", "10 days from receipt, 90 without written confirmation, refund within 45 days.", "Ley 19.496 art. 3 bis"),
             ledger_row("cl.comercioia.policy.", "garantia_legal", "Legal warranty", "6 months from receipt: repair, replacement or refund, at the buyer's choice.", "Ley 19.496 arts. 20 and 21"),
@@ -359,7 +358,7 @@ def landing(lang):
                   ("Done", "done", "Public repository and comment period", "Comments open until 30 November 2026."),
                   ("In design", "", "Reference implementation", "Synaptik Checkout IA: the three extensions and Webpay Plus, with automatic boleta."),
                   ("Pending", "", "First real sales", "At least one boleta, one factura and one withdrawal with a credit note."),
-                  ("Pending", "", "Legal review and outside validation", "Answers to the open questions and one co-signer or outside implementer.")],
+                  ("In progress", "", "Legal review and outside validation", "Answers to the open questions and one co-signer or outside implementer.")],
             road_note="Extensions and payment methods are versioned separately: Oneclick Mall, Getnet and Khipu can stay as proposals once the rest is stable.",
         )
     li = lambda xs: "\n".join(f"            <li>{x}</li>" for x in xs)
@@ -525,7 +524,7 @@ DOCS = {
             ("proveedores", "Proveedores y transferencias",
              "<p>Google LLC (analítica) y Microsoft Corporation (alojamiento y correo) pueden tratar los datos fuera de Chile, incluso en Estados Unidos, bajo sus términos de tratamiento de datos. Conservamos los datos de analítica durante 14 meses, y los correos mientras sean necesarios para responder y dar seguimiento a la especificación.</p>"),
             ("derechos", "Tus derechos",
-             "<p>Puedes pedir acceso, rectificación, cancelación u oposición respecto de tus datos (Ley 19.628). Desde el 1 de diciembre de 2026, con la Ley 21.719, también puedes pedir su portabilidad o su bloqueo, y reclamar ante la Agencia de Protección de Datos Personales. Escribe a <a href=\"mailto:contacto@comercioia.cl\">contacto@comercioia.cl</a>; respondemos dentro de los plazos legales.</p>"),
+             "<p>Puedes pedir acceso, rectificación, cancelación o bloqueo de tus datos (Ley 19.628). Desde el 1 de diciembre de 2026, con la Ley 21.719, se suman la portabilidad, la oposición y los derechos frente a decisiones automatizadas, y podrás reclamar ante la Agencia de Protección de Datos Personales. Escribe a <a href=\"mailto:contacto@comercioia.cl\">contacto@comercioia.cl</a>; respondemos dentro de los plazos legales.</p>"),
             ("cambios", "Cambios",
              "<p>Si cambiamos esta política, publicaremos aquí la nueva versión con su fecha. El historial completo está en el <a href=\"https://github.com/Pintor-Project/comercioia\">repositorio público</a>.</p>"),
         ]),
@@ -563,7 +562,7 @@ DOCS = {
             ("providers", "Providers and transfers",
              "<p>Google LLC (analytics) and Microsoft Corporation (hosting and email) may process data outside Chile, including in the United States, under their data processing terms. We keep analytics data for 14 months, and emails for as long as needed to reply and follow up on the specification.</p>"),
             ("rights", "Your rights",
-             "<p>You can request access to, correction, deletion of, or object to the processing of your data (Chilean Ley 19.628). From 1 December 2026, under Ley 21.719, you can also request portability or blocking, and complain to the Chilean Personal Data Protection Agency. Write to <a href=\"mailto:contacto@comercioia.cl\">contacto@comercioia.cl</a>; we reply within the legal deadlines.</p>"),
+             "<p>You can request access to, correction, deletion or blocking of your data (Chilean Ley 19.628). From 1 December 2026, Ley 21.719 adds portability, objection and rights regarding automated decisions, and you will be able to complain to the Chilean Personal Data Protection Agency. Write to <a href=\"mailto:contacto@comercioia.cl\">contacto@comercioia.cl</a>; we reply within the legal deadlines.</p>"),
             ("changes", "Changes",
              "<p>If we change this policy, we will publish the new version here with its date. The full history is in the <a href=\"https://github.com/Pintor-Project/comercioia\">public repository</a>.</p>"),
         ]),
@@ -590,7 +589,7 @@ DOCS = {
              "<li>HTML semántico con encabezados en orden, regiones y un enlace para saltar al contenido.</li>"
              "<li>Todo se puede usar con teclado, con el foco siempre visible.</li>"
              "<li>Contraste de al menos 4,5:1 en el texto, en modo claro y oscuro.</li>"
-             "<li>Idioma declarado en cada página y en cada fragmento en otro idioma.</li>"
+             "<li>Idioma declarado en cada página y en las frases en otro idioma.</li>"
              "<li>Texto alternativo en las imágenes y el diagrama de una compra también como lista de pasos.</li>"
              "<li>Se lee bien con zoom de 200 % y en pantallas de 320 px de ancho.</li>"
              "<li>Fuentes alojadas en el propio sitio: nada se carga desde terceros antes de tu consentimiento.</li>"
@@ -629,7 +628,7 @@ DOCS = {
              "<li>Semantic HTML with headings in order, landmarks and a skip-to-content link.</li>"
              "<li>Everything works with a keyboard, with focus always visible.</li>"
              "<li>Text contrast of at least 4.5:1, in light and dark mode.</li>"
-             "<li>Language declared on every page and on every passage in another language.</li>"
+             "<li>Language declared on every page and on phrases in another language.</li>"
              "<li>Alternative text on images, and the purchase diagram also as a list of steps.</li>"
              "<li>Reads well at 200% zoom and on 320 px wide screens.</li>"
              "<li>Fonts hosted on the site itself: nothing loads from third parties before your consent.</li>"
@@ -687,7 +686,7 @@ for (lang, kind), d in DOCS.items():
 # ---------------------------------------------------------------- hand-written pages: chrome + metadata
 FONT_RE = re.compile(r'(?:<link rel="preconnect" href="https://fonts.googleapis.com">\s*<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\s*<link rel="stylesheet" href="https://fonts.googleapis.com/css2\?[^"]+">'
                      r'|<link rel="preload" href="/assets/fonts/geist-400-latin.woff2"[^>]*>\s*<link rel="preload" href="/assets/fonts/geist-mono-400-latin.woff2"[^>]*>)', re.S)
-ICON_RE = re.compile(r'<link rel="icon" href="data:image/svg\+xml,[^"]+">')
+ICON_RE = re.compile(r'<link rel="icon" href="data:image/svg\+xml,[^"]+">|<link rel="icon" href="/favicon\.svg"[^>]*>\s*<link rel="icon" href="/favicon-192\.png"[^>]*>')
 SEO_RE = re.compile(r'<!-- seo -->.*?<!-- /seo -->', re.S)
 for rel, lang, cur in (("spec/index.html", "es", "spec"), ("en/spec/index.html", "en", "spec"), ("cumplimiento/index.html", "es", "compliance"), ("en/compliance/index.html", "en", "compliance")):
     path = os.path.join(SITE, rel)

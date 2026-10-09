@@ -27,7 +27,8 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","@id":"https://comercioia.cl/en/compliance/","url":"https://comercioia.cl/en/compliance/","name":"Compliance guide · Comercio IA","description":"Six Chilean tax and consumer-protection rules every AI agent must respect when selling, each with its official source.","inLanguage":"en","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"},"headline":"Compliance guide","datePublished":"2026-10-09","dateModified":"2026-10-09","author":{"@id":"https://comercioia.cl/#org"},"license":"https://www.apache.org/licenses/LICENSE-2.0"}]}</script>
 <script src="/assets/site.js" defer></script>
 <!-- /seo -->
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='6' width='28' height='20' fill='white' stroke='%23C8102E' stroke-width='3'/%3E%3Ctext x='16' y='21' font-family='monospace' font-size='12' font-weight='700' fill='%23C8102E' text-anchor='middle'%3Ecl%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
 <link rel="preload" href="/assets/fonts/geist-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/geist-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css">
@@ -57,7 +58,7 @@
       <li><a href="#no-daily-report">03 · No daily boleta report since 2022</a></li>
       <li><a href="#factura-acceptance">04 · Factura: the buyer accepts or claims within 8 days</a></li>
       <li><a href="#ai-notice">05 · When an AI sells, the consumer must know</a></li>
-      <li><a href="#withdrawal-exclusions">06 · Withdrawal can be excluded in only four cases, disclosed next to the price</a></li>
+      <li><a href="#withdrawal-exclusions">06 · For goods, withdrawal can be excluded in only four cases, disclosed next to the price</a></li>
     </ol>
   </nav>
 
@@ -110,7 +111,7 @@
     </section>
     <section id="factura-acceptance">
       <h2>04. Factura: the buyer accepts or claims within 8 days</h2>
-      <p>The buyer accepts or claims an electronic factura in the SII register within 8 calendar days of the SII receiving it; if it does nothing, the factura is accepted. Payment is due within 30 calendar days. Referencing the purchase order, HES or contract is not a legal requirement; it is the practice of large buyers and the State.</p>
+      <p>The buyer accepts or claims an electronic factura in the SII register within 8 calendar days of the SII receiving it; if it does nothing, the factura is accepted. Payment is due within at most 30 calendar days, except for the exceptional agreements the law allows. Referencing the purchase order, HES or contract is not a legal requirement; it is the practice of large buyers and the State.</p>
       <dl class="kv">
         <dt>What it means for an AI sale</dt><dd>The acknowledgement comes from the buying company in the SII, not from its purchasing agent. Letting the agent request references avoids commercial rejections.</dd>
         <dt>In the standard</dt><dd><code>tax_document.receiver</code>; references in the <a href="https://github.com/Pintor-Project/comercioia/issues/1">2026-10-16 proposal</a></dd>
@@ -124,7 +125,7 @@
     </section>
     <section id="ai-notice">
       <h2>05. When an AI sells, the consumer must know</h2>
-      <p>SERNAC requires telling the consumer, transparently and in time, that they are interacting with artificial intelligence, what it is used for and what data it processes, and giving reasonable grounds when the AI refuses a purchase. It bans dark patterns, manipulation and discriminatory personalised prices.</p>
+      <p>In SERNAC's interpretation (Res. Ex. 33/2022), the consumer must be told, transparently and in time, that they are interacting with artificial intelligence, what it is used for and what data it processes, and be given reasonable grounds when the AI refuses a purchase. SERNAC also warns against dark patterns and manipulation, and notes that personalised prices may amount to arbitrary discrimination.</p>
       <dl class="kv">
         <dt>What it means for an AI sale</dt><dd>The agent declares that it is an AI and the store keeps that notice with the sale.</dd>
         <dt>In the standard</dt><dd><code>consumer_terms.ai_disclosure</code></dd>
@@ -135,8 +136,8 @@
       </ul>
     </section>
     <section id="withdrawal-exclusions">
-      <h2>06. Withdrawal can be excluded in only four cases, disclosed next to the price</h2>
-      <p>In distance sales, the right of withdrawal can only be excluded for goods that cannot be returned because they were installed or used, perishables or goods expiring within 10 days, goods made to the buyer's specification, and personal or hygiene goods whose seal the buyer opened. The exclusion is disclosed before payment, in the same place and at the same moment as the price, no smaller, using the words «derecho a retracto». It never limits the legal warranty.</p>
+      <h2>06. For goods, withdrawal can be excluded in only four cases, disclosed next to the price</h2>
+      <p>In distance sales, the right of withdrawal can only be excluded for goods that cannot be returned because they were installed or used, perishables or goods expiring within 10 days, goods made to the buyer's specification, and personal or hygiene goods whose seal the buyer opened. The exclusion is disclosed before payment, in the same place and at the same moment as the price, no smaller, using the words <span lang="es">«derecho a retracto»</span>. It never limits the legal warranty. For services, the seller may exclude it by saying so expressly.</p>
       <dl class="kv">
         <dt>What it means for an AI sale</dt><dd>The exclusion notice travels as a mandatory message the agent cannot hide, next to the total.</dd>
         <dt>In the standard</dt><dd><code>cl.comercioia.policy.retracto</code> (<code>excluded</code>, <code>exclusion_reason</code>) and <code>disclosure</code> messages</dd>
@@ -156,10 +157,10 @@
 
 <footer class="footer">
   <div class="wrap">
-    <p>An open initiative led by <a href="https://pintorproject.cl">Pintor Project</a>. Reference implementation: <a href="https://synaptiktech.com/en/product/checkout-ia">Synaptik Checkout IA</a>.</p>
+    <p>An open initiative led by <a href="https://pintorproject.cl">Pintor Project</a>. Reference implementation: <a href="https://synaptiktech.com/en/product/checkout-ia">Synaptik Checkout IA</a>, a commercial product of Pintor Project.</p>
     <p class="mono"><a href="/en/spec/">Specification</a> · <a href="/en/spec/#schemas">Schemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
     <p class="links"><a href="/en/privacy/">Privacy</a> <a href="/en/accessibility/">Accessibility</a> <button type="button" class="linkish" data-cookie-settings hidden>Cookie preferences</button></p>
-    <p class="legal">Specification and schemas under the Apache-2.0 license. Not legal advice. Comercio IA is not affiliated with or endorsed by Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu or the SII; trademarks belong to their owners.</p>
+    <p class="legal">Specification and schemas under the Apache-2.0 license. Not legal advice. Comercio IA is not affiliated with or endorsed by Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu, the SII or SERNAC; trademarks belong to their owners.</p>
   </div>
 </footer>
 </body>

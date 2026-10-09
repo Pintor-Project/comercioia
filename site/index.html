@@ -27,7 +27,8 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://comercioia.cl/#org","name":"Pintor Project SpA","alternateName":"Pintor Project","url":"https://pintorproject.cl","email":"contacto@comercioia.cl","address":{"@type":"PostalAddress","streetAddress":"San Pío X 2460","addressLocality":"Providencia","addressRegion":"Región Metropolitana","postalCode":"7510041","addressCountry":"CL"}},{"@type":"WebSite","@id":"https://comercioia.cl/#website","name":"Comercio IA","url":"https://comercioia.cl/","inLanguage":["es-CL","en"],"publisher":{"@id":"https://comercioia.cl/#org"}},{"@type":"WebPage","@id":"https://comercioia.cl/","url":"https://comercioia.cl/","name":"Comercio IA · La extensión chilena abierta para UCP y ACP","description":"Boleta, retracto, garantía legal, notas de crédito y medios de pago chilenos para que cualquier agente de IA cierre una venta legal en Chile, sobre UCP y ACP.","inLanguage":"es-CL","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"}}]}</script>
 <script src="/assets/site.js" defer></script>
 <!-- /seo -->
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='6' width='28' height='20' fill='white' stroke='%23C8102E' stroke-width='3'/%3E%3Ctext x='16' y='21' font-family='monospace' font-size='12' font-weight='700' fill='%23C8102E' text-anchor='middle'%3Ecl%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
 <link rel="preload" href="/assets/fonts/geist-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/geist-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css">
@@ -62,8 +63,8 @@
             <a class="link-arrow" href="/spec/#esquemas">Ver los esquemas</a>
           </div>
         </div>
-      <figure class="receipt-wrap" role="img" aria-label="Ejemplo de boleta electrónica emitida después de una compra hecha a través de un agente de IA">
-        <div class="receipt">
+      <figure class="receipt-wrap">
+        <div class="receipt" role="img" aria-label="Ejemplo de boleta electrónica emitida después de una compra hecha a través de un agente de IA">
           <div class="rutbox ln" style="--i:0"><span>R.U.T.: 76.123.456-0</span><span>BOLETA ELECTRÓNICA</span><span>N° 4512330</span><span>EJEMPLO</span></div>
           <div class="c ln" style="--i:1">TIENDA EJEMPLO SPA</div>
           <div class="c sm ln" style="--i:2">Av. Ejemplo 123, Santiago</div>
@@ -87,9 +88,9 @@
       </figure>
       </div>
       <div class="facts">
-        <div><h3>Abierta</h3><p>Licencia Apache-2.0, como UCP y ACP. Cualquiera la implementa sin pedir permiso.</p></div>
-        <div><h3>La tienda vende</h3><p>El pago llega a la cuenta de la propia tienda. La especificación nunca toca los fondos.</p></div>
-        <div><h3>Compatible</h3><p>Un agente que no la conoce sigue funcionando, y los avisos legales igual le llegan.</p></div>
+        <div><h2>Abierta</h2><p>Licencia Apache-2.0, como UCP y ACP. Cualquiera la implementa sin pedir permiso.</p></div>
+        <div><h2>La tienda vende</h2><p>El pago llega a la cuenta de la propia tienda. La especificación nunca toca los fondos.</p></div>
+        <div><h2>Compatible</h2><p>Un agente que no la conoce sigue funcionando, y los avisos legales igual le llegan.</p></div>
       </div>
     </div>
     <div class="band" role="presentation"></div>
@@ -131,7 +132,7 @@
           <thead><tr><th>Nombre</th><th>Qué hace</th><th>Base legal</th></tr></thead>
           <tbody>
           <tr><td class="n">cl.comercioia.shopping.<span class="k">tax_document</span></td><td class="w"><b>Boleta o factura</b><span>Boleta para personas; factura con RUT y giro para empresas. El pedido devuelve folio, RUT del emisor y estado en el SII.</span></td><td class="s">DL 825 · Res. SII 74/2020</td></tr>
-          <tr><td class="n">cl.comercioia.shopping.<span class="k">consumer_terms</span></td><td class="w"><b>Información al consumidor</b><span>En ventas a personas: identidad del vendedor, aviso de que compra a través de IA, despacho, cuotas con CAE y confirmación escrita.</span></td><td class="s">Ley 19.496 · DS 6/2021</td></tr>
+          <tr><td class="n">cl.comercioia.shopping.<span class="k">consumer_terms</span></td><td class="w"><b>Información al consumidor</b><span>En ventas a personas: identidad del vendedor, aviso de que compra a través de IA, despacho, cuotas con CAE y confirmación escrita.</span></td><td class="s">Ley 19.496 · DS 6/2021 · Res. SERNAC 33/2022</td></tr>
           <tr><td class="n">cl.comercioia.shopping.<span class="k">credit_note</span></td><td class="w"><b>Notas de crédito</b><span>Cada devolución o retracto lleva su DTE 61, con referencia al documento original.</span></td><td class="s">DL 825 arts. 21 y 70</td></tr>
           <tr><td class="n">cl.comercioia.policy.<span class="k">retracto</span></td><td class="w"><b>Derecho a retracto</b><span>10 días desde la recepción, 90 sin confirmación escrita, devolución en 45 días.</span></td><td class="s">Ley 19.496 art. 3 bis</td></tr>
           <tr><td class="n">cl.comercioia.policy.<span class="k">garantia_legal</span></td><td class="w"><b>Garantía legal</b><span>6 meses desde la recepción: reparación, cambio o devolución, a elección del comprador.</span></td><td class="s">Ley 19.496 arts. 20 y 21</td></tr>
@@ -265,7 +266,7 @@
           <li class="done"><span class="st">Hecho</span><b>Repositorio público y periodo de comentarios</b><span class="d">Comentarios abiertos hasta el 30 de noviembre de 2026.</span></li>
           <li class=""><span class="st">En diseño</span><b>Implementación de referencia</b><span class="d">Synaptik Checkout IA: las tres extensiones y Webpay Plus, con boleta automática.</span></li>
           <li class=""><span class="st">Pendiente</span><b>Primeras ventas reales</b><span class="d">Al menos una boleta, una factura y un retracto con nota de crédito.</span></li>
-          <li class=""><span class="st">Pendiente</span><b>Revisión legal y validación externa</b><span class="d">Respuesta a las preguntas abiertas y un cofirmante o implementador externo.</span></li>
+          <li class=""><span class="st">En curso</span><b>Revisión legal y validación externa</b><span class="d">Respuesta a las preguntas abiertas y un cofirmante o implementador externo.</span></li>
         </ol>
         <p class="fine">Las extensiones y los medios de pago se versionan por separado: Oneclick Mall, Getnet y Khipu pueden seguir como propuesta cuando el resto ya sea estable.</p>
       </div>
@@ -275,10 +276,10 @@
 
 <footer class="footer">
   <div class="wrap">
-    <p>Iniciativa abierta impulsada por <a href="https://pintorproject.cl">Pintor Project</a>. Implementación de referencia: <a href="https://synaptiktech.com/es/product/checkout-ia">Synaptik Checkout IA</a>.</p>
+    <p>Iniciativa abierta impulsada por <a href="https://pintorproject.cl">Pintor Project</a>. Implementación de referencia: <a href="https://synaptiktech.com/es/product/checkout-ia">Synaptik Checkout IA</a>, producto comercial de Pintor Project.</p>
     <p class="mono"><a href="/spec/">Especificación</a> · <a href="/spec/#esquemas">Esquemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
     <p class="links"><a href="/privacidad/">Privacidad</a> <a href="/accesibilidad/">Accesibilidad</a> <button type="button" class="linkish" data-cookie-settings hidden>Preferencias de cookies</button></p>
-    <p class="legal">Especificación y esquemas bajo licencia Apache-2.0. No es asesoría legal. Comercio IA no está afiliado a Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu ni al SII, ni cuenta con su respaldo; las marcas pertenecen a sus dueños.</p>
+    <p class="legal">Especificación y esquemas bajo licencia Apache-2.0. No es asesoría legal. Comercio IA no está afiliado a Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu, el SII ni el SERNAC, ni cuenta con su respaldo; las marcas pertenecen a sus dueños.</p>
   </div>
 </footer>
 </body>

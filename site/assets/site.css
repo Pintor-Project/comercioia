@@ -24,23 +24,24 @@
   --red-wash: #FBEDEF;
   --paper: #FAF8F3;
   --code-bg: #F4F4F1;
+  --on-red: #FFFFFF;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #0E0F11; --bg-2: #16181B; --ink: #F1F1EE; --ink-2: #B9BCC2; --ink-3: #8A8E95;
     --line: #26292E; --line-strong: #F1F1EE; --red: #FF4D5E; --red-2: #FF7381; --red-wash: #2A1417;
-    --code-bg: #16181B; color-scheme: dark;
+    --code-bg: #16181B; --on-red: #0F1012; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0E0F11; --bg-2: #16181B; --ink: #F1F1EE; --ink-2: #B9BCC2; --ink-3: #8A8E95;
   --line: #26292E; --line-strong: #F1F1EE; --red: #FF4D5E; --red-2: #FF7381; --red-wash: #2A1417;
-  --code-bg: #16181B; color-scheme: dark;
+  --code-bg: #16181B; --on-red: #0F1012; color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-padding-top: 84px; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 84px; scroll-padding-bottom: calc(16px + var(--consent-h, 0px)); }
 body {
   margin: 0; background: var(--bg); color: var(--ink);
   font-family: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -97,10 +98,10 @@ h1, h2, h3 { text-wrap: balance; }
 h1 .sub, h2 .sub { display: block; color: var(--ink-3); }
 .actions { display: flex; gap: 22px; margin-top: 40px; flex-wrap: wrap; align-items: center; }
 .btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-size: 14px; padding: 12px 18px; border-radius: 6px; background: var(--ink); color: var(--bg); border: 1px solid var(--ink); }
-.btn:hover { background: var(--red); border-color: var(--red); color: #fff; }
+.btn:hover { background: var(--red); border-color: var(--red); color: var(--on-red); }
 .link-arrow { font-family: "Geist Mono", monospace; font-size: 14px; text-decoration: underline; text-decoration-color: var(--red); }
 .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 88px; padding-top: 26px; border-top: 1px solid var(--line-strong); }
-.facts h3 { font-size: 15px; font-weight: 500; color: var(--ink-3); letter-spacing: -0.005em; }
+.facts h2 { font-size: 15px; line-height: 1.4; font-weight: 500; color: var(--ink-3); letter-spacing: -0.005em; margin: 0; }
 .facts p { margin-top: 6px; font-size: 16.5px; color: var(--ink); }
 
 /* Receipt */
@@ -286,7 +287,7 @@ html.a11y-size-2 body { zoom: 1.3; }
 html.a11y-readable body, html.a11y-readable .mono, html.a11y-readable code, html.a11y-readable pre, html.a11y-readable .nav, html.a11y-readable .label, html.a11y-readable th, html.a11y-readable .toc, html.a11y-readable .kv dt, html.a11y-readable .btn, html.a11y-readable .btn-alt, html.a11y-readable .tag, html.a11y-readable .rut { font-family: "Atkinson Hyperlegible", Verdana, sans-serif; letter-spacing: 0; }
 html.a11y-spacing p, html.a11y-spacing li, html.a11y-spacing dd, html.a11y-spacing td { line-height: 1.9; letter-spacing: 0.04em; word-spacing: 0.12em; }
 html.a11y-links a { text-decoration: underline !important; text-decoration-thickness: 2px !important; text-decoration-color: currentColor !important; }
-html.a11y-contrast { --ink-2: var(--ink); --ink-3: var(--ink); --line: var(--ink-2); }
+:root.a11y-contrast { --ink-2: var(--ink); --ink-3: var(--ink); --line: var(--ink-2); }
 html.a11y-contrast h1 .sub, html.a11y-contrast h2 .sub { color: var(--ink); }
 html.a11y-still *, html.a11y-still *::before, html.a11y-still *::after { animation: none !important; transition: none !important; }
 html.a11y-still .receipt .ln { opacity: 1 !important; }
@@ -308,3 +309,7 @@ html.a11y-still .receipt .ln { opacity: 1 !important; }
 .seq-text summary { cursor: pointer; font-family: "Geist Mono", ui-monospace, monospace; font-size: 13.5px; color: var(--ink); width: fit-content; }
 .seq-text ol { margin: 12px 0 0; padding-left: 1.6em; display: grid; gap: 4px; }
 .spec-body dl.kv + p { margin-top: 16px; }
+@media (max-width: 680px) { html { scroll-padding-top: 148px; } }
+.a11y-panel .seg button:focus-visible { outline-offset: -3px; }
+.btn-alt:hover { border-color: var(--red); }
+main[tabindex="-1"]:focus { outline: none; }

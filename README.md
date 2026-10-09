@@ -51,8 +51,8 @@ Cada push a `main` valida y publica el sitio en comercioia.cl.
 
 ## Aviso · Notice
 
-Esta especificación describe reglas tributarias y de protección al consumidor de Chile, pero no es asesoría legal. Comercio IA no está afiliado a Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu ni al SII, ni cuenta con su respaldo; las marcas pertenecen a sus dueños.
+Esta especificación describe reglas tributarias y de protección al consumidor de Chile, pero no es asesoría legal. Comercio IA no está afiliado a Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu, el SII ni el SERNAC, ni cuenta con su respaldo; las marcas pertenecen a sus dueños.
 
-This specification describes Chilean tax and consumer-protection rules, but it is not legal advice. Comercio IA is not affiliated with or endorsed by Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu or the SII; trademarks belong to their owners.
+This specification describes Chilean tax and consumer-protection rules, but it is not legal advice. Comercio IA is not affiliated with or endorsed by Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu, the SII or SERNAC; trademarks belong to their owners.
 
-Iniciativa abierta impulsada por [Pintor Project](https://pintorproject.cl). Implementación de referencia: [Synaptik Checkout IA](https://synaptiktech.com/es/product/checkout-ia). Licencia [Apache-2.0](LICENSE).
+Iniciativa abierta impulsada por [Pintor Project](https://pintorproject.cl). Implementación de referencia: [Synaptik Checkout IA](https://synaptiktech.com/es/product/checkout-ia), producto comercial de Pintor Project. Licencia [Apache-2.0](LICENSE).

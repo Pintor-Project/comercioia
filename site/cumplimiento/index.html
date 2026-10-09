@@ -27,7 +27,8 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","@id":"https://comercioia.cl/cumplimiento/","url":"https://comercioia.cl/cumplimiento/","name":"Guía de cumplimiento · Comercio IA","description":"Seis reglas tributarias y de protección al consumidor de Chile que todo agente de IA debe respetar al vender, con su fuente oficial.","inLanguage":"es-CL","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"},"headline":"Guía de cumplimiento","datePublished":"2026-10-09","dateModified":"2026-10-09","author":{"@id":"https://comercioia.cl/#org"},"license":"https://www.apache.org/licenses/LICENSE-2.0"}]}</script>
 <script src="/assets/site.js" defer></script>
 <!-- /seo -->
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='6' width='28' height='20' fill='white' stroke='%23C8102E' stroke-width='3'/%3E%3Ctext x='16' y='21' font-family='monospace' font-size='12' font-weight='700' fill='%23C8102E' text-anchor='middle'%3Ecl%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
 <link rel="preload" href="/assets/fonts/geist-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/geist-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css">
@@ -57,7 +58,7 @@
       <li><a href="#sin-reporte-diario">03 · No existe reporte diario de boletas desde 2022</a></li>
       <li><a href="#factura-acuse">04 · Factura: el comprador acepta o reclama en 8 días</a></li>
       <li><a href="#aviso-ia">05 · Si vende una IA, el consumidor debe saberlo</a></li>
-      <li><a href="#exclusiones-retracto">06 · El retracto solo se excluye en cuatro casos, y se avisa junto al precio</a></li>
+      <li><a href="#exclusiones-retracto">06 · En bienes, el retracto solo se excluye en cuatro casos, y se avisa junto al precio</a></li>
     </ol>
   </nav>
 
@@ -110,7 +111,7 @@
     </section>
     <section id="factura-acuse">
       <h2>04. Factura: el comprador acepta o reclama en 8 días</h2>
-      <p>El comprador acepta o reclama la factura electrónica en el registro del SII dentro de 8 días corridos desde que el SII la recibe; si no hace nada, queda aceptada. El plazo de pago es de 30 días corridos. Referenciar la orden de compra, la HES o el contrato no es una exigencia legal, sino práctica de grandes compradores y del Estado.</p>
+      <p>El comprador acepta o reclama la factura electrónica en el registro del SII dentro de 8 días corridos desde que el SII la recibe; si no hace nada, queda aceptada. El plazo de pago es de hasta 30 días corridos, salvo los acuerdos excepcionales que la ley permite. Referenciar la orden de compra, la HES o el contrato no es una exigencia legal, sino práctica de grandes compradores y del Estado.</p>
       <dl class="kv">
         <dt>Qué significa para una venta con IA</dt><dd>El acuse no lo da el agente de compras, sino la empresa compradora en el SII. Que el agente pueda pedir sus referencias evita rechazos comerciales.</dd>
         <dt>En el estándar</dt><dd><code>tax_document.receiver</code>; referencias en la <a href="https://github.com/Pintor-Project/comercioia/issues/1">propuesta 2026-10-16</a></dd>
@@ -124,7 +125,7 @@
     </section>
     <section id="aviso-ia">
       <h2>05. Si vende una IA, el consumidor debe saberlo</h2>
-      <p>El SERNAC exige informar de forma transparente y oportuna que el consumidor interactúa con una inteligencia artificial, para qué se usa y qué datos trata, y explicar los motivos razonables si la IA rechaza una contratación. Prohíbe los patrones oscuros, la manipulación y los precios personalizados discriminatorios.</p>
+      <p>Según la interpretación del SERNAC (Res. Ex. 33/2022), hay que informar de forma transparente y oportuna que el consumidor interactúa con una inteligencia artificial, para qué se usa y qué datos trata, y explicar los motivos razonables si la IA rechaza una contratación. El SERNAC también advierte contra los patrones oscuros y la manipulación, y señala que los precios personalizados pueden configurar una discriminación arbitraria.</p>
       <dl class="kv">
         <dt>Qué significa para una venta con IA</dt><dd>El agente declara que es una IA y la tienda conserva ese aviso con la venta.</dd>
         <dt>En el estándar</dt><dd><code>consumer_terms.ai_disclosure</code></dd>
@@ -135,8 +136,8 @@
       </ul>
     </section>
     <section id="exclusiones-retracto">
-      <h2>06. El retracto solo se excluye en cuatro casos, y se avisa junto al precio</h2>
-      <p>En compras a distancia, el retracto solo puede excluirse para bienes que no pueden devolverse por haberse instalado o usado, perecibles o que caducan en menos de 10 días, hechos según especificaciones del comprador, o de uso personal o higiene con el sello abierto. La exclusión se informa antes de pagar, en el mismo lugar y momento que el precio, en un tamaño no menor, con la expresión «derecho a retracto». Nunca limita la garantía legal.</p>
+      <h2>06. En bienes, el retracto solo se excluye en cuatro casos, y se avisa junto al precio</h2>
+      <p>En compras a distancia, el retracto solo puede excluirse para bienes que no pueden devolverse por haberse instalado o usado, perecibles o que caducan en menos de 10 días, hechos según especificaciones del comprador, o de uso personal o higiene con el sello abierto. La exclusión se informa antes de pagar, en el mismo lugar y momento que el precio, en un tamaño no menor, con la expresión «derecho a retracto». Nunca limita la garantía legal. En servicios, el vendedor puede excluirlo si lo informa de forma expresa.</p>
       <dl class="kv">
         <dt>Qué significa para una venta con IA</dt><dd>El aviso de exclusión viaja como mensaje obligatorio que el agente no puede ocultar, junto al total.</dd>
         <dt>En el estándar</dt><dd><code>cl.comercioia.policy.retracto</code> (<code>excluded</code>, <code>exclusion_reason</code>) y mensajes <code>disclosure</code></dd>
@@ -156,10 +157,10 @@
 
 <footer class="footer">
   <div class="wrap">
-    <p>Iniciativa abierta impulsada por <a href="https://pintorproject.cl">Pintor Project</a>. Implementación de referencia: <a href="https://synaptiktech.com/es/product/checkout-ia">Synaptik Checkout IA</a>.</p>
+    <p>Iniciativa abierta impulsada por <a href="https://pintorproject.cl">Pintor Project</a>. Implementación de referencia: <a href="https://synaptiktech.com/es/product/checkout-ia">Synaptik Checkout IA</a>, producto comercial de Pintor Project.</p>
     <p class="mono"><a href="/spec/">Especificación</a> · <a href="/spec/#esquemas">Esquemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
     <p class="links"><a href="/privacidad/">Privacidad</a> <a href="/accesibilidad/">Accesibilidad</a> <button type="button" class="linkish" data-cookie-settings hidden>Preferencias de cookies</button></p>
-    <p class="legal">Especificación y esquemas bajo licencia Apache-2.0. No es asesoría legal. Comercio IA no está afiliado a Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu ni al SII, ni cuenta con su respaldo; las marcas pertenecen a sus dueños.</p>
+    <p class="legal">Especificación y esquemas bajo licencia Apache-2.0. No es asesoría legal. Comercio IA no está afiliado a Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu, el SII ni el SERNAC, ni cuenta con su respaldo; las marcas pertenecen a sus dueños.</p>
   </div>
 </footer>
 </body>

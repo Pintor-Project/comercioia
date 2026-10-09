@@ -6,6 +6,12 @@
   // Google Analytics 4 measurement ID. Empty = analytics off and no cookie notice.
   var GA_ID = "G-CCFR41KLL9";
 
+  // One origin: consent and settings are stored per origin, and the canonical host is the apex.
+  if (location.hostname === "www.comercioia.cl") {
+    location.replace("https://comercioia.cl" + location.pathname + location.search + location.hash);
+    return;
+  }
+
   var html = document.documentElement;
   var es = (html.lang || "es").toLowerCase().indexOf("es") === 0;
   var T = es ? {
@@ -135,9 +141,17 @@
     });
   }
 
+  var returnFocus = null;
   function decide(granted) {
     store(KEY_CONSENT, { analytics: granted, at: new Date().toISOString() });
     hideBanner();
+    // Don't drop focus on <body>: go back where the visitor came from, or to the content.
+    var target = returnFocus || document.getElementById("main");
+    if (target) {
+      if (!returnFocus) target.setAttribute("tabindex", "-1");
+      target.focus({ preventScroll: true });
+    }
+    returnFocus = null;
     if (granted) startAnalytics(); else { stopAnalytics(); if (window.__ciaGa) location.reload(); }
   }
 
@@ -155,7 +169,8 @@
     var more = el("a", { href: T.moreHref }, T.more);
     row.appendChild(acc); row.appendChild(rej); row.appendChild(more);
     banner.appendChild(row);
-    document.body.appendChild(banner);
+    // First in the document, so keyboard users reach it before the page.
+    document.body.insertBefore(banner, document.body.firstChild);
     liftFab();
     window.addEventListener("resize", liftFab);
   }
@@ -173,7 +188,7 @@
   document.querySelectorAll("[data-cookie-settings]").forEach(function (b) {
     if (!GA_ID) return;
     b.hidden = false;
-    b.addEventListener("click", function () { showBanner(); if (banner) banner.querySelector("button").focus(); });
+    b.addEventListener("click", function () { returnFocus = b; showBanner(); if (banner) banner.querySelector("button").focus(); });
   });
 
   /* ---------------- Events ---------------- */
