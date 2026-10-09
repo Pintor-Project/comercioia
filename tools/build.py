@@ -109,14 +109,14 @@ def footer(lang):
     if lang == "es":
         return '''<footer class="footer">
   <div class="wrap">
-    <p>Iniciativa abierta impulsada por <a href="https://pintorproject.cl">Pintor Project</a>. Implementación de referencia: <a href="https://synaptiktech.com">Synaptik Checkout</a>.</p>
+    <p>Iniciativa abierta impulsada por <a href="https://pintorproject.cl">Pintor Project</a>. Implementación de referencia: <a href="https://synaptiktech.com/es/product/checkout-ia">Synaptik Checkout IA</a>.</p>
     <p class="mono"><a href="/spec/">Especificación</a> · <a href="/spec/#esquemas">Esquemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
     <p class="legal">Especificación y esquemas bajo licencia Apache-2.0. No es asesoría legal. Comercio IA no está afiliado a Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu ni al SII, ni cuenta con su respaldo; las marcas pertenecen a sus dueños.</p>
   </div>
 </footer>'''
     return '''<footer class="footer">
   <div class="wrap">
-    <p>An open initiative led by <a href="https://pintorproject.cl">Pintor Project</a>. Reference implementation: <a href="https://synaptiktech.com">Synaptik Checkout</a>.</p>
+    <p>An open initiative led by <a href="https://pintorproject.cl">Pintor Project</a>. Reference implementation: <a href="https://synaptiktech.com/en/product/checkout-ia">Synaptik Checkout IA</a>.</p>
     <p class="mono"><a href="/en/spec/">Specification</a> · <a href="/en/spec/#schemas">Schemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
     <p class="legal">Specification and schemas under the Apache-2.0 license. Not legal advice. Comercio IA is not affiliated with or endorsed by Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu or the SII; trademarks belong to their owners.</p>
   </div>
@@ -249,7 +249,7 @@ def landing(lang):
             s6l="06 · Camino a la 1.0", s6h='Cinco condiciones <span class="sub">para declararla estable.</span>',
             road=[("Hecho", "done", "Especificación y esquemas publicados", "9 de octubre de 2026, en comercioia.cl."),
                   ("Hecho", "done", "Repositorio público y periodo de comentarios", "Comentarios abiertos hasta el 30 de noviembre de 2026."),
-                  ("En diseño", "", "Implementación de referencia", "Synaptik Checkout: las tres extensiones y Webpay Plus, con boleta automática."),
+                  ("En diseño", "", "Implementación de referencia", "Synaptik Checkout IA: las tres extensiones y Webpay Plus, con boleta automática."),
                   ("Pendiente", "", "Primeras ventas reales", "Al menos una boleta, una factura y un retracto con nota de crédito."),
                   ("Pendiente", "", "Revisión legal y validación externa", "Respuesta a las preguntas abiertas y un cofirmante o implementador externo.")],
             road_note="Las extensiones y los medios de pago se versionan por separado: Oneclick Mall, Getnet y Khipu pueden seguir como propuesta cuando el resto ya sea estable.",
@@ -288,7 +288,7 @@ def landing(lang):
             s6l="06 · Path to 1.0", s6h='Five conditions <span class="sub">before we call it stable.</span>',
             road=[("Done", "done", "Specification and schemas published", "9 October 2026, at comercioia.cl."),
                   ("Done", "done", "Public repository and comment period", "Comments open until 30 November 2026."),
-                  ("In design", "", "Reference implementation", "Synaptik Checkout: the three extensions and Webpay Plus, with automatic boleta."),
+                  ("In design", "", "Reference implementation", "Synaptik Checkout IA: the three extensions and Webpay Plus, with automatic boleta."),
                   ("Pending", "", "First real sales", "At least one boleta, one factura and one withdrawal with a credit note."),
                   ("Pending", "", "Legal review and outside validation", "Answers to the open questions and one co-signer or outside implementer.")],
             road_note="Extensions and payment methods are versioned separately: Oneclick Mall, Getnet and Khipu can stay as proposals once the rest is stable.",

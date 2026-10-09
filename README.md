@@ -55,4 +55,4 @@ Esta especificación describe reglas tributarias y de protección al consumidor 
 
 This specification describes Chilean tax and consumer-protection rules, but it is not legal advice. Comercio IA is not affiliated with or endorsed by Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu or the SII; trademarks belong to their owners.
 
-Iniciativa abierta impulsada por [Pintor Project](https://pintorproject.cl). Implementación de referencia: [Synaptik Checkout](https://synaptiktech.com). Licencia [Apache-2.0](LICENSE).
+Iniciativa abierta impulsada por [Pintor Project](https://pintorproject.cl). Implementación de referencia: [Synaptik Checkout IA](https://synaptiktech.com/es/product/checkout-ia). Licencia [Apache-2.0](LICENSE).
