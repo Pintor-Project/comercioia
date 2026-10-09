@@ -1,0 +1,40 @@
+{
+  "id": "chk_7f3a",
+  "status": "requires_escalation",
+  "continue_url": "https://tienda-ejemplo.cl/pagar/chk_7f3a",
+  "currency": "CLP",
+  "totals": [
+    { "type": "subtotal", "display_text": "Productos (IVA incluido)", "amount": 189990 },
+    { "type": "fulfillment", "display_text": "Despacho RM, 3 días hábiles", "amount": 4990 },
+    { "type": "total", "amount": 194980 }
+  ],
+  "policies": [
+    { "type": "cl.comercioia.policy.retracto",
+      "description": { "plain": "Derecho a retracto: 10 días desde que recibes el producto." },
+      "url": "https://tienda-ejemplo.cl/retracto",
+      "window_days": 10, "window_starts": "goods_received",
+      "window_days_without_confirmation": 90, "refund_within_days": 45 },
+    { "type": "cl.comercioia.policy.garantia_legal",
+      "description": { "plain": "Garantía legal de 6 meses: reparación, cambio o devolución." },
+      "months": 6, "remedies": ["repair", "replace", "refund"],
+      "remote_claim_channel": "https://tienda-ejemplo.cl/garantia" }
+  ],
+  "messages": [
+    { "type": "warning", "code": "cl.comercioia.policy.retracto", "path": "$.policies[0]",
+      "presentation": "disclosure",
+      "content": "Tienes derecho a retracto por 10 días desde que recibes el producto." },
+    { "type": "warning", "code": "cl.comercioia.policy.garantia_legal", "path": "$.policies[1]",
+      "presentation": "disclosure",
+      "content": "Garantía legal de 6 meses: reparación, cambio o devolución, a tu elección." },
+    { "type": "error", "code": "payment_redirect", "severity": "requires_buyer_input",
+      "content": "Completa el pago en Webpay." }
+  ],
+  "tax_document": { "document_choice": "boleta" },
+  "consumer_terms": {
+    "seller": { "razon_social": "Tienda Ejemplo SpA", "rut": "76123456-0",
+                "domicilio": "Av. Ejemplo 123, Santiago", "contacto": "ayuda@tienda-ejemplo.cl" },
+    "ai_disclosure": { "is_ai_agent": true, "purpose": "purchase_assistance" },
+    "price_includes_tax": true,
+    "delivery": { "cost": 4990, "estimated_delivery": "3 días hábiles" }
+  }
+}

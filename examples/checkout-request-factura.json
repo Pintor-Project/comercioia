@@ -1,0 +1,11 @@
+{
+  "tax_document": {
+    "document_choice": "factura",
+    "receiver": { "rut": "12345678-5", "razon_social": "Comercial Ejemplo Limitada",
+                  "giro": "Venta al por menor", "direccion": "Calle Ejemplo 100",
+                  "comuna": "Providencia", "email": "facturas@comercial-ejemplo.cl" }
+  },
+  "consumer_terms": {
+    "ai_disclosure": { "is_ai_agent": true, "agent_name": "Asistente de compras", "purpose": "purchase_assistance" }
+  }
+}

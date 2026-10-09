@@ -1,0 +1,28 @@
+name: Propuesta de cambio · Change proposal
+description: Agregar o cambiar campos, políticas o medios de pago · Add or change fields, policies or payment handlers
+title: "[Propuesta] "
+labels: ["propuesta"]
+body:
+  - type: textarea
+    id: cambio
+    attributes:
+      label: Qué cambia · What changes
+      description: Nombre, campos y ejemplo JSON. · Name, fields and a JSON example.
+    validations:
+      required: true
+  - type: textarea
+    id: porque
+    attributes:
+      label: Por qué · Why
+      description: Regla chilena (ley, resolución del SII o SERNAC) o caso real que lo justifica. · The Chilean rule (law, SII or SERNAC resolution) or real case behind it.
+    validations:
+      required: true
+  - type: dropdown
+    id: compat
+    attributes:
+      label: Compatibilidad · Compatibility
+      options:
+        - Agrega campos opcionales (versión nueva compatible) · Adds optional fields
+        - Cambia o quita campos (rompe compatibilidad) · Changes or removes fields (breaking)
+    validations:
+      required: true

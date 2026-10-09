@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://comercioia.cl/ucp/handlers/getnet/2026-10-09.json",
+  "name": "cl.comercioia.getnet",
+  "version": "2026-10-09",
+  "title": "Getnet Web Checkout payment handler",
+  "description": "OPEN PROPOSAL, ready to implement and open for comment. Not yet stable. Redirect payment on Getnet's Web Checkout (PlacetoPay platform). The business creates a session with its own credentials; the buyer pays at the returned processUrl. The notification is sent once, so businesses MUST also poll the session status. Features enabled for Chile must be confirmed with Getnet. Funds go from the buyer to the business's own Getnet account and never pass through the handler author. Published by the Comercio IA initiative until Getnet publishes its own handler; Getnet is invited to review, co-sign or take it over. Not affiliated with or endorsed by Getnet. Spec: https://comercioia.cl/spec/#getnet",
+  "$defs": {
+    "cl.comercioia.getnet": {
+      "payment_instrument": {
+        "allOf": [
+          {
+            "$ref": "https://ucp.dev/2026-08-25/schemas/common/types/payment_instrument.json"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "const": "redirect"
+              }
+            }
+          }
+        ]
+      },
+      "business_schema": {
+        "allOf": [
+          {
+            "$ref": "https://ucp.dev/2026-08-25/schemas/payment_handler.json#/$defs/business_schema"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "config": {
+                "$ref": "#/$defs/business_config"
+              }
+            }
+          }
+        ]
+      },
+      "platform_schema": {
+        "allOf": [
+          {
+            "$ref": "https://ucp.dev/2026-08-25/schemas/payment_handler.json#/$defs/platform_schema"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "config": {
+                "$ref": "#/$defs/platform_config"
+              }
+            }
+          }
+        ]
+      },
+      "response_schema": {
+        "allOf": [
+          {
+            "$ref": "https://ucp.dev/2026-08-25/schemas/payment_handler.json#/$defs/response_schema"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "config": {
+                "$ref": "#/$defs/response_config"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "business_config": {
+      "type": "object",
+      "description": "Public configuration only. Credentials and API keys MUST NOT appear in profiles or responses.",
+      "properties": {
+        "environment": {
+          "type": "string",
+          "examples": [
+            "production",
+            "integration"
+          ]
+        }
+      }
+    },
+    "platform_config": {
+      "type": "object",
+      "description": "No platform configuration is required: the platform only follows continue_url."
+    },
+    "response_config": {
+      "type": "object",
+      "properties": {
+        "environment": {
+          "type": "string",
+          "examples": [
+            "production",
+            "integration"
+          ]
+        },
+        "session_ttl_seconds": {
+          "type": "integer",
+          "examples": [
+            1800
+          ],
+          "description": "Session lifetime; the platform default is 30 minutes."
+        }
+      }
+    }
+  }
+}

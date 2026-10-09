@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comercio IA · The open Chilean extension for UCP and ACP</title>
+<meta name="description" content="Chilean tax receipts, right of withdrawal, legal warranty, credit notes and payment methods, so any AI agent can complete a legal sale in Chile, on top of UCP and ACP.">
+<link rel="alternate" hreflang="es-CL" href="https://comercioia.cl/">
+<link rel="alternate" hreflang="en" href="https://comercioia.cl/en/">
+<link rel="canonical" href="https://comercioia.cl/en/">
+<meta property="og:title" content="Comercio IA · The open Chilean extension for UCP and ACP">
+<meta property="og:description" content="Chilean tax receipts, right of withdrawal, legal warranty, credit notes and payment methods, so any AI agent can complete a legal sale in Chile, on top of UCP and ACP.">
+<meta property="og:url" content="https://comercioia.cl/en/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='6' width='28' height='20' fill='white' stroke='%23C8102E' stroke-width='3'/%3E%3Ctext x='16' y='21' font-family='monospace' font-size='12' font-weight='700' fill='%23C8102E' text-anchor='middle'%3Ecl%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <div class="wrap">
+    <a class="logo" href="/en/" aria-label="Comercio IA"><span class="rut">cl.<b>comercioia</b></span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/en/spec/">Specification</a>
+      <a href="/en/spec/#schemas">Schemas</a>
+      <a href="/en/#participate">Participate</a>
+      <a class="ext" href="https://github.com/Pintor-Project/comercioia">GitHub</a>
+      <a class="lang" href="/" hreflang="es-CL" lang="es-CL">Español</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <p class="label"><span class="dot"></span>Open proposal · version 2026-10-09</p>
+          <h1>Comercio IA<span class="sub">Chilean tax receipts, consumer law and payments for any AI agent.</span></h1>
+          <p class="lead" style="margin-top:28px">An open extension to UCP (Google and Shopify) and ACP (OpenAI and Stripe). It adds what Chilean law requires and the standards don't cover: SII tax documents, the right of withdrawal, the legal warranty, credit notes and local payment methods.</p>
+          <div class="actions">
+            <a class="btn" href="/en/spec/">Read the specification <span aria-hidden="true">→</span></a>
+            <a class="link-arrow" href="/en/spec/#schemas">See the schemas</a>
+          </div>
+        </div>
+      <figure class="receipt-wrap" role="img" aria-label="Example of a Chilean electronic receipt issued after a purchase made through an AI agent">
+        <div class="receipt">
+          <div class="rutbox ln" style="--i:0"><span>R.U.T.: 76.123.456-0</span><span>BOLETA ELECTRÓNICA</span><span>N° 4512330</span><span>EJEMPLO</span></div>
+          <div class="c ln" style="--i:1">TIENDA EJEMPLO SPA</div>
+          <div class="c sm ln" style="--i:2">Av. Ejemplo 123, Santiago</div>
+          <div class="hr ln" style="--i:3"></div>
+          <div class="r ln" style="--i:4"><span>09/10/26 14:22</span><span>vía agente IA</span></div>
+          <div class="hr ln" style="--i:5"></div>
+          <div class="r ln" style="--i:6"><span>Teclado 61 teclas</span><span>$189.990</span></div>
+          <div class="r ln" style="--i:7"><span>Despacho RM</span><span>$4.990</span></div>
+          <div class="hr ln" style="--i:8"></div>
+          <div class="r tot ln" style="--i:9"><span>TOTAL</span><span>$194.980</span></div>
+          <div class="r sm ln" style="--i:10"><span>IVA incluido</span><span>$31.131</span></div>
+          <div class="r sm ln" style="--i:11"><span>Webpay Plus</span><span>aprobado</span></div>
+          <div class="hr ln" style="--i:12"></div>
+          <div class="sm ln" style="--i:13">Derecho a retracto: 10 días</div>
+          <div class="sm ln" style="--i:14">Garantía legal: 6 meses</div>
+          <img class="ln" style="--i:15" src="/assets/timbre-receipt.svg" alt="">
+          <div class="c sm ln" style="--i:16">Timbre electrónico · ejemplo</div>
+          <div class="c sm ns ln" style="--i:17">cl.comercioia.shopping.tax_document</div>
+        </div>
+        <figcaption class="receipt-note">Illustrative example, in Spanish as a Chilean store would issue it. The agent receives it on the order.</figcaption>
+      </figure>
+      </div>
+      <div class="facts">
+        <div><h3>Open</h3><p>Apache-2.0 license, like UCP and ACP. Anyone can implement it without asking.</p></div>
+        <div><h3>The store sells</h3><p>Payment goes to the store's own account. The specification never touches funds.</p></div>
+        <div><h3>Compatible</h3><p>An agent that doesn't know it keeps working, and the legal notices still reach it.</p></div>
+      </div>
+    </div>
+    <div class="band" role="presentation"></div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><p class="label">01 · The gap</p><h2>The standards stop <span class="sub">where Chilean law starts.</span></h2></div>
+      <div class="section-body cols-2">
+        <div>
+          <p class="col-title">UCP and ACP cover</p>
+          <ul class="list-plain">
+            <li>Catalog and search</li>
+            <li>Cart and checkout</li>
+            <li>Order and adjustments</li>
+            <li>Policies and notices</li>
+            <li>Pluggable payment methods</li>
+          </ul>
+        </div>
+        <div>
+          <p class="col-title red">Comercio IA adds</p>
+          <ul class="list-plain red">
+            <li>SII boleta and factura</li>
+            <li>Right of withdrawal (retracto)</li>
+            <li>Legal warranty</li>
+            <li>Credit notes</li>
+            <li>Webpay, Mercado Pago, Getnet and Khipu</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><p class="label">02 · What's inside</p><h2>Three extensions, two policies <span class="sub">and five payment methods.</span></h2></div>
+      <div class="section-body">
+        <table class="ledger">
+          <thead><tr><th>Name</th><th>What it does</th><th>Legal basis</th></tr></thead>
+          <tbody>
+          <tr><td class="n">cl.comercioia.shopping.<span class="k">tax_document</span></td><td class="w"><b>Boleta or factura</b><span>The buyer chooses at checkout. The order returns the folio, issuer RUT and SII status.</span></td><td class="s">DL 825 · SII Res. 74/2020</td></tr>
+          <tr><td class="n">cl.comercioia.shopping.<span class="k">consumer_terms</span></td><td class="w"><b>Consumer information</b><span>Seller identity, notice that the purchase is made through AI, delivery, installments with CAE and written confirmation.</span></td><td class="s">Ley 19.496 · DS 6/2021</td></tr>
+          <tr><td class="n">cl.comercioia.shopping.<span class="k">credit_note</span></td><td class="w"><b>Credit notes</b><span>Every refund or withdrawal carries its DTE 61, referencing the original document.</span></td><td class="s">DL 825 arts. 21 and 70</td></tr>
+          <tr><td class="n">cl.comercioia.policy.<span class="k">retracto</span></td><td class="w"><b>Right of withdrawal</b><span>10 days from receipt, 90 without written confirmation, refund within 45 days.</span></td><td class="s">Ley 19.496 art. 3 bis</td></tr>
+          <tr><td class="n">cl.comercioia.policy.<span class="k">garantia_legal</span></td><td class="w"><b>Legal warranty</b><span>6 months from receipt: repair, replacement or refund, at the buyer's choice.</span></td><td class="s">Ley 19.496 arts. 20 and 21</td></tr>
+          <tr><td class="n">cl.comercioia.<span class="k">webpay_plus · oneclick_mall · mercadopago · getnet · khipu</span></td><td class="w"><b>Chilean payment methods</b><span>The store charges with its own account and the buyer pays on the provider's page.</span></td><td class="s">Each provider's documentation</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><p class="label">03 · One purchase</p><h2>From “I'll take it” to a boleta <span class="sub">the SII has received.</span></h2></div>
+      <div class="section-body wide">
+        <div class="seq">
+<svg viewBox="0 0 1100 572" role="img" aria-labelledby="seq-title">
+<title id="seq-title">Sequence diagram of one purchase</title>
+<text class="lane" x="90" y="26" text-anchor="middle">Buyer</text>
+<line class="life" x1="90" y1="44" x2="90" y2="564"/>
+<rect x="87" y="40" width="6" height="6" class="head"/>
+<text class="lane" x="330" y="26" text-anchor="middle">AI agent</text>
+<line class="life" x1="330" y1="44" x2="330" y2="564"/>
+<rect x="327" y="40" width="6" height="6" class="head"/>
+<text class="lane" x="560" y="26" text-anchor="middle">Store</text>
+<line class="life" x1="560" y1="44" x2="560" y2="564"/>
+<rect x="557" y="40" width="6" height="6" class="head"/>
+<text class="lane" x="790" y="26" text-anchor="middle">Payment provider</text>
+<line class="life" x1="790" y1="44" x2="790" y2="564"/>
+<rect x="787" y="40" width="6" height="6" class="head"/>
+<text class="lane" x="1010" y="26" text-anchor="middle">SII</text>
+<line class="life" x1="1010" y1="44" x2="1010" y2="564"/>
+<rect x="1007" y="40" width="6" height="6" class="head"/>
+<line class="msg" x1="90" y1="92" x2="323" y2="92"/>
+<path class="head" d="M330 92 L321 87.5 L321 96.5 Z"/>
+<text class="lbl" x="210" y="83" text-anchor="middle"><tspan class="num">01</tspan>  “I'll take it”</text>
+<line class="msg ours" x1="330" y1="136" x2="553" y2="136"/>
+<path class="head ours" d="M560 136 L551 131.5 L551 140.5 Z"/>
+<text class="lbl ours" x="445" y="127" text-anchor="middle"><tspan class="num">02</tspan>  create_checkout · asks for a boleta</text>
+<line class="msg ours" x1="560" y1="180" x2="337" y2="180"/>
+<path class="head ours" d="M330 180 L339 175.5 L339 184.5 Z"/>
+<text class="lbl ours" x="445" y="171" text-anchor="middle"><tspan class="num">03</tspan>  totals, legal notices, payment methods</text>
+<line class="msg ours" x1="330" y1="224" x2="553" y2="224"/>
+<path class="head ours" d="M560 224 L551 219.5 L551 228.5 Z"/>
+<text class="lbl ours" x="445" y="215" text-anchor="middle"><tspan class="num">04</tspan>  complete_checkout · Webpay Plus</text>
+<line class="msg" x1="560" y1="268" x2="783" y2="268"/>
+<path class="head" d="M790 268 L781 263.5 L781 272.5 Z"/>
+<text class="lbl" x="675" y="259" text-anchor="middle"><tspan class="num">05</tspan>  creates the payment on the store's account</text>
+<line class="msg" x1="560" y1="312" x2="337" y2="312"/>
+<path class="head" d="M330 312 L339 307.5 L339 316.5 Z"/>
+<text class="lbl" x="445" y="303" text-anchor="middle"><tspan class="num">06</tspan>  requires_escalation + continue_url</text>
+<line class="msg" x1="90" y1="356" x2="783" y2="356"/>
+<path class="head" d="M790 356 L781 351.5 L781 360.5 Z"/>
+<text class="lbl" x="440" y="347" text-anchor="middle"><tspan class="num">07</tspan>  pays on the provider's page</text>
+<line class="msg" x1="790" y1="400" x2="567" y2="400"/>
+<path class="head" d="M560 400 L569 395.5 L569 404.5 Z"/>
+<text class="lbl" x="675" y="391" text-anchor="middle"><tspan class="num">08</tspan>  payment confirmation</text>
+<line class="msg ours" x1="560" y1="444" x2="1003" y2="444"/>
+<path class="head ours" d="M1010 444 L1001 439.5 L1001 448.5 Z"/>
+<text class="lbl ours" x="785" y="435" text-anchor="middle"><tspan class="num">09</tspan>  boleta 39, within 1 hour</text>
+<line class="msg ours" x1="560" y1="488" x2="97" y2="488"/>
+<path class="head ours" d="M90 488 L99 483.5 L99 492.5 Z"/>
+<text class="lbl ours" x="325" y="479" text-anchor="middle"><tspan class="num">10</tspan>  boleta + contract copy</text>
+<line class="msg ours" x1="560" y1="532" x2="337" y2="532"/>
+<path class="head ours" d="M330 532 L339 527.5 L339 536.5 Z"/>
+<text class="lbl ours" x="445" y="523" text-anchor="middle"><tspan class="num">11</tspan>  order with tax_documents[]</text>
+</svg>
+        </div>
+        <p class="legend"><span>UCP/ACP core and payment provider</span><span class="ours">What Comercio IA adds</span></p>
+        <p class="fine">Neither standard yet defines how to return the buyer to the agent after paying on an external page (UCP proposal #486), so the agent learns about the payment from the order.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><p class="label">04 · Who it's for</p><h2>Everyone implements <span class="sub">their part.</span></h2></div>
+      <div class="section-body who">
+        <div><p class="tag">/.well-known/ucp</p><h3>Stores</h3><p>Declare the extension and your payment methods in your profile. If your platform or ERP already implements it, just turn it on.</p></div>
+        <div><p class="tag">UCP · ACP</p><h3>Platforms and ERPs</h3><p>Implement the schemas in your endpoints and offer it to all your stores under your own brand.</p></div>
+        <div><p class="tag">document_choice</p><h3>AI agents</h3><p>Announce the extensions you support, ask for a boleta or factura, and show every legal notice without hiding it.</p></div>
+        <div><p class="tag">payment_handlers</p><h3>Payment providers</h3><p>We publish your payment method until you publish your own. Review it, co-sign it or take it over.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="participate">
+    <div class="wrap">
+      <div class="section-head"><p class="label">05 · Status</p><h2>Ready to implement. <span class="sub">Stable after the first real sale.</span></h2></div>
+      <div class="section-body status-grid">
+        <dl class="kv">
+          <dt>Version</dt><dd><code>2026-10-09</code></dd>
+          <dt>Status</dt><dd>Open proposal: ready to implement and comment on</dd>
+          <dt>Namespace</dt><dd><code>cl.comercioia.*</code></dd>
+          <dt>Requires</dt><dd>UCP <code>2026-08-25</code> or later</dd>
+          <dt>License</dt><dd>Apache-2.0</dd>
+          <dt>Stable release</dt><dd>January 2027, once the path to 1.0 is complete</dd>
+          <dt>Contact</dt><dd><a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></dd>
+        </dl>
+        <ul class="asks">
+          <li><b>Comment.</b><span>Errors, missing fields, cases from your business. Every comment gets an answer before the stable release.</span></li>
+          <li><b>Co-sign.</b><span>Platforms, ERPs, payment providers and trade associations can be listed as co-signers of the stable release.</span></li>
+          <li><b>Implement.</b><span>Free and without asking. If you implement it, tell us and we'll list you.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><p class="label">06 · Path to 1.0</p><h2>Five conditions <span class="sub">before we call it stable.</span></h2></div>
+      <div class="section-body">
+        <ol class="road">
+          <li class="done"><span class="st">Done</span><b>Specification and schemas published</b><span class="d">9 October 2026, at comercioia.cl.</span></li>
+          <li class="done"><span class="st">Done</span><b>Public repository and comment period</b><span class="d">Comments open until 30 November 2026.</span></li>
+          <li class=""><span class="st">In design</span><b>Reference implementation</b><span class="d">Synaptik Checkout: the three extensions and Webpay Plus, with automatic boleta.</span></li>
+          <li class=""><span class="st">Pending</span><b>First real sales</b><span class="d">At least one boleta, one factura and one withdrawal with a credit note.</span></li>
+          <li class=""><span class="st">Pending</span><b>Legal review and outside validation</b><span class="d">Answers to the open questions and one co-signer or outside implementer.</span></li>
+        </ol>
+        <p class="fine">Extensions and payment methods are versioned separately: Oneclick Mall, Getnet and Khipu can stay as proposals once the rest is stable.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p>An open initiative led by <a href="https://pintorproject.cl">Pintor Project</a>. Reference implementation: <a href="https://synaptiktech.com">Synaptik Checkout</a>.</p>
+    <p class="mono"><a href="/en/spec/">Specification</a> · <a href="/en/spec/#schemas">Schemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
+    <p class="legal">Specification and schemas under the Apache-2.0 license. Not legal advice. Comercio IA is not affiliated with or endorsed by Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu or the SII; trademarks belong to their owners.</p>
+  </div>
+</footer>
+</body>
+</html>

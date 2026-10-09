@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://comercioia.cl/ucp/handlers/oneclick_mall/2026-10-09.json",
+  "name": "cl.comercioia.oneclick_mall",
+  "version": "2026-10-09",
+  "title": "Oneclick Mall (Transbank) payment handler",
+  "description": "OPEN PROPOSAL, ready to implement and open for comment. Not yet stable. Saved-card payment. The buyer enrolls a card once on Transbank's page; later charges are server-to-server with the enrollment's tbk_user and a store commerce code under the business's Mall. PROPOSED: whether charges initiated through an AI agent fit Transbank's Oneclick terms must be confirmed with Transbank before use. Funds go from the buyer to the business's own Transbank account and never pass through the handler author. Published by the Comercio IA initiative until Transbank publishes its own handler; Transbank is invited to review, co-sign or take it over. Not affiliated with or endorsed by Transbank. Spec: https://comercioia.cl/spec/#oneclick-mall",
+  "$defs": {
+    "cl.comercioia.oneclick_mall": {
+      "payment_instrument": {
+        "allOf": [
+          {
+            "$ref": "https://ucp.dev/2026-08-25/schemas/common/types/payment_instrument.json"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "const": "redirect"
+              }
+            }
+          }
+        ]
+      },
+      "business_schema": {
+        "allOf": [
+          {
+            "$ref": "https://ucp.dev/2026-08-25/schemas/payment_handler.json#/$defs/business_schema"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "config": {
+                "$ref": "#/$defs/business_config"
+              }
+            }
+          }
+        ]
+      },
+      "platform_schema": {
+        "allOf": [
+          {
+            "$ref": "https://ucp.dev/2026-08-25/schemas/payment_handler.json#/$defs/platform_schema"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "config": {
+                "$ref": "#/$defs/platform_config"
+              }
+            }
+          }
+        ]
+      },
+      "response_schema": {
+        "allOf": [
+          {
+            "$ref": "https://ucp.dev/2026-08-25/schemas/payment_handler.json#/$defs/response_schema"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "config": {
+                "$ref": "#/$defs/response_config"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "business_config": {
+      "type": "object",
+      "description": "Public configuration only. Credentials and API keys MUST NOT appear in profiles or responses.",
+      "properties": {
+        "environment": {
+          "type": "string",
+          "examples": [
+            "production",
+            "integration"
+          ]
+        }
+      }
+    },
+    "platform_config": {
+      "type": "object",
+      "description": "No platform configuration is required: the platform only follows continue_url."
+    },
+    "response_config": {
+      "type": "object",
+      "properties": {
+        "environment": {
+          "type": "string",
+          "examples": [
+            "production",
+            "integration"
+          ]
+        },
+        "enrollment_required": {
+          "type": "boolean",
+          "description": "True when the buyer has no active enrollment and must be sent to enroll via continue_url."
+        },
+        "daily_limit_clp": {
+          "type": "integer",
+          "description": "Per-buyer daily limit set at affiliation, if the business chooses to disclose it."
+        }
+      }
+    }
+  }
+}

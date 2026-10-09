@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://comercioia.cl/ucp/schemas/tax_document/2026-10-09.json",
+  "name": "cl.comercioia.shopping.tax_document",
+  "version": "2026-10-09",
+  "title": "Chilean Tax Document (boleta / factura)",
+  "description": "OPEN PROPOSAL, ready to implement and open for comment. Not yet stable: fields may change before the first stable release. Lets the buyer choose a boleta or a factura at checkout and returns the SII electronic tax documents (DTE) issued for the order. Amounts are integer CLP (CLP has no minor unit). Spec: https://comercioia.cl/spec/#tax-document",
+  "requires": {
+    "protocol": { "min": "2026-08-25" },
+    "capabilities": {
+      "dev.ucp.shopping.checkout": { "min": "2026-08-25" },
+      "dev.ucp.shopping.order": { "min": "2026-08-25" }
+    }
+  },
+  "$defs": {
+    "rut": {
+      "type": "string",
+      "pattern": "^[0-9]{1,8}-[0-9Kk]$",
+      "description": "Chilean taxpayer ID (RUT) without dots, with a hyphen and the modulo 11 check digit, e.g. 76123456-0. Receivers MUST validate the check digit.",
+      "examples": ["76123456-0", "66666666-6"]
+    },
+    "document_type": {
+      "type": "integer",
+      "description": "SII DTE type code: 33 factura electrónica, 34 factura exenta, 39 boleta electrónica, 41 boleta exenta, 52 guía de despacho, 56 nota de débito, 61 nota de crédito.",
+      "examples": [39, 33, 41, 34]
+    },
+    "receiver": {
+      "type": "object",
+      "description": "Factura receiver. Required when document_choice is 'factura'. Lengths follow the SII DTE format.",
+      "required": ["rut", "razon_social", "giro", "direccion", "comuna"],
+      "properties": {
+        "rut": { "$ref": "#/$defs/rut" },
+        "razon_social": { "type": "string", "maxLength": 100 },
+        "giro": { "type": "string", "maxLength": 40, "description": "Receiver's line of business as registered with the SII." },
+        "direccion": { "type": "string", "maxLength": 70 },
+        "comuna": { "type": "string", "maxLength": 20 },
+        "ciudad": { "type": "string", "maxLength": 20 },
+        "email": { "type": "string", "format": "email", "description": "Address that receives the DTE." }
+      }
+    },
+    "tax_document_request": {
+      "type": "object",
+      "description": "The buyer's choice of tax document. When absent, the business issues a boleta.",
+      "properties": {
+        "document_choice": {
+          "type": "string",
+          "description": "'boleta' for consumers (default) or 'factura' for VAT-registered buyers. Businesses MUST treat unknown values as 'boleta' and say so in messages[].",
+          "examples": ["boleta", "factura"]
+        },
+        "receiver": { "$ref": "#/$defs/receiver" }
+      },
+      "if": {
+        "properties": { "document_choice": { "const": "factura" } },
+        "required": ["document_choice"]
+      },
+      "then": { "required": ["receiver"] }
+    },
+    "issued_document": {
+      "type": "object",
+      "description": "An SII electronic tax document issued for the order.",
+      "required": ["type", "folio", "issuer_rut", "issued_at", "total"],
+      "properties": {
+        "type": { "$ref": "#/$defs/document_type" },
+        "folio": { "type": "integer", "minimum": 1 },
+        "issuer_rut": { "$ref": "#/$defs/rut" },
+        "receiver_rut": {
+          "$ref": "#/$defs/rut",
+          "description": "66666666-6 for a boleta to an unidentified consumer."
+        },
+        "issued_at": { "type": "string", "format": "date-time" },
+        "total": { "type": "integer", "minimum": 0, "description": "Total in integer CLP, VAT included." },
+        "net": { "type": "integer", "minimum": 0 },
+        "iva": { "type": "integer", "minimum": 0 },
+        "exempt": { "type": "integer", "minimum": 0 },
+        "issue_trigger": {
+          "type": "string",
+          "description": "Event that triggered issuance.",
+          "examples": ["payment_confirmed", "dispatched", "delivered"]
+        },
+        "sii_track_id": { "type": "string", "description": "SII submission tracking ID." },
+        "sii_status": {
+          "type": "string",
+          "description": "Latest known SII status of the document.",
+          "examples": ["pending", "accepted", "accepted_with_objections", "rejected"]
+        },
+        "representation_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "https link to a printable representation (PDF or HTML) the buyer can keep."
+        }
+      }
+    },
+    "dev.ucp.shopping.checkout": {
+      "title": "Checkout with Chilean tax document",
+      "description": "Checkout extended with the buyer's boleta or factura choice.",
+      "allOf": [
+        { "$ref": "https://ucp.dev/2026-08-25/schemas/shopping/checkout.json" },
+        {
+          "type": "object",
+          "properties": {
+            "tax_document": {
+              "$ref": "#/$defs/tax_document_request",
+              "ucp_request": { "create": "optional", "update": "optional", "complete": "optional" }
+            }
+          }
+        }
+      ]
+    },
+    "dev.ucp.shopping.order": {
+      "title": "Order with Chilean tax documents",
+      "description": "Order extended with the SII documents issued for it.",
+      "allOf": [
+        { "$ref": "https://ucp.dev/2026-08-25/schemas/shopping/order.json" },
+        {
+          "type": "object",
+          "properties": {
+            "tax_documents": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/issued_document" },
+              "description": "SII documents issued for this order, in issue order."
+            }
+          }
+        }
+      ]
+    }
+  }
+}

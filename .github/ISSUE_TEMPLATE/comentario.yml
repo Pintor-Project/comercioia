@@ -1,0 +1,30 @@
+name: Comentario · Comment
+description: Un error, un campo que falta o un caso real · An error, a missing field or a real case
+title: "[Comentario] "
+labels: ["comentario"]
+body:
+  - type: dropdown
+    id: pieza
+    attributes:
+      label: Pieza · Piece
+      options:
+        - tax_document
+        - consumer_terms
+        - credit_note
+        - policy.retracto / policy.garantia_legal
+        - Medio de pago · Payment handler
+        - Sitio o documentación · Site or docs
+        - Otro · Other
+    validations:
+      required: true
+  - type: textarea
+    id: detalle
+    attributes:
+      label: Comentario · Comment
+      description: Qué viste y qué esperabas. Si hay una regla chilena o un caso de tu negocio, cítalo. · What you saw and what you expected. Cite the Chilean rule or business case if there is one.
+    validations:
+      required: true
+  - type: input
+    id: quien
+    attributes:
+      label: Organización (opcional) · Organization (optional)

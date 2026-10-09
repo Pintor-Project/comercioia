@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Specification · Comercio IA</title>
+<meta name="description" content="Open-proposal specification of the Comercio IA Chilean extension for UCP and ACP: tax documents, consumer terms, credit notes and Chilean payment methods.">
+<link rel="alternate" hreflang="es-CL" href="https://comercioia.cl/spec/">
+<link rel="alternate" hreflang="en" href="https://comercioia.cl/en/spec/">
+<link rel="canonical" href="https://comercioia.cl/en/spec/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='6' width='28' height='20' fill='white' stroke='%23C8102E' stroke-width='3'/%3E%3Ctext x='16' y='21' font-family='monospace' font-size='12' font-weight='700' fill='%23C8102E' text-anchor='middle'%3Ecl%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <div class="wrap">
+    <a class="logo" href="/en/" aria-label="Comercio IA"><span class="rut">cl.<b>comercioia</b></span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/en/spec/" aria-current="page">Specification</a>
+      <a href="/en/spec/#schemas">Schemas</a>
+      <a href="/en/#participate">Participate</a>
+      <a class="ext" href="https://github.com/Pintor-Project/comercioia">GitHub</a>
+      <a class="lang" href="/spec/" hreflang="es-CL" lang="es-CL">Español</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap spec">
+  <nav class="toc" aria-label="Contents">
+    <ol>
+      <li><a href="#introduction">Introduction</a></li>
+      <li><a href="#conventions">Conventions</a></li>
+      <li><a href="#profile">Profile declaration</a></li>
+      <li><a href="#tax-document">tax_document</a></li>
+      <li><a href="#consumer-terms">consumer_terms</a></li>
+      <li><a href="#policies">Withdrawal and warranty</a></li>
+      <li><a href="#credit-note">credit_note</a></li>
+      <li><a href="#payment-methods">Payment methods</a></li>
+      <li><a href="#webpay-plus">· Webpay Plus</a></li>
+      <li><a href="#oneclick-mall">· Oneclick Mall</a></li>
+      <li><a href="#mercadopago">· Mercado Pago</a></li>
+      <li><a href="#getnet">· Getnet</a></li>
+      <li><a href="#khipu">· Khipu</a></li>
+      <li><a href="#examples">Examples</a></li>
+      <li><a href="#acp">ACP mapping</a></li>
+      <li><a href="#schemas">Schemas</a></li>
+      <li><a href="#versioning">Versioning and governance</a></li>
+      <li><a href="#open-questions">Open questions</a></li>
+      <li><a href="#sources">Sources</a></li>
+    </ol>
+  </nav>
+
+  <main id="main" class="spec-body">
+    <section id="introduction">
+      <p class="status">Open proposal · version 2026-10-09</p>
+      <h1>Comercio IA specification</h1>
+      <p class="lede">A Chilean extension to the Universal Commerce Protocol (UCP) and the Agentic Commerce Protocol (ACP). It defines how an AI agent and a store exchange the information Chilean law requires to close a distance sale, and how to pay with Chilean payment methods.</p>
+      <dl class="kv">
+        <dt>Version</dt><dd><code>2026-10-09</code> (open proposal: ready to implement and comment on)</dd>
+        <dt>Namespace</dt><dd><code>cl.comercioia.*</code></dd>
+        <dt>Schemas served from</dt><dd><code>https://comercioia.cl/ucp/…</code></dd>
+        <dt>Requires</dt><dd>UCP <code>2026-08-25</code> or later. ACP <code>2026-04-17</code> mapping in the <a href="#acp">ACP</a> section.</dd>
+        <dt>License</dt><dd>Apache-2.0</dd>
+      </dl>
+      <p class="warn">This specification describes tax and consumer-protection rules, but it is not legal advice. Each store is responsible for deciding which notices apply to it.</p>
+    </section>
+
+    <section id="conventions">
+      <h2>1. Conventions</h2>
+      <ul>
+        <li><b>MUST</b>, <b>MUST NOT</b>, <b>SHOULD</b> and <b>MAY</b> are used as in RFC 2119.</li>
+        <li><b>Amounts</b> are integer Chilean pesos. The peso has no minor unit, so the minor unit is the peso, as in the standards.</li>
+        <li><b>RUT</b> (Chilean taxpayer ID) without dots, with a hyphen and the modulo 11 check digit, e.g. <code>76123456-0</code>. Anyone receiving a RUT MUST validate the check digit.</li>
+        <li><b>Dates</b> in RFC 3339 with a time zone, e.g. <code>2026-12-03T14:22:05-03:00</code>.</li>
+        <li><b>Open objects.</b> As UCP asks, the schemas don't close objects or use closed lists: codes are documented as examples, and an unknown value MUST be handled as each field says.</li>
+        <li><b>Domain authority.</b> Every <code>cl.comercioia.*</code> schema is served from <code>comercioia.cl</code>, with no redirects and no CDN under another name. A schema fetched from another domain is ignored by agents.</li>
+      </ul>
+    </section>
+
+    <section id="profile">
+      <h2>2. Declaring it in the store profile</h2>
+      <p>The store declares the extensions under <code>capabilities</code> and the payment methods under <code>payment_handlers</code> in its <code>/.well-known/ucp</code> profile. Agents negotiate by name and version: an extension the agent doesn't announce stays inactive, and checkout continues on the core fields.</p>
+<pre><code>{
+  "ucp": {
+    "version": "2026-08-25",
+    "services": { "dev.ucp.shopping": [ … ] },
+    "capabilities": {
+      "dev.ucp.shopping.checkout": [{ "version": "2026-08-25" }],
+      "dev.ucp.shopping.order":    [{ "version": "2026-08-25" }],
+      "cl.comercioia.shopping.tax_document": [{
+        "version": "2026-10-09",
+        "extends": ["dev.ucp.shopping.checkout", "dev.ucp.shopping.order"],
+        "spec":   "https://comercioia.cl/en/spec/#tax-document",
+        "schema": "https://comercioia.cl/ucp/schemas/tax_document/2026-10-09.json" }],
+      "cl.comercioia.shopping.consumer_terms": [{
+        "version": "2026-10-09",
+        "extends": ["dev.ucp.shopping.checkout", "dev.ucp.shopping.order"],
+        "spec":   "https://comercioia.cl/en/spec/#consumer-terms",
+        "schema": "https://comercioia.cl/ucp/schemas/consumer_terms/2026-10-09.json" }],
+      "cl.comercioia.shopping.credit_note": [{
+        "version": "2026-10-09",
+        "extends": "dev.ucp.shopping.order",
+        "spec":   "https://comercioia.cl/en/spec/#credit-note",
+        "schema": "https://comercioia.cl/ucp/schemas/credit_note/2026-10-09.json" }]
+    },
+    "payment_handlers": {
+      "cl.comercioia.webpay_plus": [{
+        "id": "webpay_1", "version": "2026-10-09",
+        "spec":   "https://comercioia.cl/en/spec/#webpay-plus",
+        "schema": "https://comercioia.cl/ucp/handlers/webpay_plus/2026-10-09.json",
+        "available_instruments": [{ "type": "redirect" }],
+        "config": { "environment": "production" } }]
+    }
+  }
+}</code></pre>
+    </section>
+
+    <section id="tax-document">
+      <h2>3. Tax document <code>cl.comercioia.shopping.tax_document</code></h2>
+      <p>Extends <code>dev.ucp.shopping.checkout</code> and <code>dev.ucp.shopping.order</code>. At checkout the buyer chooses a boleta or a factura. On the order, the store returns the documents it issued.</p>
+      <h3>On checkout: <code>tax_document</code></h3>
+      <div class="table-scroll"><table>
+        <tr><th>Field</th><th>Rule</th><th>Source</th></tr>
+        <tr><td><code>document_choice</code></td><td><code>boleta</code> (default) or <code>factura</code>. Consumers get a boleta (39, or 41 exempt); a factura (33 or 34) is only for VAT-registered buyers. An unknown value MUST be treated as a boleta, with a notice in <code>messages[]</code>.</td><td>DL 825 arts. 52–53</td></tr>
+        <tr><td><code>receiver</code></td><td>Required for a factura: <code>rut</code>, <code>razon_social</code> (≤100), <code>giro</code> (line of business, ≤40), <code>direccion</code> (≤70), <code>comuna</code> (≤20); optional <code>ciudad</code> and <code>email</code>.</td><td>SII DTE format; DS 55 art. 69</td></tr>
+      </table></div>
+      <h3>On the order: <code>tax_documents[]</code></h3>
+      <div class="table-scroll"><table>
+        <tr><th>Field</th><th>Rule</th><th>Source</th></tr>
+        <tr><td><code>type</code>, <code>folio</code></td><td>DTE type and the folio number authorized by the SII.</td><td>DTE format</td></tr>
+        <tr><td><code>issuer_rut</code>, <code>receiver_rut</code></td><td>A boleta to an unidentified consumer carries the generic RUT <code>66666666-6</code>.</td><td>DTE format</td></tr>
+        <tr><td><code>issued_at</code>, <code>issue_trigger</code></td><td>Issued no later than delivery. The recommended default is to issue on payment confirmation (<code>payment_confirmed</code>). A factura issued after dispatch needs a dispatch guide (52) at dispatch.</td><td>DL 825 art. 55</td></tr>
+        <tr><td><code>total</code>, <code>net</code>, <code>iva</code>, <code>exempt</code></td><td>Integer pesos. The total includes VAT.</td><td>DL 825</td></tr>
+        <tr><td><code>sii_track_id</code>, <code>sii_status</code></td><td>Each boleta reaches the SII within one hour of issue.</td><td>SII Res. Ex. 74/2020</td></tr>
+        <tr><td><code>representation_url</code></td><td>An https link to a representation the buyer can keep, delivered immediately by email, chat, link or QR.</td><td>SII Res. Ex. 74/2020</td></tr>
+      </table></div>
+    </section>
+
+    <section id="consumer-terms">
+      <h2>4. Consumer terms <code>cl.comercioia.shopping.consumer_terms</code></h2>
+      <p>Extends checkout and order with the information a distance seller must give before and after the sale.</p>
+      <div class="table-scroll"><table>
+        <tr><th>Field</th><th>Rule</th><th>Source</th></tr>
+        <tr><td><code>seller</code></td><td>The seller's <code>razon_social</code>, <code>rut</code>, <code>domicilio</code> and <code>contacto</code>, visible before payment; optional <code>platform_role</code> stating the role of any intermediary platform.</td><td>DS 6/2021</td></tr>
+        <tr><td><code>ai_disclosure</code></td><td>The agent declares it is an AI agent (<code>is_ai_agent</code>, <code>agent_name</code>, <code>purpose</code>, <code>human_contact</code>). The store echoes it in its response. No dark patterns; automated refusals must explain why.</td><td>SERNAC Res. Ex. 33/2022</td></tr>
+        <tr><td><code>price_includes_tax</code></td><td>MUST be <code>true</code> for consumer sales: the total price includes taxes.</td><td>Ley 19.496 art. 30</td></tr>
+        <tr><td><code>delivery</code></td><td>Shipping cost and estimated delivery, shown before payment.</td><td>DS 6/2021</td></tr>
+        <tr><td><code>installments</code></td><td>Only when installments are offered: <code>count</code>, <code>installment_amount</code>, monthly rate, <code>cae</code> (annual equivalent cost), <code>total_cost</code> and <code>cash_price</code>. The cash price MUST be at least as visible as the installment price.</td><td>Ley 19.496 arts. 17 G and 37</td></tr>
+        <tr><td><code>confirmation</code> (order)</td><td>Written confirmation with a full copy of the contract, sent once the sale closes: <code>channel</code>, <code>sent_at</code>, <code>contract_copy_url</code>. Without it, the withdrawal window extends from 10 to 90 days.</td><td>Ley 19.496 art. 12 A</td></tr>
+      </table></div>
+    </section>
+
+    <section id="policies">
+      <h2>5. Right of withdrawal and legal warranty</h2>
+      <p>Both are policy types inside core <code>policies[]</code>, which UCP lets anyone define under their own domain. Like every UCP policy they carry <code>type</code> and <code>description</code>, an object with <code>plain</code>, <code>markdown</code> or <code>html</code>. Their schemas live in <code>consumer_terms</code>.</p>
+      <h3><code>cl.comercioia.policy.retracto</code></h3>
+      <div class="table-scroll"><table>
+        <tr><th>Field</th><th>Default and rule</th></tr>
+        <tr><td><code>window_days</code></td><td>10 calendar days from receipt of the goods, or from contracting for services.</td></tr>
+        <tr><td><code>window_days_without_confirmation</code></td><td>90, if the art. 12 A written confirmation wasn't sent.</td></tr>
+        <tr><td><code>refund_within_days</code></td><td>45, with no deductions.</td></tr>
+        <tr><td><code>excluded</code>, <code>exclusion_reason</code></td><td>Goods can only be excluded by their nature: not returnable, perishable, made to order, or opened personal-hygiene items (DS 52/2022). Services can be excluded by the seller. Example codes: <code>not_returnable</code>, <code>perishable</code>, <code>made_to_order</code>, <code>hygiene_opened</code>, <code>service_excluded_by_seller</code>.</td></tr>
+      </table></div>
+      <p>Source: Ley 19.496 art. 3 bis b), as amended by Ley 21.398. The notice is shown before payment, next to the price and no smaller, with the words «derecho a retracto».</p>
+      <h3><code>cl.comercioia.policy.garantia_legal</code></h3>
+      <div class="table-scroll"><table>
+        <tr><th>Field</th><th>Default and rule</th></tr>
+        <tr><td><code>months</code></td><td>6 months from receipt.</td></tr>
+        <tr><td><code>remedies</code></td><td><code>repair</code>, <code>replace</code> or <code>refund</code>, at the buyer's choice.</td></tr>
+        <tr><td><code>remote_claim_channel</code></td><td>A distance seller offers a remote claim channel or free pickup.</td></tr>
+      </table></div>
+      <p>Source: Ley 19.496 arts. 20 and 21; SERNAC Res. Ex. 779/2023.</p>
+      <h3>Notices that arrive even when the agent doesn't know the extension</h3>
+      <p>The store MUST also send each withdrawal and warranty notice as a core <code>warning</code> in <code>messages[]</code>, with <code>presentation: "disclosure"</code>, a <code>code</code> equal to the policy type and a <code>path</code> pointing to it. UCP requires platforms not to hide, collapse or auto-dismiss these notices, and to send the buyer to <code>continue_url</code> if they can't show them. So the legal notices reach the buyer even through an agent that knows nothing about Chile.</p>
+    </section>
+
+    <section id="credit-note">
+      <h2>6. Credit notes <code>cl.comercioia.shopping.credit_note</code></h2>
+      <p>Extends <code>dev.ucp.shopping.order</code>. Each core <code>adjustments[]</code> entry (refund, return, withdrawal, cancellation) MAY carry a <code>tax_document</code> with the credit note (61) or debit note (56) issued.</p>
+      <div class="table-scroll"><table>
+        <tr><th>Field</th><th>Rule</th></tr>
+        <tr><td><code>type</code>, <code>folio</code>, <code>issued_at</code>, <code>total</code></td><td>The document issued, in integer pesos.</td></tr>
+        <tr><td><code>ref_type</code>, <code>ref_folio</code>, <code>ref_date</code></td><td>The original document it refers to (for example, boleta 39).</td></tr>
+        <tr><td><code>cod_ref</code></td><td>1 cancels the document, 2 corrects text, 3 corrects amounts.</td></tr>
+        <tr><td><code>razon</code></td><td>Reason printed on the document (≤90).</td></tr>
+      </table></div>
+      <p>The VAT on a credit note can only be recovered within 6 months of delivery (DL 825 arts. 21 N°2 and 70).</p>
+    </section>
+
+    <section id="payment-methods">
+      <h2>7. Payment methods</h2>
+      <p>All five payment methods follow the same pattern, which in UCP is the core escalation pattern:</p>
+      <ol>
+        <li>The store creates the payment with <b>its own account</b> at the provider.</li>
+        <li>The checkout answers <code>status: "requires_escalation"</code> with a <code>continue_url</code> and a message with <code>severity: "requires_buyer_input"</code>.</li>
+        <li>The buyer pays on the provider's page.</li>
+        <li>The store confirms the result directly with the provider and creates the order.</li>
+      </ol>
+      <p>The agent never receives card data or credentials. Public configuration (<code>config</code>) MUST NOT include keys or secrets. These payment methods are published by the Comercio IA initiative until each provider publishes its own; every provider is invited to review, co-sign or take theirs over.</p>
+      <h3>Failures and their UCP equivalents</h3>
+      <div class="table-scroll"><table>
+        <tr><th>Situation</th><th><code>code</code></th><th><code>severity</code></th><th>What the agent does</th></tr>
+        <tr><td>The issuer declines the payment</td><td><code>payment_failed</code></td><td><code>recoverable</code></td><td>Offers a retry or another payment method.</td></tr>
+        <tr><td>Insufficient funds</td><td><code>payment_failed</code></td><td><code>recoverable</code></td><td>Same as a decline; the detail goes in <code>content</code>.</td></tr>
+        <tr><td>The buyer didn't pay in time (the provider session expires)</td><td><code>payment_failed</code></td><td><code>recoverable</code></td><td>A new attempt creates a new transaction.</td></tr>
+        <tr><td>Provider unavailable or network error</td><td><code>payment_failed</code></td><td><code>recoverable</code></td><td>Retries later; the store checks the status before creating another payment.</td></tr>
+        <tr><td>The buyer must pay on the provider's page</td><td>(checkout status)</td><td><code>requires_buyer_input</code></td><td>Sends the buyer to <code>continue_url</code>.</td></tr>
+      </table></div>
+
+      <h3 id="webpay-plus">Webpay Plus · <code>cl.comercioia.webpay_plus</code></h3>
+      <dl class="kv">
+        <dt>Provider</dt><dd>Transbank</dd>
+        <dt>Create</dt><dd><code>POST /rswebpaytransaction/api/webpay/v1.2/transactions</code> with the store's commerce code. <code>buy_order</code> ≤26 characters, <code>session_id</code> ≤61, amount in integer pesos, <code>return_url</code> ≤256.</dd>
+        <dt>How the buyer pays</dt><dd>Webpay requires a form POST of <code>token_ws</code>, so <code>continue_url</code> points to a store page that submits it automatically.</dd>
+        <dt>Confirmation</dt><dd>Commit (<code>PUT …/transactions/{token}</code>) when the buyer returns. Approved only if <code>response_code = 0</code> and <code>status = AUTHORIZED</code>.</dd>
+        <dt>Expiry</dt><dd>5-minute token; the form allows 4 minutes in production (<code>token_ttl_seconds</code>, <code>payment_window_seconds</code>).</dd>
+        <dt>Design for</dt><dd>There is no webhook: the store MUST sweep abandoned payments by status query (status can be queried for 7 days). There is no idempotency key: the store uses its own.</dd>
+        <dt>Refunds</dt><dd>Reversal or nullification, full or partial, within Transbank's time limits.</dd>
+      </dl>
+
+      <h3 id="oneclick-mall">Oneclick Mall · <code>cl.comercioia.oneclick_mall</code> <span class="mono">(proposed)</span></h3>
+      <dl class="kv">
+        <dt>Provider</dt><dd>Transbank</dd>
+        <dt>Create</dt><dd>A one-time card enrollment on Transbank's page. After that, server-to-server charges with the enrollment's <code>tbk_user</code> and the store's commerce code inside the Mall.</dd>
+        <dt>How the buyer pays</dt><dd>Only once, at enrollment. With no active enrollment, the response sets <code>enrollment_required</code> and sends the buyer to <code>continue_url</code>.</dd>
+        <dt>Confirmation</dt><dd>Synchronous authorization response.</dd>
+        <dt>Design for</dt><dd>The closest thing to in-chat payment available in Chile today. Daily per-user limits are set at affiliation. <b>Before use, confirm with Transbank</b> whether a charge initiated through an AI agent fits its terms.</dd>
+      </dl>
+
+      <h3 id="mercadopago">Mercado Pago · <code>cl.comercioia.mercadopago</code></h3>
+      <dl class="kv">
+        <dt>Provider</dt><dd>Mercado Pago</dd>
+        <dt>Create</dt><dd>Orders or Preferences API with the store's credentials. <code>external_reference</code> ≤64, <code>notification_url</code> ≤248, integer unit prices in Chile, <code>X-Idempotency-Key</code> header.</dd>
+        <dt>How the buyer pays</dt><dd>At the checkout URL Mercado Pago returns.</dd>
+        <dt>Confirmation</dt><dd>Signed webhook (<code>x-signature</code>) plus reconciliation.</dd>
+        <dt>Refunds</dt><dd>Full or partial, within Mercado Pago's time limits.</dd>
+      </dl>
+
+      <h3 id="getnet">Getnet · <code>cl.comercioia.getnet</code></h3>
+      <dl class="kv">
+        <dt>Provider</dt><dd>Getnet (Web Checkout on the PlacetoPay platform)</dd>
+        <dt>Create</dt><dd><code>POST /api/session</code> with the store's credentials; <code>reference</code> ≤32. Sessions last 30 minutes by default (<code>session_ttl_seconds</code>).</dd>
+        <dt>How the buyer pays</dt><dd>At the returned <code>processUrl</code>.</dd>
+        <dt>Confirmation</dt><dd>The notification is sent only once, so the store MUST also query <code>/api/session/{requestId}</code>.</dd>
+        <dt>Design for</dt><dd>Which features Getnet Chile enables is to be confirmed with Getnet.</dd>
+      </dl>
+
+      <h3 id="khipu">Khipu · <code>cl.comercioia.khipu</code></h3>
+      <dl class="kv">
+        <dt>Provider</dt><dd>Khipu (bank transfer)</dd>
+        <dt>Create</dt><dd><code>POST https://payment-api.khipu.com/v3/payments</code> with the store's API key.</dd>
+        <dt>How the buyer pays</dt><dd>From their bank account, at the returned <code>payment_url</code>.</dd>
+        <dt>Confirmation</dt><dd>Signed webhook (<code>x-khipu-signature</code>), retried by Khipu, plus status query (<code>pending</code>, <code>verifying</code>, <code>done</code>).</dd>
+        <dt>Design for</dt><dd>No idempotency key is documented. Initiating payments from bank accounts is a regulated activity: Khipu holds that registration, not whoever implements this specification.</dd>
+      </dl>
+    </section>
+
+    <section id="examples">
+      <h2>8. Examples</h2>
+      <p>The examples show only the relevant fields. Example RUTs pass the modulo 11 check. Buyer-facing text is in Spanish, as a Chilean store would send it.</p>
+      <h3>Response to <code>complete_checkout</code>: pay with Webpay Plus</h3>
+<pre><code>{
+  "id": "chk_7f3a",
+  "status": "requires_escalation",
+  "continue_url": "https://tienda-ejemplo.cl/pagar/chk_7f3a",
+  "currency": "CLP",
+  "totals": [
+    { "type": "subtotal", "display_text": "Productos (IVA incluido)", "amount": 189990 },
+    { "type": "fulfillment", "display_text": "Despacho RM, 3 días hábiles", "amount": 4990 },
+    { "type": "total", "amount": 194980 }
+  ],
+  "policies": [
+    { "type": "cl.comercioia.policy.retracto",
+      "description": { "plain": "Derecho a retracto: 10 días desde que recibes el producto." },
+      "url": "https://tienda-ejemplo.cl/retracto",
+      "window_days": 10, "window_days_without_confirmation": 90, "refund_within_days": 45 },
+    { "type": "cl.comercioia.policy.garantia_legal",
+      "description": { "plain": "Garantía legal de 6 meses: reparación, cambio o devolución." },
+      "months": 6, "remedies": ["repair", "replace", "refund"] }
+  ],
+  "messages": [
+    { "type": "warning", "code": "cl.comercioia.policy.retracto",
+      "path": "$.policies[0]", "presentation": "disclosure",
+      "content": "Tienes derecho a retracto por 10 días desde que recibes el producto." },
+    { "type": "error", "code": "payment_redirect", "severity": "requires_buyer_input",
+      "content": "Completa el pago en Webpay." }
+  ],
+  "tax_document": { "document_choice": "boleta" },
+  "consumer_terms": {
+    "seller": { "razon_social": "Tienda Ejemplo SpA", "rut": "76123456-0",
+                "domicilio": "Av. Ejemplo 123, Santiago", "contacto": "ayuda@tienda-ejemplo.cl" },
+    "ai_disclosure": { "is_ai_agent": true, "purpose": "purchase_assistance" },
+    "price_includes_tax": true,
+    "delivery": { "cost": 4990, "estimated_delivery": "3 días hábiles" }
+  }
+}</code></pre>
+      <h3>The order after payment and after a withdrawal</h3>
+<pre><code>{
+  "id": "ord_5521",
+  "checkout_id": "chk_7f3a",
+  "currency": "CLP",
+  "totals": [{ "type": "total", "amount": 194980 }],
+  "tax_documents": [{
+    "type": 39, "folio": 4512330, "issuer_rut": "76123456-0", "receiver_rut": "66666666-6",
+    "issued_at": "2026-12-03T14:22:05-03:00", "total": 194980, "net": 163849, "iva": 31131,
+    "issue_trigger": "payment_confirmed", "sii_status": "accepted",
+    "representation_url": "https://tienda-ejemplo.cl/dte/39/4512330" }],
+  "consumer_terms": {
+    "confirmation": { "channel": "email", "sent_at": "2026-12-03T14:22:40-03:00",
+                      "contract_copy_url": "https://tienda-ejemplo.cl/contrato/ord_5521" } },
+  "adjustments": [{
+    "id": "adj_1", "type": "refund", "status": "completed",
+    "occurred_at": "2026-12-09T10:00:00-03:00",
+    "description": "Retracto dentro de 10 días",
+    "tax_document": { "type": 61, "folio": 88213, "issued_at": "2026-12-09T10:05:00-03:00",
+                      "total": 194980, "ref_type": 39, "ref_folio": 4512330,
+                      "ref_date": "2026-12-03", "cod_ref": 1,
+                      "razon": "Anula boleta por retracto" } }]
+}</code></pre>
+    </section>
+
+    <section id="acp">
+      <h2>9. ACP mapping</h2>
+      <p>ACP's base objects are closed (<code>additionalProperties: false</code>), so this extension's fields only validate against a schema that combines ACP's with ours. The ACP version will be switched on when OpenAI's program includes Chile; today its product feeds cover the United States, Canada and Mexico.</p>
+      <div class="table-scroll"><table>
+        <tr><th>Piece</th><th>Already in ACP</th><th>What Comercio IA adds</th></tr>
+        <tr><td>Boleta or factura</td><td><code>Order.confirmation</code> (<code>invoice_number</code>, <code>receipt_url</code>)</td><td>DTE type, folio, issuer RUT, SII status</td></tr>
+        <tr><td>Factura buyer</td><td><code>buyer.company.tax_id</code>, name</td><td>Line of business, address, comuna; boleta-or-factura choice</td></tr>
+        <tr><td>Right of withdrawal</td><td><code>return_policy</code> link; feed field <code>return_deadline_in_days</code></td><td>Structured withdrawal fields</td></tr>
+        <tr><td>Legal warranty</td><td>Per-item <code>disclosures[]</code></td><td>Structured warranty fields</td></tr>
+        <tr><td>Credit note</td><td><code>Order.adjustments[]</code></td><td>DTE 61 reference</td></tr>
+        <tr><td>Payment</td><td><code>capabilities.payment.handlers[]</code> with <code>psp</code></td><td>The five Chilean payment methods; redirect payments are not yet specified in ACP (proposal #142)</td></tr>
+      </table></div>
+    </section>
+
+    <section id="schemas">
+      <h2>10. Schemas</h2>
+      <p>JSON Schema draft 2020-12, self-describing (<code>$id</code>, <code>name</code>, <code>version</code>), with one <code>$defs</code> entry per capability they extend, composed with <code>allOf</code>, and a <code>requires</code> block with the minimum core version.</p>
+      <div class="table-scroll"><table>
+        <tr><th>Name</th><th>Schema</th></tr>
+        <tr><td><code>cl.comercioia.shopping.tax_document</code></td><td><a href="/ucp/schemas/tax_document/2026-10-09.json">/ucp/schemas/tax_document/2026-10-09.json</a></td></tr>
+        <tr><td><code>cl.comercioia.shopping.consumer_terms</code></td><td><a href="/ucp/schemas/consumer_terms/2026-10-09.json">/ucp/schemas/consumer_terms/2026-10-09.json</a></td></tr>
+        <tr><td><code>cl.comercioia.shopping.credit_note</code></td><td><a href="/ucp/schemas/credit_note/2026-10-09.json">/ucp/schemas/credit_note/2026-10-09.json</a></td></tr>
+        <tr><td><code>cl.comercioia.webpay_plus</code></td><td><a href="/ucp/handlers/webpay_plus/2026-10-09.json">/ucp/handlers/webpay_plus/2026-10-09.json</a></td></tr>
+        <tr><td><code>cl.comercioia.oneclick_mall</code></td><td><a href="/ucp/handlers/oneclick_mall/2026-10-09.json">/ucp/handlers/oneclick_mall/2026-10-09.json</a></td></tr>
+        <tr><td><code>cl.comercioia.mercadopago</code></td><td><a href="/ucp/handlers/mercadopago/2026-10-09.json">/ucp/handlers/mercadopago/2026-10-09.json</a></td></tr>
+        <tr><td><code>cl.comercioia.getnet</code></td><td><a href="/ucp/handlers/getnet/2026-10-09.json">/ucp/handlers/getnet/2026-10-09.json</a></td></tr>
+        <tr><td><code>cl.comercioia.khipu</code></td><td><a href="/ucp/handlers/khipu/2026-10-09.json">/ucp/handlers/khipu/2026-10-09.json</a></td></tr>
+      </table></div>
+    </section>
+
+    <section id="versioning">
+      <h2>11. Versioning and governance</h2>
+      <ul>
+        <li>Every version is dated (<code>YYYY-MM-DD</code>) and stays published at its own address. A published version is never modified: changes ship in a new version.</li>
+        <li>Third-party extensions version independently of the core, as UCP and ACP allow. Each version states which core versions it requires.</li>
+        <li>Compatibility is kept with the current UCP release and the previous one.</li>
+        <li>Comments are open until 30 November 2026 in the <a href="https://github.com/Pintor-Project/comercioia">public repository</a>. The first stable release is planned for January 2027, once the <a href="/en/#participate">path to 1.0</a> is complete.</li>
+        <li>If a provider publishes an official payment handler, this specification adopts it and marks its own as deprecated.</li>
+        <li>Once adoption is broad, pieces useful to other countries will be proposed to the UCP or ACP core through their formal processes.</li>
+      </ul>
+    </section>
+
+    <section id="open-questions">
+      <h2>12. Open questions</h2>
+      <p>Topics for legal review before the stable release:</p>
+      <ul>
+        <li>When delivery happens in a distance sale for the purposes of DL 825 art. 55, and whether issuing the boleta on payment confirmation is the right default.</li>
+        <li>Whether an AI agent that completes a purchase counts as a "platform" or "operator" under DS 6/2021, and what liability follows.</li>
+        <li>Whether an orchestrator that never holds funds is outside Banco Central chapter III.J.2 and CMF NCG 541.</li>
+        <li>Data-processing roles under Ley 21.719 (in force from 1 December 2026) when an agent shares buyer data with the store, and the form of the buyer's mandate.</li>
+        <li>Whether SERNAC sets a deadline for the art. 12 A confirmation.</li>
+      </ul>
+    </section>
+
+    <section id="sources">
+      <h2>13. Sources</h2>
+      <ul>
+        <li>UCP specification and schemas, release 2026-08-25: <a href="https://ucp.dev/">ucp.dev</a></li>
+        <li>ACP, release 2026-04-17: <a href="https://github.com/agentic-commerce-protocol/agentic-commerce-protocol">ACP repository</a></li>
+        <li>Transbank Developers, Webpay Plus and Oneclick: <a href="https://www.transbankdevelopers.cl/">transbankdevelopers.cl</a></li>
+        <li>Mercado Pago Developers Chile: <a href="https://www.mercadopago.cl/developers">mercadopago.cl/developers</a></li>
+        <li>Getnet Web Checkout (PlacetoPay): <a href="https://docs.placetopay.dev/">docs.placetopay.dev</a></li>
+        <li>Khipu API v3: <a href="https://docs.khipu.com/">docs.khipu.com</a></li>
+        <li>SII, Res. Ex. 74/2020 and DTE format: <a href="https://www.sii.cl/">sii.cl</a></li>
+        <li>DL 825, Ley 19.496, Ley 21.398, DS 6/2021 and Ley 21.719: <a href="https://www.bcn.cl/leychile/">BCN Ley Chile</a></li>
+        <li>SERNAC, Res. Ex. 33/2022 and 779/2023: <a href="https://www.sernac.cl/">sernac.cl</a></li>
+      </ul>
+    </section>
+  </main>
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <p>An open initiative led by <a href="https://pintorproject.cl">Pintor Project</a>. Reference implementation: <a href="https://synaptiktech.com">Synaptik Checkout</a>.</p>
+    <p class="mono"><a href="/en/spec/">Specification</a> · <a href="/en/spec/#schemas">Schemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
+    <p class="legal">Specification and schemas under the Apache-2.0 license. Not legal advice. Comercio IA is not affiliated with or endorsed by Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu or the SII; trademarks belong to their owners.</p>
+  </div>
+</footer>
+</body>
+</html>

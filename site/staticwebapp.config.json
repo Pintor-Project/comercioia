@@ -1,0 +1,22 @@
+{
+  "trailingSlash": "auto",
+  "routes": [
+    {
+      "route": "/ucp/*",
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "public, max-age=300"
+      }
+    }
+  ],
+  "mimeTypes": {
+    ".json": "application/json"
+  },
+  "responseOverrides": {
+    "404": { "rewrite": "/404.html" }
+  },
+  "globalHeaders": {
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  }
+}

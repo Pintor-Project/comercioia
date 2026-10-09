@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://comercioia.cl/ucp/schemas/credit_note/2026-10-09.json",
+  "name": "cl.comercioia.shopping.credit_note",
+  "version": "2026-10-09",
+  "title": "Chilean Credit Note on Order Adjustments",
+  "description": "OPEN PROPOSAL, ready to implement and open for comment. Not yet stable: fields may change before the first stable release. Attaches the SII credit note (DTE 61) or debit note (DTE 56) to each core order adjustment (refund, return, cancellation), referencing the original boleta or factura. Spec: https://comercioia.cl/spec/#credit-note",
+  "requires": {
+    "protocol": { "min": "2026-08-25" },
+    "capabilities": {
+      "dev.ucp.shopping.order": { "min": "2026-08-25" }
+    }
+  },
+  "$defs": {
+    "rut": {
+      "type": "string",
+      "pattern": "^[0-9]{1,8}-[0-9Kk]$",
+      "description": "Chilean taxpayer ID (RUT) without dots, with a hyphen and the modulo 11 check digit."
+    },
+    "adjustment_document": {
+      "type": "object",
+      "description": "Credit or debit note issued for an adjustment.",
+      "required": ["type", "folio", "issued_at", "total", "ref_type", "ref_folio", "ref_date", "cod_ref"],
+      "properties": {
+        "type": { "type": "integer", "description": "61 nota de crédito, 56 nota de débito.", "examples": [61, 56] },
+        "folio": { "type": "integer", "minimum": 1 },
+        "issuer_rut": { "$ref": "#/$defs/rut" },
+        "issued_at": { "type": "string", "format": "date-time" },
+        "total": { "type": "integer", "minimum": 0, "description": "Integer CLP." },
+        "ref_type": { "type": "integer", "description": "DTE type of the referenced document, e.g. 39 or 33." },
+        "ref_folio": { "type": "integer", "minimum": 1 },
+        "ref_date": { "type": "string", "format": "date" },
+        "cod_ref": {
+          "type": "integer",
+          "description": "SII reference code: 1 cancels the referenced document, 2 corrects text, 3 corrects amounts.",
+          "examples": [1, 2, 3]
+        },
+        "razon": { "type": "string", "maxLength": 90, "description": "Reason, as printed on the document." },
+        "sii_track_id": { "type": "string" },
+        "sii_status": { "type": "string", "examples": ["pending", "accepted", "rejected"] },
+        "representation_url": { "type": "string", "format": "uri" }
+      }
+    },
+    "adjustment_with_document": {
+      "type": "object",
+      "properties": {
+        "tax_document": { "$ref": "#/$defs/adjustment_document" }
+      }
+    },
+    "dev.ucp.shopping.order": {
+      "title": "Order with credit notes on adjustments",
+      "description": "Order whose adjustments[] entries can carry the SII credit or debit note issued for them.",
+      "allOf": [
+        { "$ref": "https://ucp.dev/2026-08-25/schemas/shopping/order.json" },
+        {
+          "type": "object",
+          "properties": {
+            "adjustments": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/adjustment_with_document" }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

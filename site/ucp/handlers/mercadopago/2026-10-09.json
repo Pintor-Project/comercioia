@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://comercioia.cl/ucp/handlers/mercadopago/2026-10-09.json",
+  "name": "cl.comercioia.mercadopago",
+  "version": "2026-10-09",
+  "title": "Mercado Pago Checkout payment handler",
+  "description": "OPEN PROPOSAL, ready to implement and open for comment. Not yet stable. Redirect payment. The business creates an order or preference with its own Mercado Pago credentials (unit prices are integers in Chile, with an idempotency key); the buyer pays at the returned checkout URL. Confirmation is by signed webhook plus reconciliation. Funds go from the buyer to the business's own Mercado Pago account and never pass through the handler author. Published by the Comercio IA initiative until Mercado Pago publishes its own handler; Mercado Pago is invited to review, co-sign or take it over. Not affiliated with or endorsed by Mercado Pago. Spec: https://comercioia.cl/spec/#mercadopago",
+  "$defs": {
+    "cl.comercioia.mercadopago": {
+      "payment_instrument": {
+        "allOf": [
+          {
+            "$ref": "https://ucp.dev/2026-08-25/schemas/common/types/payment_instrument.json"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "const": "redirect"
+              }
+            }
+          }
+        ]
+      },
+      "business_schema": {
+        "allOf": [
+          {
+            "$ref": "https://ucp.dev/2026-08-25/schemas/payment_handler.json#/$defs/business_schema"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "config": {
+                "$ref": "#/$defs/business_config"
+              }
+            }
+          }
+        ]
+      },
+      "platform_schema": {
+        "allOf": [
+          {
+            "$ref": "https://ucp.dev/2026-08-25/schemas/payment_handler.json#/$defs/platform_schema"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "config": {
+                "$ref": "#/$defs/platform_config"
+              }
+            }
+          }
+        ]
+      },
+      "response_schema": {
+        "allOf": [
+          {
+            "$ref": "https://ucp.dev/2026-08-25/schemas/payment_handler.json#/$defs/response_schema"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "config": {
+                "$ref": "#/$defs/response_config"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "business_config": {
+      "type": "object",
+      "description": "Public configuration only. Credentials and API keys MUST NOT appear in profiles or responses.",
+      "properties": {
+        "environment": {
+          "type": "string",
+          "examples": [
+            "production",
+            "integration"
+          ]
+        }
+      }
+    },
+    "platform_config": {
+      "type": "object",
+      "description": "No platform configuration is required: the platform only follows continue_url."
+    },
+    "response_config": {
+      "type": "object",
+      "properties": {
+        "environment": {
+          "type": "string",
+          "examples": [
+            "production",
+            "integration"
+          ]
+        },
+        "checkout_expires_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the payment link stops accepting payments, if set."
+        }
+      }
+    }
+  }
+}

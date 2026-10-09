@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://comercioia.cl/ucp/schemas/consumer_terms/2026-10-09.json",
+  "name": "cl.comercioia.shopping.consumer_terms",
+  "version": "2026-10-09",
+  "title": "Chilean Consumer Terms",
+  "description": "OPEN PROPOSAL, ready to implement and open for comment. Not yet stable: fields may change before the first stable release. Carries the information Chilean consumer law asks a distance seller to give before and after an online sale (Ley 19.496, DS 6/2021), plus the retracto and legal warranty policy types for core policies[]. Required notices MUST also be sent as core messages[] warnings with presentation 'disclosure', so platforms that do not know this extension still show them. This schema is not legal advice. Spec: https://comercioia.cl/spec/#consumer-terms",
+  "requires": {
+    "protocol": { "min": "2026-08-25" },
+    "capabilities": {
+      "dev.ucp.shopping.checkout": { "min": "2026-08-25" },
+      "dev.ucp.shopping.order": { "min": "2026-08-25" }
+    }
+  },
+  "$defs": {
+    "rut": {
+      "type": "string",
+      "pattern": "^[0-9]{1,8}-[0-9Kk]$",
+      "description": "Chilean taxpayer ID (RUT) without dots, with a hyphen and the modulo 11 check digit."
+    },
+    "seller": {
+      "type": "object",
+      "description": "Identity of the seller shown to the buyer before payment (DS 6/2021).",
+      "required": ["razon_social", "rut", "domicilio", "contacto"],
+      "properties": {
+        "razon_social": { "type": "string" },
+        "rut": { "$ref": "#/$defs/rut" },
+        "domicilio": { "type": "string", "description": "Legal address." },
+        "contacto": { "type": "string", "description": "Email address or https URL where the buyer can reach the seller." },
+        "platform_role": {
+          "type": "string",
+          "description": "Plain-language statement of the role of any intermediary platform in the sale."
+        }
+      }
+    },
+    "ai_disclosure": {
+      "type": "object",
+      "description": "Declares that the buyer is interacting through an AI agent (SERNAC Res. Ex. 33/2022). Sent by the platform in requests; echoed by the business.",
+      "properties": {
+        "is_ai_agent": { "type": "boolean" },
+        "agent_name": { "type": "string" },
+        "purpose": { "type": "string", "examples": ["purchase_assistance"] },
+        "human_contact": { "type": "string", "description": "How the buyer can reach a person." }
+      }
+    },
+    "installments": {
+      "type": "object",
+      "description": "Present only when the business offers cuotas. The cash price MUST be at least as visible as the installment price (Ley 19.496 arts. 17 G, 37).",
+      "required": ["count", "installment_amount", "total_cost", "cash_price"],
+      "properties": {
+        "count": { "type": "integer", "minimum": 2 },
+        "installment_amount": { "type": "integer", "minimum": 0, "description": "Integer CLP." },
+        "interest_rate_monthly": { "type": "number", "minimum": 0, "description": "Percent per month." },
+        "cae": { "type": "number", "minimum": 0, "description": "Carga Anual Equivalente, percent." },
+        "total_cost": { "type": "integer", "minimum": 0, "description": "Total cost of credit, integer CLP." },
+        "cash_price": { "type": "integer", "minimum": 0, "description": "Cash price, integer CLP." }
+      }
+    },
+    "delivery": {
+      "type": "object",
+      "description": "Shipping cost and delivery time shown before payment.",
+      "properties": {
+        "cost": { "type": "integer", "minimum": 0, "description": "Integer CLP." },
+        "estimated_delivery": { "type": "string", "description": "ISO 8601 date, or a plain-language estimate." }
+      }
+    },
+    "confirmation": {
+      "type": "object",
+      "description": "Written confirmation with a full copy of the contract, sent once the sale closes (Ley 19.496 art. 12 A). Without it, the retracto window extends to 90 days.",
+      "required": ["channel", "sent_at"],
+      "properties": {
+        "channel": { "type": "string", "examples": ["email", "chat", "sms"] },
+        "sent_at": { "type": "string", "format": "date-time" },
+        "contract_copy_url": { "type": "string", "format": "uri" }
+      }
+    },
+    "checkout_terms": {
+      "type": "object",
+      "properties": {
+        "seller": { "$ref": "#/$defs/seller" },
+        "ai_disclosure": { "$ref": "#/$defs/ai_disclosure" },
+        "price_includes_tax": { "type": "boolean", "description": "MUST be true for consumer sales: the total includes taxes." },
+        "delivery": { "$ref": "#/$defs/delivery" },
+        "installments": { "$ref": "#/$defs/installments" }
+      }
+    },
+    "order_terms": {
+      "type": "object",
+      "properties": {
+        "seller": { "$ref": "#/$defs/seller" },
+        "ai_disclosure": { "$ref": "#/$defs/ai_disclosure" },
+        "confirmation": { "$ref": "#/$defs/confirmation" }
+      }
+    },
+    "retracto_policy": {
+      "title": "Policy type cl.comercioia.policy.retracto",
+      "description": "Right of withdrawal for distance sales (Ley 19.496 art. 3 bis b, as amended by Ley 21.398). Used inside core policies[].",
+      "allOf": [
+        { "$ref": "https://ucp.dev/2026-08-25/schemas/common/types/policy.json" },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "const": "cl.comercioia.policy.retracto" },
+            "window_days": { "type": "integer", "minimum": 0, "default": 10, "description": "Calendar days from receipt of the goods (or from contracting, for services)." },
+            "window_starts": { "type": "string", "examples": ["goods_received", "contract_concluded"] },
+            "window_days_without_confirmation": { "type": "integer", "minimum": 0, "default": 90 },
+            "refund_within_days": { "type": "integer", "minimum": 0, "default": 45 },
+            "excluded": { "type": "boolean", "default": false },
+            "exclusion_reason": {
+              "type": "string",
+              "description": "Required when excluded is true.",
+              "examples": ["not_returnable", "perishable", "made_to_order", "hygiene_opened", "service_excluded_by_seller"]
+            }
+          }
+        }
+      ]
+    },
+    "garantia_legal_policy": {
+      "title": "Policy type cl.comercioia.policy.garantia_legal",
+      "description": "Legal warranty (Ley 19.496 arts. 20-21; SERNAC Res. Ex. 779/2023). Used inside core policies[].",
+      "allOf": [
+        { "$ref": "https://ucp.dev/2026-08-25/schemas/common/types/policy.json" },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "const": "cl.comercioia.policy.garantia_legal" },
+            "months": { "type": "integer", "minimum": 0, "default": 6, "description": "Months from receipt." },
+            "remedies": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "At the buyer's choice.",
+              "default": ["repair", "replace", "refund"]
+            },
+            "remote_claim_channel": { "type": "string", "description": "Remote claim channel or free pickup offered by a distance seller." }
+          }
+        }
+      ]
+    },
+    "dev.ucp.shopping.checkout": {
+      "title": "Checkout with Chilean consumer terms",
+      "description": "Checkout extended with seller identity, AI disclosure, delivery and installment information.",
+      "allOf": [
+        { "$ref": "https://ucp.dev/2026-08-25/schemas/shopping/checkout.json" },
+        {
+          "type": "object",
+          "properties": {
+            "consumer_terms": {
+              "$ref": "#/$defs/checkout_terms",
+              "ucp_request": { "create": "optional", "update": "optional", "complete": "optional" }
+            }
+          }
+        }
+      ]
+    },
+    "dev.ucp.shopping.order": {
+      "title": "Order with Chilean consumer terms",
+      "description": "Order extended with seller identity and the written confirmation.",
+      "allOf": [
+        { "$ref": "https://ucp.dev/2026-08-25/schemas/shopping/order.json" },
+        {
+          "type": "object",
+          "properties": {
+            "consumer_terms": { "$ref": "#/$defs/order_terms" }
+          }
+        }
+      ]
+    }
+  }
+}

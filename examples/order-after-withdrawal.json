@@ -1,0 +1,22 @@
+{
+  "id": "ord_5521",
+  "checkout_id": "chk_7f3a",
+  "currency": "CLP",
+  "totals": [{ "type": "total", "amount": 194980 }],
+  "tax_documents": [{
+    "type": 39, "folio": 4512330, "issuer_rut": "76123456-0", "receiver_rut": "66666666-6",
+    "issued_at": "2026-12-03T14:22:05-03:00", "total": 194980, "net": 163849, "iva": 31131,
+    "issue_trigger": "payment_confirmed", "sii_status": "accepted",
+    "representation_url": "https://tienda-ejemplo.cl/dte/39/4512330" }],
+  "consumer_terms": {
+    "confirmation": { "channel": "email", "sent_at": "2026-12-03T14:22:40-03:00",
+                      "contract_copy_url": "https://tienda-ejemplo.cl/contrato/ord_5521" } },
+  "adjustments": [{
+    "id": "adj_1", "type": "refund", "status": "completed",
+    "occurred_at": "2026-12-09T10:00:00-03:00",
+    "description": "Retracto dentro de 10 días",
+    "tax_document": { "type": 61, "folio": 88213, "issuer_rut": "76123456-0",
+                      "issued_at": "2026-12-09T10:05:00-03:00", "total": 194980,
+                      "ref_type": 39, "ref_folio": 4512330, "ref_date": "2026-12-03",
+                      "cod_ref": 1, "razon": "Anula boleta por retracto" } }]
+}
