@@ -162,7 +162,7 @@ h1 .sub, h2 .sub { display: block; color: var(--ink-3); }
 .legend { display: flex; gap: 28px; flex-wrap: wrap; margin-top: 18px; font-size: 14px; color: var(--ink-2); }
 .legend span::before { content: ""; display: inline-block; width: 26px; border-top: 1.25px solid var(--ink); vertical-align: middle; margin-right: 10px; }
 .legend span.ours::before { border-top: 2px solid var(--red); }
-.fine { margin-top: 18px; font-size: 14px; color: var(--ink-3); max-width: 760px; }
+.fine { margin-top: 18px; font-size: 14px; color: var(--ink-3); max-width: 900px; }
 
 .who { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
 .who > div { border-top: 1px solid var(--line); padding-top: 16px; }
