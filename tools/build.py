@@ -86,11 +86,13 @@ def seq_svg(lang):
 # ---------------------------------------------------------------- shared chrome
 def masthead(lang, current):
     if lang == "es":
-        links = [("/spec/", "Especificación", "spec"), ("/spec/#esquemas", "Esquemas", "schemas"), ("/#participa", "Participa", "join")]
-        home, other, other_label, other_lang = "/", "/en/" if current != "spec" else "/en/spec/", "English", "en"
+        links = [("/spec/", "Especificación", "spec"), ("/spec/#esquemas", "Esquemas", "schemas"), ("/cumplimiento/", "Cumplimiento", "compliance"), ("/#participa", "Participa", "join")]
+        other = {"spec": "/en/spec/", "compliance": "/en/compliance/"}.get(current, "/en/")
+        home, other_label, other_lang = "/", "English", "en"
     else:
-        links = [("/en/spec/", "Specification", "spec"), ("/en/spec/#schemas", "Schemas", "schemas"), ("/en/#participate", "Participate", "join")]
-        home, other, other_label, other_lang = "/en/", "/" if current != "spec" else "/spec/", "Español", "es-CL"
+        links = [("/en/spec/", "Specification", "spec"), ("/en/spec/#schemas", "Schemas", "schemas"), ("/en/compliance/", "Compliance", "compliance"), ("/en/#participate", "Participate", "join")]
+        other = {"spec": "/spec/", "compliance": "/cumplimiento/"}.get(current, "/")
+        home, other_label, other_lang = "/en/", "Español", "es-CL"
     cur = ' aria-current="page"'
     nav = "\n      ".join(f'<a href="{h}"{cur if k == current else ""}>{t}</a>' for h, t, k in links)
     return f'''<a class="skip" href="#main">{"Saltar al contenido" if lang == "es" else "Skip to content"}</a>
@@ -421,12 +423,12 @@ open(os.path.join(SITE, "en", "index.html"), "w").write(landing("en"))
 # ---------------------------------------------------------------- spec pages + 404: new chrome
 FONT_RE = re.compile(r'<link rel="preconnect" href="https://fonts.googleapis.com">\s*<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\s*<link rel="stylesheet" href="https://fonts.googleapis.com/css2\?[^"]+">', re.S)
 ICON_RE = re.compile(r'<link rel="icon" href="data:image/svg\+xml,[^"]+">')
-for rel, lang in (("spec/index.html", "es"), ("en/spec/index.html", "en")):
+for rel, lang, cur in (("spec/index.html", "es", "spec"), ("en/spec/index.html", "en", "spec"), ("cumplimiento/index.html", "es", "compliance"), ("en/compliance/index.html", "en", "compliance")):
     path = os.path.join(SITE, rel)
     s = open(path).read()
     s = FONT_RE.sub(lambda m: FONTS, s)
     s = ICON_RE.sub(lambda m: ICON, s)
-    s = re.sub(r'<a class="skip".*?</header>', lambda m: masthead(lang, "spec"), s, flags=re.S)
+    s = re.sub(r'<a class="skip".*?</header>', lambda m: masthead(lang, cur), s, flags=re.S)
     s = re.sub(r'<footer class="[^"]*">.*?</footer>', lambda m: footer(lang), s, flags=re.S)
     open(path, "w").write(s)
 

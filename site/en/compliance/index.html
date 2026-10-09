@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compliance guide · Comercio IA</title>
+<meta name="description" content="Six Chilean tax and consumer-protection rules every AI agent must respect when selling, each with its official source.">
+<link rel="alternate" hreflang="es-CL" href="https://comercioia.cl/cumplimiento/">
+<link rel="alternate" hreflang="en" href="https://comercioia.cl/en/compliance/">
+<link rel="canonical" href="https://comercioia.cl/en/compliance/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='6' width='28' height='20' fill='white' stroke='%23C8102E' stroke-width='3'/%3E%3Ctext x='16' y='21' font-family='monospace' font-size='12' font-weight='700' fill='%23C8102E' text-anchor='middle'%3Ecl%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <div class="wrap">
+    <a class="logo" href="/en/" aria-label="Comercio IA"><span class="rut">cl.<b>comercioia</b></span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/en/spec/">Specification</a>
+      <a href="/en/spec/#schemas">Schemas</a>
+      <a href="/en/compliance/" aria-current="page">Compliance</a>
+      <a href="/en/#participate">Participate</a>
+      <a class="ext" href="https://github.com/Pintor-Project/comercioia">GitHub</a>
+      <a class="lang" href="/cumplimiento/" hreflang="es-CL" lang="es-CL">Español</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap spec">
+  <nav class="toc" aria-label="Contents">
+    <ol>
+      <li><a href="#one-hour">01 · A boleta reaches the SII within 1 hour</a></li>
+      <li><a href="#generic-rut">02 · Generic RUT 66.666.666-6, except above 135 UF</a></li>
+      <li><a href="#no-daily-report">03 · No daily boleta report since 2022</a></li>
+      <li><a href="#factura-acceptance">04 · Factura: the buyer accepts or claims within 8 days</a></li>
+      <li><a href="#ai-notice">05 · When an AI sells, the consumer must know</a></li>
+      <li><a href="#withdrawal-exclusions">06 · Withdrawal can be excluded in only four cases, disclosed next to the price</a></li>
+    </ol>
+  </nav>
+
+  <main id="main" class="spec-body">
+    <section id="intro">
+      <p class="status">Based on official sources · legal review in progress</p>
+      <h1>Compliance guide<span class="sub">Six Chilean rules every AI agent must respect when selling.</span></h1>
+      <p class="lede">Tax and consumer-protection rules that Comercio IA applies, each with its official source from the SII, SERNAC or the law. We keep them current and our legal team is reviewing them.</p>
+      <p class="warn">This guide summarises public rules and criteria as of 9 October 2026. It is not legal advice: each store decides what applies to it.</p>
+    </section>
+
+    <section id="one-hour">
+      <h2>01. A boleta reaches the SII within 1 hour</h2>
+      <p>Each electronic boleta must be sent to the SII immediately, within at most 1 hour of being generated. The clock runs from generation (signature and timbre), not from the accounting date. Facturas and other documents follow a different rule: they are sent before delivery to the receiver or before goods are moved.</p>
+      <dl class="kv">
+        <dt>What it means for an AI sale</dt><dd>A sale closed by an agent must issue and send the boleta automatically, with retries and alerts before the hour runs out.</dd>
+        <dt>In the standard</dt><dd><code>tax_documents[].issued_at</code>, <code>sii_track_id</code>, <code>sii_status</code></dd>
+      </dl>
+      <h3>Sources</h3>
+      <ul>
+          <li><a href="https://www.sii.cl/normativa_legislacion/resoluciones/2020/reso74.pdf">SII Res. Ex. No. 74 of 2020, item F.6</a></li>
+          <li><a href="https://www.sii.cl/preguntas_frecuentes/bol_electr_vtas_serv/001_380_7671.htm">SII FAQ 001.380.7671</a></li>
+      </ul>
+    </section>
+    <section id="generic-rut">
+      <h2>02. Generic RUT 66.666.666-6, except above 135 UF</h2>
+      <p>When the buyer's RUT is unknown, the boleta uses the generic RUT 66.666.666-6. Since 1 September 2025, a boleta whose total exceeds 135 UF must carry the buyer's real RUT, name, payment method and a clear description of the goods. 55.555.555-5 is for export documents, not boletas.</p>
+      <dl class="kv">
+        <dt>What it means for an AI sale</dt><dd>For large purchases the agent must ask for the buyer's details before payment; if they are missing, the store does not issue with the generic RUT.</dd>
+        <dt>In the standard</dt><dd><code>tax_document.receiver</code> (see the <a href="https://github.com/Pintor-Project/comercioia/issues/1">2026-10-16 proposal</a>)</dd>
+      </dl>
+      <h3>Sources</h3>
+      <ul>
+          <li><a href="https://www.sii.cl/normativa_legislacion/resoluciones/2025/reso44.pdf">Tax Code art. 92 ter; SII Res. Ex. No. 44 of 2025</a></li>
+          <li><a href="https://www.sii.cl/factura_electronica/factura_mercado/formato_boleta_electronica.pdf">SII Electronic Boleta Format v4.2</a></li>
+      </ul>
+    </section>
+    <section id="no-daily-report">
+      <h2>03. No daily boleta report since 2022</h2>
+      <p>The daily sales summary (formerly the folio consumption report) was eliminated for all issuers on 1 August 2022. The SII builds the Sales Register each day from the boletas it receives. The issuer must still send each boleta on time, review the register when needed and file the monthly F29.</p>
+      <dl class="kv">
+        <dt>What it means for an AI sale</dt><dd>An implementation doesn't need to produce daily summaries; it must make sure every boleta reaches the SII.</dd>
+        <dt>In the standard</dt><dd><code>tax_documents[].sii_status</code></dd>
+      </dl>
+      <h3>Sources</h3>
+      <ul>
+          <li><a href="https://www.sii.cl/normativa_legislacion/resoluciones/2022/reso53.pdf">SII Res. Ex. No. 53 of 2022</a></li>
+          <li><a href="https://www.sii.cl/preguntas_frecuentes/bol_electr_vtas_serv/001_380_7679.htm">SII FAQ 001.380.7679</a></li>
+      </ul>
+    </section>
+    <section id="factura-acceptance">
+      <h2>04. Factura: the buyer accepts or claims within 8 days</h2>
+      <p>The buyer accepts or claims an electronic factura in the SII register within 8 calendar days of the SII receiving it; if it does nothing, the factura is accepted. Payment is due within 30 calendar days. Referencing the purchase order, HES or contract is not a legal requirement; it is the practice of large buyers and the State.</p>
+      <dl class="kv">
+        <dt>What it means for an AI sale</dt><dd>The acknowledgement comes from the buying company in the SII, not from its purchasing agent. Letting the agent request references avoids commercial rejections.</dd>
+        <dt>In the standard</dt><dd><code>tax_document.receiver</code>; references in the <a href="https://github.com/Pintor-Project/comercioia/issues/1">2026-10-16 proposal</a></dd>
+      </dl>
+      <h3>Sources</h3>
+      <ul>
+          <li><a href="https://www.bcn.cl/leychile/navegar?idNorma=233421">Ley 19.983 arts. 2, 3, 4 and 9</a></li>
+          <li><a href="https://www.sii.cl/normativa_legislacion/circulares/2017/circu4.pdf">SII Circular No. 4 of 2017</a></li>
+          <li><a href="https://www.sii.cl/servicios_online/docs/formato_dte.pdf">SII DTE Format, reference section</a></li>
+      </ul>
+    </section>
+    <section id="ai-notice">
+      <h2>05. When an AI sells, the consumer must know</h2>
+      <p>SERNAC requires telling the consumer, transparently and in time, that they are interacting with artificial intelligence, what it is used for and what data it processes, and giving reasonable grounds when the AI refuses a purchase. It bans dark patterns, manipulation and discriminatory personalised prices.</p>
+      <dl class="kv">
+        <dt>What it means for an AI sale</dt><dd>The agent declares that it is an AI and the store keeps that notice with the sale.</dd>
+        <dt>In the standard</dt><dd><code>consumer_terms.ai_disclosure</code></dd>
+      </dl>
+      <h3>Sources</h3>
+      <ul>
+          <li><a href="https://www.sernac.cl/portal/618/articles-64740_archivo_01.pdf">SERNAC Interpretive Circular (Res. Ex. No. 33 of 2022)</a></li>
+      </ul>
+    </section>
+    <section id="withdrawal-exclusions">
+      <h2>06. Withdrawal can be excluded in only four cases, disclosed next to the price</h2>
+      <p>In distance sales, the right of withdrawal can only be excluded for goods that cannot be returned because they were installed or used, perishables or goods expiring within 10 days, goods made to the buyer's specification, and personal or hygiene goods whose seal the buyer opened. The exclusion is disclosed before payment, in the same place and at the same moment as the price, no smaller, using the words «derecho a retracto». It never limits the legal warranty.</p>
+      <dl class="kv">
+        <dt>What it means for an AI sale</dt><dd>The exclusion notice travels as a mandatory message the agent cannot hide, next to the total.</dd>
+        <dt>In the standard</dt><dd><code>cl.comercioia.policy.retracto</code> (<code>excluded</code>, <code>exclusion_reason</code>) and <code>disclosure</code> messages</dd>
+      </dl>
+      <h3>Sources</h3>
+      <ul>
+          <li><a href="https://www.diariooficial.interior.gob.cl/publicaciones/2024/08/27/43935/01/2535265.pdf">DS No. 52 of 2022, Ministry of Economy (Diario Oficial 27-08-2024)</a></li>
+          <li><a href="https://www.sernac.cl/portal/618/articles-84774_archivo_01.pdf">SERNAC Res. Ex. No. 272 of 2025</a></li>
+      </ul>
+    </section>
+
+    <section id="mas">
+      <p class="note">Questions still under review are in the <a href="/en/spec/#open-questions">specification</a>. Spotted an error? <a href="https://github.com/Pintor-Project/comercioia/issues/new/choose">Open an issue</a>.</p>
+    </section>
+  </main>
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <p>An open initiative led by <a href="https://pintorproject.cl">Pintor Project</a>. Reference implementation: <a href="https://synaptiktech.com/en/product/checkout-ia">Synaptik Checkout IA</a>.</p>
+    <p class="mono"><a href="/en/spec/">Specification</a> · <a href="/en/spec/#schemas">Schemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
+    <p class="legal">Specification and schemas under the Apache-2.0 license. Not legal advice. Comercio IA is not affiliated with or endorsed by Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu or the SII; trademarks belong to their owners.</p>
+  </div>
+</footer>
+</body>
+</html>
