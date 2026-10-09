@@ -1,0 +1,10 @@
+{
+  "tax_document": {
+    "document_choice": "boleta",
+    "receiver": { "rut": "15987654-3", "razon_social": "María Fernanda Soto Rojas",
+                  "email": "maria.soto@correo-ejemplo.cl" }
+  },
+  "consumer_terms": {
+    "ai_disclosure": { "is_ai_agent": true, "agent_name": "Asistente de compras", "purpose": "purchase_assistance" }
+  }
+}

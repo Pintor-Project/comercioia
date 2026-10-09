@@ -1,0 +1,12 @@
+{
+  "id": "ord_6034",
+  "checkout_id": "chk_9b21",
+  "currency": "CLP",
+  "totals": [{ "type": "total", "amount": 6489990 }],
+  "tax_documents": [{
+    "type": 39, "folio": 4519877, "issuer_rut": "76123456-0", "receiver_rut": "15987654-3",
+    "issued_at": "2026-12-05T11:40:12-03:00", "total": 6489990, "net": 5453773, "iva": 1036217,
+    "payment_method": 2,
+    "issue_trigger": "payment_confirmed", "sii_status": "accepted",
+    "representation_url": "https://tienda-ejemplo.cl/dte/39/4519877" }]
+}

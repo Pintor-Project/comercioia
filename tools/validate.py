@@ -7,6 +7,9 @@ Checks:
   3. Every example validates against the matching definitions (UCP base schemas are fetched from ucp.dev).
   4. Every RUT in the examples has a valid modulo 11 check digit.
   5. The profile example declares each schema at its canonical comercioia.cl URL.
+  6. Backward compatibility: an example valid under the previous version of a schema stays valid under the latest.
+
+Examples are checked against the latest version of each schema.
 
 Usage: python tools/validate.py            (run from the repository root)
 """
@@ -47,7 +50,8 @@ def retrieve(uri):
 registry = Registry(retrieve=retrieve)
 
 # 1 + 2: schemas
-schemas = {}
+schemas = {}    # name -> (doc, rel) of the latest version
+previous = {}   # name -> (doc, rel) of the version before it
 for path in sorted(glob.glob(os.path.join(SITE, "ucp", "**", "*.json"), recursive=True)):
     rel = os.path.relpath(path, SITE)
     doc = json.load(open(path))
@@ -66,18 +70,36 @@ for path in sorted(glob.glob(os.path.join(SITE, "ucp", "**", "*.json"), recursiv
     caps = set(doc.get("requires", {}).get("capabilities", {}))
     if not caps <= set(doc.get("$defs", {})):
         fail(f"{rel}: requires.capabilities {caps - set(doc['$defs'])} missing from $defs")
-    schemas[name] = (doc, rel)
+    if name in schemas and schemas[name][0]["version"] < version:
+        previous[name] = schemas[name]
+    if name not in schemas or schemas[name][0]["version"] < version:
+        schemas[name] = (doc, rel)
     print("ok  ", rel, name)
+
+
+def errors_for(doc, defname, instance):
+    schema = {"$ref": f"{doc['$id']}#/$defs/{defname}"}
+    return sorted(Draft202012Validator(schema, registry=registry).iter_errors(instance), key=str)
 
 
 def check(name, defname, instance, label):
     doc, rel = schemas[name]
-    schema = {"$ref": f"{doc['$id']}#/$defs/{defname}"}
-    errs = sorted(Draft202012Validator(schema, registry=registry).iter_errors(instance), key=str)
+    errs = errors_for(doc, defname, instance)
     for e in errs:
         fail(f"{label}: {defname}: {e.message} at {list(e.absolute_path)}")
     if not errs:
-        print("ok  ", label, "->", defname)
+        print("ok  ", label, "->", defname, doc["version"])
+    if name in previous and defname in previous[name][0]["$defs"]:
+        old = previous[name][0]
+        if errs and not errors_for(old, defname, instance):
+            fail(f"{label}: valid under {name} {old['version']} but not under {doc['version']} (breaks backward compatibility)")
+
+
+def rejects(name, defname, instance, label):
+    if errors_for(schemas[name][0], defname, instance):
+        print("ok  ", label, "is rejected")
+    else:
+        fail(f"{label} must be rejected")
 
 
 def ex(name):
@@ -99,12 +121,19 @@ for i, msg in enumerate(co["messages"]):
 req = ex("checkout-request-factura.json")
 check("cl.comercioia.shopping.tax_document", "tax_document_request", req["tax_document"], "checkout-request-factura.tax_document")
 check("cl.comercioia.shopping.consumer_terms", "checkout_terms", req["consumer_terms"], "checkout-request-factura.consumer_terms")
-bad_factura = {"document_choice": "factura"}
-if not list(Draft202012Validator({"$ref": schemas["cl.comercioia.shopping.tax_document"][0]["$id"] + "#/$defs/tax_document_request"},
-                                 registry=registry).iter_errors(bad_factura)):
-    fail("a factura without receiver must be rejected")
-else:
-    print("ok   factura without receiver is rejected")
+TD = "cl.comercioia.shopping.tax_document"
+rcv = req["tax_document"]["receiver"]
+rejects(TD, "tax_document_request", {"document_choice": "factura"}, "factura without receiver")
+rejects(TD, "tax_document_request", {"document_choice": "factura", "receiver": {"rut": rcv["rut"], "razon_social": rcv["razon_social"]}},
+        "factura receiver without giro, direccion and comuna")
+rejects(TD, "tax_document_request", dict(req["tax_document"], references=[{"type": "801", "number": "4500195544"}]),
+        "factura reference without date")
+rejects(TD, "tax_document_request", {"references": [{"type": "8010", "number": "1"}]}, "reference type longer than 3 characters")
+rejects(TD, "tax_document_request", {"document_choice": "boleta", "receiver": {"rut": "15987654-3"}}, "boleta receiver without razon_social")
+
+b135 = ex("checkout-request-boleta-135uf.json")
+check(TD, "tax_document_request", b135["tax_document"], "checkout-request-boleta-135uf.tax_document")
+check("cl.comercioia.shopping.consumer_terms", "checkout_terms", b135["consumer_terms"], "checkout-request-boleta-135uf.consumer_terms")
 
 order = ex("order-after-withdrawal.json")
 for i, d in enumerate(order["tax_documents"]):
@@ -112,6 +141,13 @@ for i, d in enumerate(order["tax_documents"]):
 check("cl.comercioia.shopping.consumer_terms", "order_terms", order["consumer_terms"], "order.consumer_terms")
 for i, adj in enumerate(order["adjustments"]):
     check("cl.comercioia.shopping.credit_note", "adjustment_with_document", adj, f"order.adjustments[{i}]")
+
+UF135_CLP = 5186253  # 135 UF in CLP for 2025 (SII Res. Ex. 44/2025); the SII updates it every December
+for fname in ("order-boleta-135uf.json", "order-factura.json"):
+    for i, d in enumerate(ex(fname)["tax_documents"]):
+        check(TD, "issued_document", d, f"{fname[:-5]}.tax_documents[{i}]")
+        if d["type"] in (39, 41) and d["total"] > UF135_CLP and (d.get("receiver_rut") in (None, "66666666-6") or "payment_method" not in d):
+            fail(f"{fname}: a boleta above 135 UF must carry the buyer's RUT and the payment method")
 
 
 # 4: RUT check digits

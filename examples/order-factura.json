@@ -1,0 +1,15 @@
+{
+  "id": "ord_6102",
+  "checkout_id": "chk_a417",
+  "currency": "CLP",
+  "totals": [{ "type": "total", "amount": 2850000 }],
+  "tax_documents": [{
+    "type": 33, "folio": 120554, "issuer_rut": "76123456-0", "receiver_rut": "12345678-5",
+    "issued_at": "2026-10-21T09:15:00-03:00", "total": 2850000, "net": 2394958, "iva": 455042,
+    "references": [
+      { "type": "801", "number": "4500195544", "date": "2026-10-15" },
+      { "type": "HES", "number": "1001266280", "date": "2026-10-20", "reason": "Recepción conforme del servicio" }
+    ],
+    "issue_trigger": "delivered", "sii_status": "accepted",
+    "representation_url": "https://tienda-ejemplo.cl/dte/33/120554" }]
+}
