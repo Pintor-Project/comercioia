@@ -57,7 +57,7 @@
         <div>
           <p class="label"><span class="dot"></span>Open proposal · version 2026-10-09</p>
           <h1>Comercio IA<span class="sub">A boleta for consumers, a factura for businesses. For any AI agent.</span></h1>
-          <p class="lead" style="margin-top:28px">An open extension to UCP (Google and Shopify) and ACP (OpenAI and Stripe). It adds what Chilean law requires and the standards don't cover: an SII boleta or factura depending on who buys, the right of withdrawal and legal warranty in consumer sales, credit notes and local payment methods.</p>
+          <p class="lead" style="margin-top:28px">When an AI assistant sells on behalf of a Chilean store, the sale has to follow Chilean law: an SII tax receipt (boleta or factura), the right of withdrawal, the legal warranty and local payment methods. Comercio IA is the open set of rules to do that, as an add-on to the AI shopping standards from Google, Shopify, OpenAI and Stripe.</p>
           <div class="actions">
             <a class="btn" href="/en/spec/">Read the specification <span aria-hidden="true">→</span></a>
             <a class="link-arrow" href="/en/spec/#schemas">See the schemas</a>
@@ -94,6 +94,27 @@
       </div>
     </div>
     <div class="band" role="presentation"></div>
+  </section>
+
+  <section class="section intro" id="what-is-it">
+    <div class="wrap">
+      <div class="section-head"><p class="label">Start here</p><h2>What this is, <span class="sub">in plain words.</span></h2></div>
+      <div class="section-body">
+        <div class="intro-steps">
+          <div><p class="tag">01</p><h3>AI assistants are starting to shop</h3><p>ChatGPT, Gemini and Claude no longer just recommend products: they can search a store, build a cart and take the buyer to pay. For that, the assistant and the store need to speak the same language.</p></div>
+          <div><p class="tag">02</p><h3>That language exists: UCP and ACP</h3><p>Google and Shopify published the <a href="https://ucp.dev">Universal Commerce Protocol (UCP)</a>; OpenAI and Stripe, the <a href="https://www.agenticcommerce.dev">Agentic Commerce Protocol (ACP)</a>. They are open standards: public rules so any assistant can buy from any store, the way a card works on any payment terminal.</p></div>
+          <div><p class="tag">03</p><h3>But they don't know Chile</h3><p>They were designed for the United States: they know nothing about SII tax receipts (boleta and factura), the right of withdrawal, the legal warranty or Webpay. Comercio IA is an extension: an add-on that plugs into those standards and adds what Chilean law requires. It doesn't replace them; it completes them.</p></div>
+        </div>
+        <h3 class="intro-terms-title">Words you'll see</h3>
+        <dl class="kv intro-terms">
+            <dt>AI agent</dt><dd>An assistant such as ChatGPT, Gemini or Claude that does tasks for a person, like finding and buying things.</dd>
+            <dt>Standard or protocol</dt><dd>Free, public rules that everyone who wants to interoperate follows, like the format of an electronic invoice.</dd>
+            <dt>Extension</dt><dd>An addition to a standard for a case the standard doesn't cover. Anyone who doesn't know it keeps working.</dd>
+            <dt>Schema</dt><dd>The technical file that says exactly which data travels and in what format. It's what developers read.</dd>
+        </dl>
+        <p class="fine">This page is for implementers: e-commerce platforms, ERPs, payment providers and stores' technical teams. If you run a store and just want to sell through AI, your platform or provider should handle it.</p>
+      </div>
+    </div>
   </section>
 
   <section class="section">

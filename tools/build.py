@@ -253,6 +253,68 @@ def ledger_row(prefix, key, title, text, source):
     return (f'<tr><td class="n">{prefix}<span class="k">{key}</span></td>'
             f'<td class="w"><b>{title}</b><span>{text}</span></td><td class="s">{source}</td></tr>')
 
+# ---------------------------------------------------------------- plain-language introduction
+INTRO = {
+    "es": dict(
+        label="Para empezar", h2='Qué es esto, <span class="sub">en simple.</span>',
+        steps=[
+            ("01", "Los asistentes de IA empiezan a comprar",
+             "ChatGPT, Gemini o Claude ya no solo recomiendan productos: pueden buscar en una tienda, armar el carro y llevar al cliente a pagar. Para eso, el asistente y la tienda tienen que hablar el mismo idioma."),
+            ("02", "Ese idioma ya existe: UCP y ACP",
+             'Google y Shopify publicaron el <a href="https://ucp.dev">Universal Commerce Protocol (UCP)</a>; OpenAI y Stripe, el <a href="https://www.agenticcommerce.dev">Agentic Commerce Protocol (ACP)</a>. Son estándares abiertos: reglas públicas para que cualquier asistente pueda comprar en cualquier tienda, igual que una tarjeta funciona en cualquier máquina de pago.'),
+            ("03", "Pero no conocen Chile",
+             "Fueron pensados para Estados Unidos: no saben de boleta ni factura del SII, derecho a retracto, garantía legal ni Webpay. Comercio IA es una extensión: un complemento que se enchufa a esos estándares y agrega lo que exige la ley chilena. No los reemplaza, los completa."),
+        ],
+        terms_title="Palabras que vas a ver",
+        terms=[
+            ("Agente de IA", "Un asistente como ChatGPT, Gemini o Claude que hace tareas por una persona, como buscar y comprar."),
+            ("Estándar o protocolo", "Reglas públicas y gratuitas que siguen todos los que quieren entenderse, como el formato de una factura electrónica."),
+            ("Extensión", "Un agregado a un estándar para un caso que el estándar no cubre. Quien no la conoce sigue funcionando."),
+            ("Esquema", "El archivo técnico que dice exactamente qué datos viajan y en qué formato. Es lo que leen los programadores."),
+        ],
+        who="Esta página es para quien implementa: plataformas de e-commerce, ERPs, proveedores de pago y equipos técnicos de tiendas. Si tienes una tienda y solo quieres vender por IA, tu plataforma o tu proveedor debería encargarse.",
+    ),
+    "en": dict(
+        label="Start here", h2='What this is, <span class="sub">in plain words.</span>',
+        steps=[
+            ("01", "AI assistants are starting to shop",
+             "ChatGPT, Gemini and Claude no longer just recommend products: they can search a store, build a cart and take the buyer to pay. For that, the assistant and the store need to speak the same language."),
+            ("02", "That language exists: UCP and ACP",
+             'Google and Shopify published the <a href="https://ucp.dev">Universal Commerce Protocol (UCP)</a>; OpenAI and Stripe, the <a href="https://www.agenticcommerce.dev">Agentic Commerce Protocol (ACP)</a>. They are open standards: public rules so any assistant can buy from any store, the way a card works on any payment terminal.'),
+            ("03", "But they don't know Chile",
+             "They were designed for the United States: they know nothing about SII tax receipts (boleta and factura), the right of withdrawal, the legal warranty or Webpay. Comercio IA is an extension: an add-on that plugs into those standards and adds what Chilean law requires. It doesn't replace them; it completes them."),
+        ],
+        terms_title="Words you'll see",
+        terms=[
+            ("AI agent", "An assistant such as ChatGPT, Gemini or Claude that does tasks for a person, like finding and buying things."),
+            ("Standard or protocol", "Free, public rules that everyone who wants to interoperate follows, like the format of an electronic invoice."),
+            ("Extension", "An addition to a standard for a case the standard doesn't cover. Anyone who doesn't know it keeps working."),
+            ("Schema", "The technical file that says exactly which data travels and in what format. It's what developers read."),
+        ],
+        who="This page is for implementers: e-commerce platforms, ERPs, payment providers and stores' technical teams. If you run a store and just want to sell through AI, your platform or provider should handle it.",
+    ),
+}
+
+def intro_section(lang):
+    d = INTRO[lang]
+    steps = "\n".join(f'          <div><p class="tag">{n}</p><h3>{h}</h3><p>{t}</p></div>' for n, h, t in d["steps"])
+    terms = "\n".join(f"            <dt>{a}</dt><dd>{b}</dd>" for a, b in d["terms"])
+    return f'''  <section class="section intro" id="{"que-es" if lang == "es" else "what-is-it"}">
+    <div class="wrap">
+      <div class="section-head"><p class="label">{d["label"]}</p><h2>{d["h2"]}</h2></div>
+      <div class="section-body">
+        <div class="intro-steps">
+{steps}
+        </div>
+        <h3 class="intro-terms-title">{d["terms_title"]}</h3>
+        <dl class="kv intro-terms">
+{terms}
+        </dl>
+        <p class="fine">{d["who"]}</p>
+      </div>
+    </div>
+  </section>'''
+
 # ---------------------------------------------------------------- landing pages
 def landing(lang):
     es = lang == "es"
@@ -263,7 +325,7 @@ def landing(lang):
             desc="Boleta, retracto, garantía legal, notas de crédito y medios de pago chilenos para que cualquier agente de IA cierre una venta legal en Chile, sobre UCP y ACP.",
             label="Propuesta abierta · versión 2026-10-09",
             h1="Comercio IA", h1sub="Boleta para personas, factura para empresas. Para cualquier agente de IA.",
-            lead="Una extensión abierta de UCP (Google y Shopify) y ACP (OpenAI y Stripe). Agrega lo que la ley chilena exige y los estándares no traen: boleta o factura del SII según quién compra, derecho a retracto y garantía legal en ventas a personas, notas de crédito y medios de pago locales.",
+            lead="Cuando un asistente de IA vende por una tienda chilena, la venta tiene que cumplir la ley: boleta o factura del SII, derecho a retracto, garantía legal y medios de pago locales. Comercio IA son las reglas abiertas para hacerlo, como complemento de los estándares de compra por IA de Google, Shopify, OpenAI y Stripe.",
             cta="Leer la especificación", cta_href="/spec/", alt_link="Ver los esquemas", alt_href="/spec/#esquemas",
             facts=[("Abierta", "Licencia Apache-2.0, como UCP y ACP. Cualquiera la implementa sin pedir permiso."),
                    ("La tienda vende", "El pago llega a la cuenta de la propia tienda. La especificación nunca toca los fondos."),
@@ -275,7 +337,7 @@ def landing(lang):
             desc="Chilean tax receipts, withdrawal rights, legal warranty, credit notes and payment methods, so any AI agent can make a legal sale in Chile. On UCP and ACP.",
             label="Open proposal · version 2026-10-09",
             h1="Comercio IA", h1sub="A boleta for consumers, a factura for businesses. For any AI agent.",
-            lead="An open extension to UCP (Google and Shopify) and ACP (OpenAI and Stripe). It adds what Chilean law requires and the standards don't cover: an SII boleta or factura depending on who buys, the right of withdrawal and legal warranty in consumer sales, credit notes and local payment methods.",
+            lead="When an AI assistant sells on behalf of a Chilean store, the sale has to follow Chilean law: an SII tax receipt (boleta or factura), the right of withdrawal, the legal warranty and local payment methods. Comercio IA is the open set of rules to do that, as an add-on to the AI shopping standards from Google, Shopify, OpenAI and Stripe.",
             cta="Read the specification", cta_href="/en/spec/", alt_link="See the schemas", alt_href="/en/spec/#schemas",
             facts=[("Open", "Apache-2.0 license, like UCP and ACP. Anyone can implement it without asking."),
                    ("The store sells", "Payment goes to the store's own account. The specification never touches funds."),
@@ -393,6 +455,8 @@ def landing(lang):
     </div>
     <div class="band" role="presentation"></div>
   </section>
+
+{intro_section(lang)}
 
   <section class="section">
     <div class="wrap">

@@ -313,3 +313,11 @@ html.a11y-still .receipt .ln { opacity: 1 !important; }
 .a11y-panel .seg button:focus-visible { outline-offset: -3px; }
 .btn-alt:hover { border-color: var(--red); }
 main[tabindex="-1"]:focus { outline: none; }
+.intro-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+.intro-steps > div { border-top: 1px solid var(--line); padding-top: 16px; min-width: 0; }
+.intro-steps .tag { font-size: 12px; color: var(--red); }
+.intro-steps h3 { margin-top: 10px; }
+.intro-steps p:not(.tag) { margin-top: 8px; color: var(--ink-2); font-size: 15.5px; }
+.intro-terms-title { margin-top: 48px; }
+.intro-terms { margin-top: 12px; }
+@media (max-width: 1040px) { .intro-steps { grid-template-columns: 1fr; gap: 24px; } }
