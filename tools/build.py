@@ -256,7 +256,7 @@ def ledger_row(prefix, key, title, text, source):
 # ---------------------------------------------------------------- plain-language introduction
 INTRO = {
     "es": dict(
-        label="Para empezar", h2='Qué es esto, <span class="sub">en simple.</span>',
+        label="Para empezar", h2='Cómo compra una IA, <span class="sub">y qué le falta en Chile.</span>',
         steps=[
             ("01", "Los asistentes de IA empiezan a comprar",
              "ChatGPT, Gemini o Claude ya no solo recomiendan productos: pueden buscar en una tienda, armar el carro y llevar al cliente a pagar. Para eso, el asistente y la tienda tienen que hablar el mismo idioma."),
@@ -275,7 +275,7 @@ INTRO = {
         who="Esta página es para quien implementa: plataformas de e-commerce, ERPs, proveedores de pago y equipos técnicos de tiendas. Si tienes una tienda y solo quieres vender por IA, tu plataforma o tu proveedor debería encargarse.",
     ),
     "en": dict(
-        label="Start here", h2='What this is, <span class="sub">in plain words.</span>',
+        label="Start here", h2='How AI shopping works, <span class="sub">and what Chile adds.</span>',
         steps=[
             ("01", "AI assistants are starting to shop",
              "ChatGPT, Gemini and Claude no longer just recommend products: they can search a store, build a cart and take the buyer to pay. For that, the assistant and the store need to speak the same language."),
