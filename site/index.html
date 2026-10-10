@@ -29,9 +29,10 @@
 <!-- /seo -->
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
-<link rel="preload" href="/assets/fonts/geist-400-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/geist-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/hanken-grotesk-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/hanken-grotesk-300-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/demo.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Saltar al contenido</a>
@@ -49,126 +50,149 @@
   </div>
 </header>
 <button type="button" class="a11y-fab" id="a11y-btn" aria-expanded="false" aria-label="Ajustes de accesibilidad" title="Ajustes de accesibilidad" hidden><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10.4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="6.7" r="1.6" fill="currentColor"/><path d="M6.6 9.3l5.4 1.2 5.4-1.2M12 10.5v3.7m0 0l-2.5 4.9m2.5-4.9l2.5 4.9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false"><symbol id="timbre" viewBox="0 0 171 27" preserveAspectRatio="none"><path d="M0 0h8v3h-8zM9 0h1v3h-1zM11 0h1v3h-1zM13 0h1v3h-1zM17 0h1v3h-1zM20 0h1v3h-1zM22 0h6v3h-6zM29 0h1v3h-1zM34 0h1v3h-1zM36 0h3v3h-3zM42 0h3v3h-3zM46 0h3v3h-3zM51 0h1v3h-1zM54 0h2v3h-2zM57 0h3v3h-3zM61 0h3v3h-3zM68 0h2v3h-2zM72 0h1v3h-1zM75 0h6v3h-6zM82 0h2v3h-2zM85 0h3v3h-3zM90 0h4v3h-4zM96 0h1v3h-1zM98 0h1v3h-1zM102 0h5v3h-5zM109 0h2v3h-2zM113 0h3v3h-3zM117 0h1v3h-1zM119 0h1v3h-1zM123 0h2v3h-2zM126 0h1v3h-1zM131 0h4v3h-4zM136 0h2v3h-2zM140 0h1v3h-1zM144 0h1v3h-1zM150 0h1v3h-1zM153 0h7v3h-7zM161 0h1v3h-1zM165 0h1v3h-1zM167 0h1v3h-1zM170 0h1v3h-1zM0 3h8v3h-8zM9 3h1v3h-1zM11 3h1v3h-1zM13 3h1v3h-1zM17 3h2v3h-2zM24 3h2v3h-2zM27 3h1v3h-1zM29 3h3v3h-3zM34 3h1v3h-1zM36 3h3v3h-3zM43 3h1v3h-1zM46 3h4v3h-4zM51 3h5v3h-5zM57 3h4v3h-4zM62 3h3v3h-3zM66 3h1v3h-1zM68 3h1v3h-1zM74 3h1v3h-1zM76 3h3v3h-3zM81 3h1v3h-1zM85 3h1v3h-1zM90 3h3v3h-3zM94 3h1v3h-1zM97 3h1v3h-1zM102 3h6v3h-6zM111 3h1v3h-1zM114 3h1v3h-1zM116 3h2v3h-2zM119 3h6v3h-6zM126 3h2v3h-2zM130 3h2v3h-2zM134 3h1v3h-1zM136 3h1v3h-1zM139 3h5v3h-5zM147 3h2v3h-2zM150 3h1v3h-1zM153 3h7v3h-7zM161 3h1v3h-1zM165 3h1v3h-1zM167 3h1v3h-1zM170 3h1v3h-1zM0 6h8v3h-8zM9 6h1v3h-1zM11 6h1v3h-1zM13 6h1v3h-1zM17 6h5v3h-5zM25 6h1v3h-1zM27 6h2v3h-2zM30 6h2v3h-2zM34 6h1v3h-1zM36 6h3v3h-3zM41 6h3v3h-3zM45 6h1v3h-1zM51 6h2v3h-2zM56 6h1v3h-1zM59 6h1v3h-1zM62 6h3v3h-3zM68 6h2v3h-2zM71 6h6v3h-6zM78 6h1v3h-1zM82 6h2v3h-2zM85 6h2v3h-2zM88 6h2v3h-2zM92 6h2v3h-2zM99 6h2v3h-2zM102 6h3v3h-3zM106 6h1v3h-1zM109 6h1v3h-1zM113 6h1v3h-1zM119 6h1v3h-1zM121 6h1v3h-1zM124 6h2v3h-2zM130 6h1v3h-1zM136 6h2v3h-2zM141 6h3v3h-3zM146 6h3v3h-3zM150 6h2v3h-2zM153 6h7v3h-7zM161 6h1v3h-1zM165 6h1v3h-1zM167 6h1v3h-1zM170 6h1v3h-1zM0 9h8v3h-8zM9 9h1v3h-1zM11 9h1v3h-1zM13 9h1v3h-1zM17 9h1v3h-1zM19 9h2v3h-2zM23 9h1v3h-1zM26 9h6v3h-6zM34 9h4v3h-4zM40 9h3v3h-3zM45 9h1v3h-1zM48 9h1v3h-1zM51 9h1v3h-1zM57 9h1v3h-1zM60 9h2v3h-2zM64 9h2v3h-2zM68 9h1v3h-1zM70 9h1v3h-1zM72 9h4v3h-4zM80 9h4v3h-4zM85 9h5v3h-5zM91 9h1v3h-1zM94 9h1v3h-1zM96 9h3v3h-3zM102 9h1v3h-1zM105 9h3v3h-3zM110 9h1v3h-1zM112 9h3v3h-3zM119 9h3v3h-3zM123 9h1v3h-1zM125 9h3v3h-3zM129 9h5v3h-5zM136 9h3v3h-3zM141 9h1v3h-1zM143 9h2v3h-2zM150 9h1v3h-1zM153 9h7v3h-7zM161 9h1v3h-1zM165 9h1v3h-1zM167 9h1v3h-1zM170 9h1v3h-1zM0 12h8v3h-8zM9 12h1v3h-1zM11 12h1v3h-1zM13 12h1v3h-1zM17 12h1v3h-1zM21 12h1v3h-1zM24 12h5v3h-5zM30 12h1v3h-1zM34 12h2v3h-2zM38 12h2v3h-2zM42 12h1v3h-1zM44 12h6v3h-6zM51 12h1v3h-1zM55 12h4v3h-4zM61 12h1v3h-1zM65 12h2v3h-2zM68 12h2v3h-2zM74 12h2v3h-2zM80 12h1v3h-1zM82 12h2v3h-2zM85 12h1v3h-1zM89 12h1v3h-1zM92 12h1v3h-1zM99 12h1v3h-1zM102 12h4v3h-4zM107 12h3v3h-3zM111 12h1v3h-1zM115 12h1v3h-1zM119 12h4v3h-4zM124 12h1v3h-1zM127 12h6v3h-6zM134 12h1v3h-1zM136 12h1v3h-1zM138 12h4v3h-4zM143 12h3v3h-3zM150 12h1v3h-1zM153 12h7v3h-7zM161 12h1v3h-1zM165 12h1v3h-1zM167 12h1v3h-1zM170 12h1v3h-1zM0 15h8v3h-8zM9 15h1v3h-1zM11 15h1v3h-1zM13 15h1v3h-1zM17 15h3v3h-3zM25 15h2v3h-2zM30 15h1v3h-1zM32 15h1v3h-1zM34 15h2v3h-2zM38 15h3v3h-3zM43 15h1v3h-1zM46 15h4v3h-4zM51 15h1v3h-1zM55 15h4v3h-4zM63 15h1v3h-1zM65 15h2v3h-2zM68 15h4v3h-4zM73 15h1v3h-1zM75 15h1v3h-1zM77 15h2v3h-2zM85 15h1v3h-1zM92 15h1v3h-1zM94 15h2v3h-2zM100 15h1v3h-1zM102 15h2v3h-2zM105 15h1v3h-1zM109 15h2v3h-2zM114 15h3v3h-3zM119 15h3v3h-3zM123 15h4v3h-4zM128 15h1v3h-1zM131 15h3v3h-3zM136 15h4v3h-4zM141 15h1v3h-1zM146 15h1v3h-1zM148 15h1v3h-1zM153 15h7v3h-7zM161 15h1v3h-1zM165 15h1v3h-1zM167 15h1v3h-1zM170 15h1v3h-1zM0 18h8v3h-8zM9 18h1v3h-1zM11 18h1v3h-1zM13 18h1v3h-1zM17 18h3v3h-3zM23 18h4v3h-4zM28 18h1v3h-1zM30 18h3v3h-3zM34 18h1v3h-1zM41 18h1v3h-1zM43 18h1v3h-1zM48 18h1v3h-1zM51 18h3v3h-3zM55 18h3v3h-3zM62 18h2v3h-2zM65 18h1v3h-1zM68 18h2v3h-2zM76 18h2v3h-2zM79 18h1v3h-1zM81 18h1v3h-1zM85 18h5v3h-5zM92 18h1v3h-1zM94 18h2v3h-2zM99 18h2v3h-2zM102 18h1v3h-1zM104 18h2v3h-2zM108 18h4v3h-4zM116 18h2v3h-2zM119 18h3v3h-3zM123 18h3v3h-3zM127 18h5v3h-5zM133 18h2v3h-2zM136 18h2v3h-2zM139 18h2v3h-2zM145 18h4v3h-4zM150 18h2v3h-2zM153 18h7v3h-7zM161 18h1v3h-1zM165 18h1v3h-1zM167 18h1v3h-1zM170 18h1v3h-1zM0 21h8v3h-8zM9 21h1v3h-1zM11 21h1v3h-1zM13 21h1v3h-1zM17 21h3v3h-3zM21 21h3v3h-3zM26 21h1v3h-1zM28 21h3v3h-3zM34 21h2v3h-2zM37 21h4v3h-4zM42 21h5v3h-5zM48 21h1v3h-1zM51 21h4v3h-4zM56 21h2v3h-2zM59 21h1v3h-1zM63 21h3v3h-3zM68 21h2v3h-2zM71 21h1v3h-1zM77 21h2v3h-2zM82 21h1v3h-1zM85 21h3v3h-3zM89 21h2v3h-2zM92 21h1v3h-1zM98 21h3v3h-3zM102 21h2v3h-2zM105 21h4v3h-4zM111 21h2v3h-2zM115 21h3v3h-3zM119 21h1v3h-1zM121 21h1v3h-1zM128 21h2v3h-2zM134 21h1v3h-1zM136 21h4v3h-4zM141 21h1v3h-1zM145 21h1v3h-1zM148 21h1v3h-1zM153 21h7v3h-7zM161 21h1v3h-1zM165 21h1v3h-1zM167 21h1v3h-1zM170 21h1v3h-1zM0 24h8v3h-8zM9 24h1v3h-1zM11 24h1v3h-1zM13 24h1v3h-1zM17 24h1v3h-1zM19 24h4v3h-4zM25 24h1v3h-1zM28 24h1v3h-1zM34 24h2v3h-2zM42 24h2v3h-2zM46 24h1v3h-1zM48 24h2v3h-2zM51 24h5v3h-5zM57 24h1v3h-1zM60 24h3v3h-3zM64 24h3v3h-3zM68 24h1v3h-1zM70 24h2v3h-2zM73 24h3v3h-3zM80 24h4v3h-4zM85 24h3v3h-3zM89 24h2v3h-2zM92 24h2v3h-2zM95 24h2v3h-2zM102 24h2v3h-2zM108 24h2v3h-2zM112 24h2v3h-2zM116 24h2v3h-2zM119 24h1v3h-1zM122 24h3v3h-3zM128 24h1v3h-1zM134 24h1v3h-1zM136 24h1v3h-1zM140 24h1v3h-1zM144 24h6v3h-6zM151 24h1v3h-1zM153 24h7v3h-7zM161 24h1v3h-1zM165 24h1v3h-1zM167 24h1v3h-1zM170 24h1v3h-1z"/></symbol></svg>
 
 <main id="main">
   <section class="hero">
     <div class="wrap">
       <div class="hero-grid">
         <div>
-          <p class="label"><span class="dot"></span>Propuesta abierta · versión 2026-10-09</p>
+          <p class="status">Propuesta abierta · versión 2026-10-09</p>
           <h1>Comercio IA<span class="sub">Boleta para personas, factura para empresas. Para cualquier agente de IA.</span></h1>
-          <p class="lead" style="margin-top:28px">Cuando un asistente de IA vende por una tienda chilena, la venta tiene que cumplir la ley: boleta o factura del SII, derecho a retracto, garantía legal y medios de pago locales. Comercio IA son las reglas abiertas para hacerlo, como complemento de los estándares de compra por IA de Google, Shopify, OpenAI y Stripe.</p>
+          <p class="lead">Cuando un asistente de IA vende por una tienda chilena, la venta tiene que cumplir la ley: boleta o factura del SII, derecho a retracto, garantía legal y medios de pago locales. Comercio IA son las reglas abiertas para hacerlo, como complemento de los estándares de compra por IA de Google, Shopify, OpenAI y Stripe.</p>
           <div class="actions">
             <a class="btn" href="/spec/">Leer la especificación <span aria-hidden="true">→</span></a>
-            <a class="link-arrow" href="/spec/#esquemas">Ver los esquemas</a>
+            <a class="btn ghost" href="#demo">Ver una compra paso a paso</a>
           </div>
         </div>
-      <figure class="receipt-wrap">
-        <div class="receipt" role="img" aria-label="Ejemplo de boleta electrónica emitida después de una compra hecha a través de un agente de IA">
-          <div class="rutbox ln" style="--i:0"><span>R.U.T.: 76.123.456-0</span><span>BOLETA ELECTRÓNICA</span><span>N° 4512330</span><span>EJEMPLO</span></div>
-          <div class="c ln" style="--i:1">TIENDA EJEMPLO SPA</div>
-          <div class="c sm ln" style="--i:2">Av. Ejemplo 123, Santiago</div>
-          <div class="hr ln" style="--i:3"></div>
-          <div class="r ln" style="--i:4"><span>09/10/26 14:22</span><span>vía agente IA</span></div>
-          <div class="hr ln" style="--i:5"></div>
-          <div class="r ln" style="--i:6"><span>Teclado 61 teclas</span><span>$189.990</span></div>
-          <div class="r ln" style="--i:7"><span>Despacho RM</span><span>$4.990</span></div>
-          <div class="hr ln" style="--i:8"></div>
-          <div class="r tot ln" style="--i:9"><span>TOTAL</span><span>$194.980</span></div>
-          <div class="r sm ln" style="--i:10"><span>IVA incluido</span><span>$31.131</span></div>
-          <div class="r sm ln" style="--i:11"><span>Webpay Plus</span><span>aprobado</span></div>
-          <div class="hr ln" style="--i:12"></div>
-          <div class="sm ln" style="--i:13">Derecho a retracto: 10 días</div>
-          <div class="sm ln" style="--i:14">Garantía legal: 6 meses</div>
-          <img class="ln" style="--i:15" src="/assets/timbre-receipt.svg" alt="">
-          <div class="c sm ln" style="--i:16">Timbre electrónico · ejemplo</div>
-          <div class="c sm ns ln" style="--i:17">cl.comercioia.shopping.tax_document</div>
-        </div>
-        <figcaption class="receipt-note">Ejemplo ilustrativo. La tienda emite la boleta y el agente la recibe en el pedido.</figcaption>
-      </figure>
+        <figure class="hero-art">
+          <svg class="block" viewBox="0 0 520 450" role="img" aria-labelledby="block-t">
+            <title id="block-t">El recuadro del RUT de los documentos tributarios chilenos, en volumen, con su timbre electrónico: boleta electrónica, factura electrónica y nota de crédito.</title>
+            <g class="lift">
+              <path class="face" d="M40 140 L400 140 L470 90 L110 90 Z"/>
+              <path class="hatch" d="M70 140 L140 90 M110 140 L180 90 M150 140 L220 90 M190 140 L260 90 M230 140 L300 90 M270 140 L340 90 M310 140 L380 90 M350 140 L420 90"/>
+              <path class="solid" d="M400 140 L470 90 L470 370 L400 420 Z"/>
+            </g>
+            <rect class="face" x="40" y="140" width="360" height="280"/>
+            <rect class="frame" x="76" y="170" width="288" height="146"/>
+            <text class="t-big" x="220" y="218" text-anchor="middle">cl.<tspan>comercioia</tspan></text>
+            <text class="t" x="220" y="250" text-anchor="middle">BOLETA ELECTRÓNICA</text>
+            <text class="t" x="220" y="273" text-anchor="middle">FACTURA ELECTRÓNICA</text>
+            <text class="t" x="220" y="296" text-anchor="middle">NOTA DE CRÉDITO</text>
+            <use class="timbre" href="#timbre" x="76" y="336" width="288" height="50"/>
+            <text class="t-dim" x="220" y="406" text-anchor="middle">Timbre electrónico · versión 2026-10-09</text>
+          </svg>
+          <figcaption class="block-caption">El recuadro del RUT, presente en todo documento tributario chileno.</figcaption>
+        </figure>
       </div>
+      <dl class="covers">
+        <dt>Extiende</dt><dd><span>UCP</span><span>ACP</span></dd>
+        <dt>Medios de pago</dt><dd><span>Webpay Plus</span><span>Oneclick Mall</span><span>Mercado Pago</span><span>Getnet</span><span>Khipu</span></dd>
+      </dl>
       <div class="facts">
         <div><h2>Abierta</h2><p>Licencia Apache-2.0, como UCP y ACP. Cualquiera la implementa sin pedir permiso.</p></div>
         <div><h2>La tienda vende</h2><p>El pago llega a la cuenta de la propia tienda. La especificación nunca toca los fondos.</p></div>
         <div><h2>Compatible</h2><p>Un agente que no la conoce sigue funcionando, y los avisos legales igual le llegan.</p></div>
       </div>
     </div>
-    <div class="band" role="presentation"></div>
   </section>
 
   <section class="section intro" id="que-es">
     <div class="wrap">
-      <div class="section-head"><p class="label">Para empezar</p><h2>Cómo compra una IA, <span class="sub">y qué le falta en Chile.</span></h2></div>
-      <div class="section-body">
-        <div class="intro-steps">
-          <div><p class="tag">01</p><h3>Los asistentes de IA empiezan a comprar</h3><p>ChatGPT, Gemini o Claude ya no solo recomiendan productos: pueden buscar en una tienda, armar el carro y llevar al cliente a pagar. Para eso, el asistente y la tienda tienen que hablar el mismo idioma.</p></div>
-          <div><p class="tag">02</p><h3>Ese idioma ya existe: UCP y ACP</h3><p>Google y Shopify publicaron el <a href="https://ucp.dev">Universal Commerce Protocol (UCP)</a>; OpenAI y Stripe, el <a href="https://www.agenticcommerce.dev">Agentic Commerce Protocol (ACP)</a>. Son estándares abiertos: reglas públicas para que cualquier asistente pueda comprar en cualquier tienda, igual que una tarjeta funciona en cualquier máquina de pago.</p></div>
-          <div><p class="tag">03</p><h3>Pero no conocen Chile</h3><p>Fueron pensados para Estados Unidos: no saben de boleta ni factura del SII, derecho a retracto, garantía legal ni Webpay. Comercio IA es una extensión: un complemento que se enchufa a esos estándares y agrega lo que exige la ley chilena. No los reemplaza, los completa.</p></div>
-        </div>
-        <h3 class="intro-terms-title">Palabras que vas a ver</h3>
-        <dl class="kv intro-terms">
+      <h2>Cómo compra una IA, <span class="sub">y qué le falta en Chile.</span></h2>
+      <div class="ideas">
+          <div>
+            <svg viewBox="0 0 132 96" aria-hidden="true" focusable="false"><rect class="ill-fill" x="10" y="12" width="84" height="50" rx="14"/><path class="ill" d="M24 12h56a14 14 0 0 1 14 14v22a14 14 0 0 1-14 14H46l-14 12v-12h-8a14 14 0 0 1-14-14V26a14 14 0 0 1 14-14z"/><path class="ill" d="M36 30h8l5 18h20l4-12H47"/><circle class="ill-dot" cx="52" cy="53" r="2.2"/><circle class="ill-dot" cx="66" cy="53" r="2.2"/><path class="ill-red" d="M108 20v12M102 26h12M116 48v8M112 52h8"/></svg>
+            <h3>Los asistentes de IA empiezan a comprar</h3>
+            <p>ChatGPT, Gemini o Claude ya no solo recomiendan productos: pueden buscar en una tienda, armar el carro y llevar al cliente a pagar. Para eso, el asistente y la tienda tienen que hablar el mismo idioma.</p>
+          </div>
+          <div>
+            <svg viewBox="0 0 132 96" aria-hidden="true" focusable="false"><rect class="ill-fill" x="8" y="26" width="46" height="44" rx="8"/><rect class="ill" x="8" y="26" width="46" height="44" rx="8"/><text class="ill-t" x="31" y="51" text-anchor="middle">UCP</text><rect class="ill" x="78" y="26" width="46" height="44" rx="8"/><text class="ill-t" x="101" y="51" text-anchor="middle">ACP</text><path class="ill" d="M54 40h24M54 56h24" stroke-dasharray="3 4"/><path class="ill" d="M72 36l6 4-6 4M60 52l-6 4 6 4"/></svg>
+            <h3>Ese idioma ya existe: UCP y ACP</h3>
+            <p>Google y Shopify publicaron el <a href="https://ucp.dev">Universal Commerce Protocol (UCP)</a>; OpenAI y Stripe, el <a href="https://www.agenticcommerce.dev">Agentic Commerce Protocol (ACP)</a>. Son estándares abiertos: reglas públicas para que cualquier asistente pueda comprar en cualquier tienda, igual que una tarjeta funciona en cualquier máquina de pago.</p>
+          </div>
+          <div>
+            <svg viewBox="0 0 132 96" aria-hidden="true" focusable="false"><rect class="ill-fill" x="8" y="22" width="60" height="52" rx="8"/><path class="ill" d="M16 22h44a8 8 0 0 1 8 8v12h-6a6 6 0 0 0 0 12h6v12a8 8 0 0 1-8 8H16a8 8 0 0 1-8-8V30a8 8 0 0 1 8-8z"/><text class="ill-t" x="34" y="52" text-anchor="middle">UCP</text><rect class="ill-red" x="78" y="30" width="46" height="36"/><text class="ill-tr" x="101" y="46" text-anchor="middle">cl.</text><text class="ill-tr" x="101" y="58" text-anchor="middle">SII</text><path class="ill-red" d="M62 48h16"/></svg>
+            <h3>Pero no conocen Chile</h3>
+            <p>Fueron pensados para Estados Unidos: no saben de boleta ni factura del SII, derecho a retracto, garantía legal ni Webpay. Comercio IA es una extensión: un complemento que se enchufa a esos estándares y agrega lo que exige la ley chilena. No los reemplaza, los completa.</p>
+          </div>
+      </div>
+      <div class="glossary">
+        <h3>Palabras que vas a ver</h3>
+        <dl>
             <dt>Agente de IA</dt><dd>Un asistente como ChatGPT, Gemini o Claude que hace tareas por una persona, como buscar y comprar.</dd>
             <dt>Estándar o protocolo</dt><dd>Reglas públicas y gratuitas que siguen todos los que quieren entenderse, como el formato de una factura electrónica.</dd>
             <dt>Extensión</dt><dd>Un agregado a un estándar para un caso que el estándar no cubre. Quien no la conoce sigue funcionando.</dd>
             <dt>Esquema</dt><dd>El archivo técnico que dice exactamente qué datos viajan y en qué formato. Es lo que leen los programadores.</dd>
         </dl>
-        <p class="fine">Esta página es para quien implementa: plataformas de e-commerce, ERPs, proveedores de pago y equipos técnicos de tiendas. Si tienes una tienda y solo quieres vender por IA, tu plataforma o tu proveedor debería encargarse.</p>
       </div>
+      <p class="fine">Esta página es para quien implementa: plataformas de e-commerce, ERPs, proveedores de pago y equipos técnicos de tiendas. Si tienes una tienda y solo quieres vender por IA, tu plataforma o tu proveedor debería encargarse.</p>
     </div>
   </section>
 
-  <section class="section">
-    <div class="wrap">
-      <div class="section-head"><p class="label">01 · El vacío</p><h2>Los estándares llegan hasta donde <span class="sub">empieza la ley chilena.</span></h2></div>
-      <div class="section-body cols-2">
-        <div>
-          <p class="col-title">UCP y ACP traen</p>
-          <ul class="list-plain">
-            <li>Catálogo y búsqueda</li>
-            <li>Carro y checkout</li>
-            <li>Pedido y ajustes</li>
-            <li>Políticas y avisos</li>
-            <li>Medios de pago enchufables</li>
-          </ul>
+  <section class="section" id="demo">
+    <div class="wrap center">
+      <h2>De «lo quiero» a una boleta <span class="sub">que el SII ya recibió.</span></h2>
+      <p class="intro-p">Lo que ve el comprador en su asistente, junto a lo que viaja entre el agente y la tienda. En rojo, lo que agrega Comercio IA.</p>
+    </div>
+    <div class="demo-band">
+      <div class="wrap">
+        <div class="demo" data-demo>
+          <div>
+            <div class="steps" data-demo-tabs aria-label="Pasos de una compra" hidden>
+            <button type="button" id="tab-1" aria-controls="paso-1"><span class="n">01</span><span>«Lo quiero», con boleta</span></button>
+            <button type="button" id="tab-2" aria-controls="paso-2"><span class="n">02</span><span>Totales y avisos legales</span></button>
+            <button type="button" id="tab-3" aria-controls="paso-3"><span class="n">03</span><span>Pago en la página del proveedor</span></button>
+            <button type="button" id="tab-4" aria-controls="paso-4"><span class="n">04</span><span>Boleta emitida al SII</span></button>
+            <button type="button" id="tab-5" aria-controls="paso-5"><span class="n">05</span><span>Retracto y nota de crédito</span></button>
+            </div>
+            <p class="demo-note">Ejemplo ilustrativo con datos de prueba.</p>
+          </div>
+          <div>
+          <div class="panel" id="paso-1">
+            <div class="panel-copy"><p class="panel-n">Paso 1 de 5</p><h3>El agente pide boleta al crear el checkout.</h3><p>Y declara que es un asistente de IA. La tienda lo repite en su respuesta, para que el comprador sepa que compra a través de un agente.</p></div>
+            <div class="phone"><div class="screen"><div class="bar" aria-hidden="true"><span>14:21</span><span>5G</span></div><div class="ahead"><svg viewBox="0 0 22 22" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="11" fill="var(--bg-3)"/><path d="M11 5.5l1.4 4.1 4.1 1.4-4.1 1.4-1.4 4.1-1.4-4.1-4.1-1.4 4.1-1.4z" fill="var(--ink-2)"/></svg><span>Asistente de IA</span></div><div class="chat"><div class="me">Busco un teclado de 61 teclas que llegue esta semana.</div><div class="ai">Encontré este en Tienda Ejemplo:</div><div class="card prod"><div class="img"><svg viewBox="0 0 34 20" aria-hidden="true" focusable="false"><rect x="1" y="1" width="32" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M5 6h3M10 6h3M15 6h3M20 6h3M25 6h3M5 10h3M10 10h3M15 10h3M20 10h3M25 10h3M9 14h16" stroke="currentColor" stroke-width="1.4"/></svg></div><div><b>Teclado 61 teclas</b><div class="dim">Despacho RM · 3 días hábiles</div><div>$189.990</div></div></div><div class="ai">¿Lo quieres con boleta o con factura?</div><div class="me">Con boleta.</div></div><div class="input" aria-hidden="true">Escribe un mensaje</div></div></div>
+            <figure class="code"><figcaption><span><b>create_checkout</b> · agente → tienda</span><span>UCP</span></figcaption>
+<pre tabindex="0"><code><span class="l">{</span><span class="l">  <span class="k">"line_items"</span>: [ <span class="d">…</span> ],</span><span class="l o">  <span class="k">"tax_document"</span>: { <span class="k">"document_choice"</span>: <span class="s">"boleta"</span> },</span><span class="l o">  <span class="k">"consumer_terms"</span>: {</span><span class="l o">    <span class="k">"ai_disclosure"</span>: {</span><span class="l o">      <span class="k">"is_ai_agent"</span>: <span class="s">true</span>, <span class="k">"purpose"</span>: <span class="s">"purchase_assistance"</span></span><span class="l o">    }</span><span class="l o">  }</span><span class="l">}</span></code></pre>
+<p class="code-legend">Lo que agrega Comercio IA</p></figure>
+          </div>
+          <div class="panel" id="paso-2">
+            <div class="panel-copy"><p class="panel-n">Paso 2 de 5</p><h3>La tienda responde con el total en pesos y los avisos legales.</h3><p>Quién vende, con RUT y domicilio; el derecho a retracto y la garantía legal. Los avisos también llegan como mensajes del núcleo de UCP, así que hasta un agente que no conoce la extensión debe mostrarlos sin ocultarlos.</p></div>
+            <div class="phone"><div class="screen"><div class="bar" aria-hidden="true"><span>14:21</span><span>5G</span></div><div class="ahead"><svg viewBox="0 0 22 22" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="11" fill="var(--bg-3)"/><path d="M11 5.5l1.4 4.1 4.1 1.4-4.1 1.4-1.4 4.1-1.4-4.1-4.1-1.4 4.1-1.4z" fill="var(--ink-2)"/></svg><span>Asistente de IA</span></div><div class="chat"><div class="card"><div class="row"><span>Teclado 61 teclas</span><span>$189.990</span></div><div class="row"><span>Despacho RM</span><span>$4.990</span></div><div class="row tot"><span>Total</span><span>$194.980</span></div><div class="dim">IVA incluido · boleta electrónica</div></div><div class="notice"><b>Vende</b>Tienda Ejemplo SpA · RUT 76.123.456-0 · Av. Ejemplo 123, Santiago</div><div class="notice"><b>Derecho a retracto</b>Tienes derecho a retracto por 10 días desde que recibes el producto.</div><div class="notice"><b>Garantía legal</b>Garantía legal de 6 meses: reparación, cambio o devolución, a tu elección.</div><div class="ai small">Estás comprando a través de un asistente de IA.</div></div><div class="input" aria-hidden="true">Escribe un mensaje</div></div></div>
+            <figure class="code"><figcaption><span><b>checkout</b> · tienda → agente</span><span>UCP</span></figcaption>
+<pre tabindex="0"><code><span class="l">{</span><span class="l">  <span class="k">"currency"</span>: <span class="s">"CLP"</span>,</span><span class="l">  <span class="k">"totals"</span>: [ <span class="d">…</span>, { <span class="k">"type"</span>: <span class="s">"total"</span>, <span class="k">"amount"</span>: <span class="s">194980</span> } ],</span><span class="l o">  <span class="k">"policies"</span>: [</span><span class="l o">    {</span><span class="l o">      <span class="k">"type"</span>: <span class="s">"cl.comercioia.policy.retracto"</span>,</span><span class="l o">      <span class="k">"window_days"</span>: <span class="s">10</span>, <span class="k">"refund_within_days"</span>: <span class="s">45</span></span><span class="l o">    },</span><span class="l o">    {</span><span class="l o">      <span class="k">"type"</span>: <span class="s">"cl.comercioia.policy.garantia_legal"</span>,</span><span class="l o">      <span class="k">"months"</span>: <span class="s">6</span></span><span class="l o">    }</span><span class="l o">  ],</span><span class="l">  <span class="k">"messages"</span>: [</span><span class="l">    {</span><span class="l">      <span class="k">"type"</span>: <span class="s">"warning"</span>,</span><span class="l">      <span class="k">"code"</span>: <span class="s">"cl.comercioia.policy.retracto"</span>,</span><span class="l">      <span class="k">"presentation"</span>: <span class="s">"disclosure"</span>, <span class="k">"content"</span>: <span class="d">…</span></span><span class="l">    },</span><span class="l">    <span class="d">…</span></span><span class="l">  ],</span><span class="l o">  <span class="k">"consumer_terms"</span>: {</span><span class="l o">    <span class="k">"seller"</span>: {</span><span class="l o">      <span class="k">"razon_social"</span>: <span class="s">"Tienda Ejemplo SpA"</span>,</span><span class="l o">      <span class="k">"rut"</span>: <span class="s">"76123456-0"</span>,</span><span class="l o">      <span class="k">"domicilio"</span>: <span class="s">"Av. Ejemplo 123, Santiago"</span></span><span class="l o">    },</span><span class="l o">    <span class="k">"ai_disclosure"</span>: <span class="d">…</span>, <span class="k">"price_includes_tax"</span>: <span class="s">true</span></span><span class="l o">  }</span><span class="l">}</span></code></pre>
+<p class="code-legend">Lo que agrega Comercio IA</p></figure>
+          </div>
+          <div class="panel" id="paso-3">
+            <div class="panel-copy"><p class="panel-n">Paso 3 de 5</p><h3>El comprador paga fuera del chat, en la página del proveedor.</h3><p>La tienda crea el pago con su propia cuenta de Webpay Plus y responde con un enlace (<code>continue_url</code>). El asistente solo abre ese enlace; el dinero va directo a la cuenta de la tienda.</p></div>
+            <div class="phone"><div class="screen"><div class="bar" aria-hidden="true"><span>14:22</span><span>5G</span></div><div class="ahead"><svg viewBox="0 0 22 22" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="11" fill="var(--bg-3)"/><path d="M11 5.5l1.4 4.1 4.1 1.4-4.1 1.4-1.4 4.1-1.4-4.1-4.1-1.4 4.1-1.4z" fill="var(--ink-2)"/></svg><span>Asistente de IA</span></div><div class="chat"><div class="me">Listo, lo compro.</div><div class="ai">Para pagar, abre la página de pago. Ahí pagas con Webpay Plus.</div><div class="card"><b>Total a pagar: $194.980</b><div class="dim">Webpay Plus · tienda-ejemplo.cl</div><span class="paybtn">Abrir la página de pago ↗</span></div><div class="ai small">El pago se hace en la página del proveedor, no en este chat.</div></div><div class="input" aria-hidden="true">Escribe un mensaje</div></div></div>
+            <figure class="code"><figcaption><span><b>complete_checkout</b> · tienda → agente</span><span>UCP</span></figcaption>
+<pre tabindex="0"><code><span class="l">{</span><span class="l">  <span class="k">"id"</span>: <span class="s">"chk_7f3a"</span>, <span class="k">"status"</span>: <span class="s">"requires_escalation"</span>,</span><span class="l">  <span class="k">"continue_url"</span>: <span class="s">"https://tienda-ejemplo.cl/pagar/chk_7f3a"</span>,</span><span class="l">  <span class="k">"messages"</span>: [</span><span class="l">    <span class="d">…</span>,</span><span class="l">    {</span><span class="l">      <span class="k">"type"</span>: <span class="s">"error"</span>, <span class="k">"code"</span>: <span class="s">"payment_redirect"</span>,</span><span class="l">      <span class="k">"severity"</span>: <span class="s">"requires_buyer_input"</span>,</span><span class="l">      <span class="k">"content"</span>: <span class="s">"Completa el pago en Webpay."</span></span><span class="l">    }</span><span class="l">  ]</span><span class="l">}</span></code></pre>
+<p class="code-sub">perfil de la tienda · /.well-known/ucp</p>
+<pre tabindex="0"><code><span class="l">{</span><span class="l">  <span class="k">"payment_handlers"</span>: {</span><span class="l o">    <span class="k">"cl.comercioia.webpay_plus"</span>: [</span><span class="l o">      {</span><span class="l o">        <span class="k">"id"</span>: <span class="s">"webpay_1"</span>,</span><span class="l o">        <span class="k">"available_instruments"</span>: [ { <span class="k">"type"</span>: <span class="s">"redirect"</span> } ]</span><span class="l o">      }</span><span class="l o">    ]</span><span class="l">  }</span><span class="l">}</span></code></pre>
+<p class="code-legend">Lo que agrega Comercio IA</p></figure>
+          </div>
+          <div class="panel" id="paso-4">
+            <div class="panel-copy"><p class="panel-n">Paso 4 de 5</p><h3>Con el pago confirmado, la tienda emite la boleta y la envía al SII.</h3><p>La tienda confirma el pago directamente con el proveedor. El pedido le devuelve al agente el folio, el RUT del emisor y el estado en el SII; el comprador recibe la boleta y la copia del contrato por correo.</p></div>
+            <div class="phone"><div class="screen"><div class="bar" aria-hidden="true"><span>14:23</span><span>5G</span></div><div class="ahead"><svg viewBox="0 0 22 22" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="11" fill="var(--bg-3)"/><path d="M11 5.5l1.4 4.1 4.1 1.4-4.1 1.4-1.4 4.1-1.4-4.1-4.1-1.4 4.1-1.4z" fill="var(--ink-2)"/></svg><span>Asistente de IA</span></div><div class="chat"><div class="ai">Tienda Ejemplo confirmó tu pago y emitió tu boleta:</div><div class="mini-receipt" role="img" aria-label="Boleta electrónica N° 4512330 de Tienda Ejemplo SpA por $194.980"><div class="rb">R.U.T.: 76.123.456-0<br>BOLETA ELECTRÓNICA<br>N° 4512330</div><div class="row"><span>Teclado 61 teclas</span><span>$189.990</span></div><div class="row"><span>Despacho RM</span><span>$4.990</span></div><div class="row"><b>TOTAL</b><b>$194.980</b></div><img src="/assets/timbre-receipt.svg" alt=""></div><div class="ai small">Te llegó la copia del contrato por correo.</div></div><div class="input" aria-hidden="true">Escribe un mensaje</div></div></div>
+            <figure class="code"><figcaption><span><b>pedido</b> · tienda → agente</span><span>UCP</span></figcaption>
+<pre tabindex="0"><code><span class="l">{</span><span class="l">  <span class="k">"id"</span>: <span class="s">"ord_5521"</span>,</span><span class="l o">  <span class="k">"tax_documents"</span>: [</span><span class="l o">    {</span><span class="l o">      <span class="k">"type"</span>: <span class="s">39</span>, <span class="k">"folio"</span>: <span class="s">4512330</span>,</span><span class="l o">      <span class="k">"issuer_rut"</span>: <span class="s">"76123456-0"</span>,</span><span class="l o">      <span class="k">"issued_at"</span>: <span class="s">"2026-12-03T14:22:05-03:00"</span>,</span><span class="l o">      <span class="k">"total"</span>: <span class="s">194980</span>, <span class="k">"iva"</span>: <span class="s">31131</span>,</span><span class="l o">      <span class="k">"sii_status"</span>: <span class="s">"accepted"</span>,</span><span class="l o">      <span class="k">"representation_url"</span>: <span class="s">"https://tienda-ejemplo.cl/dte/39/4512330"</span></span><span class="l o">    }</span><span class="l o">  ],</span><span class="l o">  <span class="k">"consumer_terms"</span>: {</span><span class="l o">    <span class="k">"confirmation"</span>: {</span><span class="l o">      <span class="k">"channel"</span>: <span class="s">"email"</span>,</span><span class="l o">      <span class="k">"contract_copy_url"</span>: <span class="s">"https://tienda-ejemplo.cl/contrato/ord_5521"</span></span><span class="l o">    }</span><span class="l o">  }</span><span class="l">}</span></code></pre>
+<p class="code-legend">Lo que agrega Comercio IA</p></figure>
+          </div>
+          <div class="panel" id="paso-5">
+            <div class="panel-copy"><p class="panel-n">Paso 5 de 5</p><h3>Si el comprador se retracta, la devolución lleva su nota de crédito.</h3><p>La tienda registra la devolución en el pedido con una nota de crédito electrónica (DTE 61) que hace referencia a la boleta original.</p></div>
+            <div class="phone"><div class="screen"><div class="bar" aria-hidden="true"><span>10:05</span><span>5G</span></div><div class="ahead"><svg viewBox="0 0 22 22" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="11" fill="var(--bg-3)"/><path d="M11 5.5l1.4 4.1 4.1 1.4-4.1 1.4-1.4 4.1-1.4-4.1-4.1-1.4 4.1-1.4z" fill="var(--ink-2)"/></svg><span>Asistente de IA</span></div><div class="chat"><div class="me">Me arrepentí del teclado. ¿Lo puedo devolver?</div><div class="ai">Sí: estás dentro de los 10 días del derecho a retracto. Tienda Ejemplo explica cómo devolverlo en tienda-ejemplo.cl/retracto.</div><div class="card"><b>Devolución completada</b><div class="row"><span>Nota de crédito</span><span>N° 88213</span></div><div class="row"><span>Anula boleta</span><span>N° 4512330</span></div><div class="row tot"><span>Devuelto</span><span>$194.980</span></div></div></div><div class="input" aria-hidden="true">Escribe un mensaje</div></div></div>
+            <figure class="code"><figcaption><span><b>pedido</b> · tienda → agente</span><span>UCP</span></figcaption>
+<pre tabindex="0"><code><span class="l">{</span><span class="l">  <span class="k">"id"</span>: <span class="s">"ord_5521"</span>,</span><span class="l">  <span class="k">"adjustments"</span>: [</span><span class="l">    {</span><span class="l">      <span class="k">"id"</span>: <span class="s">"adj_1"</span>, <span class="k">"type"</span>: <span class="s">"refund"</span>,</span><span class="l">      <span class="k">"status"</span>: <span class="s">"completed"</span>,</span><span class="l">      <span class="k">"description"</span>: <span class="s">"Retracto dentro de 10 días"</span>,</span><span class="l o">      <span class="k">"tax_document"</span>: {</span><span class="l o">        <span class="k">"type"</span>: <span class="s">61</span>, <span class="k">"folio"</span>: <span class="s">88213</span>, <span class="k">"ref_type"</span>: <span class="s">39</span>,</span><span class="l o">        <span class="k">"ref_folio"</span>: <span class="s">4512330</span>, <span class="k">"cod_ref"</span>: <span class="s">1</span>,</span><span class="l o">        <span class="k">"razon"</span>: <span class="s">"Anula boleta por retracto"</span></span><span class="l o">      }</span><span class="l">    }</span><span class="l">  ]</span><span class="l">}</span></code></pre>
+<p class="code-legend">Lo que agrega Comercio IA</p></figure>
+          </div>
+          </div>
         </div>
-        <div>
-          <p class="col-title red">Comercio IA agrega</p>
-          <ul class="list-plain red">
-            <li>Boleta para personas, factura para empresas</li>
-            <li>Derecho a retracto</li>
-            <li>Garantía legal</li>
-            <li>Notas de crédito</li>
-            <li>Webpay, Mercado Pago, Getnet y Khipu</li>
-          </ul>
-        </div>
       </div>
     </div>
-  </section>
-
-  <section class="section">
     <div class="wrap">
-      <div class="section-head"><p class="label">02 · Qué contiene</p><h2>Tres extensiones, dos políticas <span class="sub">y cinco medios de pago.</span></h2></div>
-      <div class="section-body">
-        <table class="ledger">
-          <thead><tr><th>Nombre</th><th>Qué hace</th><th>Base legal</th></tr></thead>
-          <tbody>
-          <tr><td class="n">cl.comercioia.shopping.<span class="k">tax_document</span></td><td class="w"><b>Boleta o factura</b><span>Boleta para personas; factura con RUT y giro para empresas. El pedido devuelve folio, RUT del emisor y estado en el SII.</span></td><td class="s">DL 825 · Res. SII 74/2020</td></tr>
-          <tr><td class="n">cl.comercioia.shopping.<span class="k">consumer_terms</span></td><td class="w"><b>Información al consumidor</b><span>En ventas a personas: identidad del vendedor, aviso de que compra a través de IA, despacho, cuotas con CAE y confirmación escrita.</span></td><td class="s">Ley 19.496 · DS 6/2021 · Res. SERNAC 33/2022</td></tr>
-          <tr><td class="n">cl.comercioia.shopping.<span class="k">credit_note</span></td><td class="w"><b>Notas de crédito</b><span>Cada devolución o retracto lleva su DTE 61, con referencia al documento original.</span></td><td class="s">DL 825 arts. 21 y 70</td></tr>
-          <tr><td class="n">cl.comercioia.policy.<span class="k">retracto</span></td><td class="w"><b>Derecho a retracto</b><span>10 días desde la recepción, 90 sin confirmación escrita, devolución en 45 días.</span></td><td class="s">Ley 19.496 art. 3 bis</td></tr>
-          <tr><td class="n">cl.comercioia.policy.<span class="k">garantia_legal</span></td><td class="w"><b>Garantía legal</b><span>6 meses desde la recepción: reparación, cambio o devolución, a elección del comprador.</span></td><td class="s">Ley 19.496 arts. 20 y 21</td></tr>
-          <tr><td class="n">cl.comercioia.<span class="k">webpay_plus · oneclick_mall · mercadopago · getnet · khipu</span></td><td class="w"><b>Medios de pago chilenos</b><span>La tienda cobra con su propia cuenta y el comprador paga en la página del proveedor.</span></td><td class="s">Documentación de cada proveedor</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap">
-      <div class="section-head"><p class="label">03 · Una compra</p><h2>De «lo quiero» a una boleta <span class="sub">que el SII ya recibió.</span></h2></div>
-      <div class="section-body wide">
-        <div class="seq">
+      <h3 class="seq-head">La misma compra, como diagrama de secuencia</h3>
+      <div class="seq">
 <svg viewBox="0 0 1100 572" role="img" aria-labelledby="seq-title">
 <title id="seq-title">Diagrama de secuencia de una compra</title>
 <text class="lane" x="90" y="26" text-anchor="middle">Comprador</text>
@@ -220,8 +244,8 @@
 <path class="head ours" d="M330 532 L339 527.5 L339 536.5 Z"/>
 <text class="lbl ours" x="445" y="523" text-anchor="middle"><tspan class="num">11</tspan>  pedido con tax_documents[]</text>
 </svg>
-        </div>
-        <details class="seq-text">
+      </div>
+      <details class="seq-text">
           <summary>Ver los pasos como texto</summary>
           <ol>
             <li>Comprador → Agente de IA: «Lo quiero»</li>
@@ -237,28 +261,84 @@
             <li>Tienda → Agente de IA: pedido con tax_documents[]</li>
           </ol>
         </details>
-        <p class="legend"><span>Núcleo de UCP/ACP y proveedor de pago</span><span class="ours">Lo que agrega Comercio IA</span></p>
-        <p class="fine">Ningún estándar define todavía cómo devolver al comprador al agente después de pagar en una página externa (propuesta UCP #486), así que el agente se entera del pago por el pedido. Si compra una empresa, el paso 02 pide factura con su RUT y giro, el paso 09 emite una factura (33) y, en general, el retracto no aplica, salvo cuando la compradora es micro o pequeña empresa (Ley 20.416).</p>
+      <p class="legend"><span>Núcleo de UCP/ACP y proveedor de pago</span><span class="ours">Lo que agrega Comercio IA</span></p>
+      <p class="fine">Ningún estándar define todavía cómo devolver al comprador al agente después de pagar en una página externa (propuesta UCP #486), así que el agente se entera del pago por el pedido. Si compra una empresa, el paso 02 pide factura con su RUT y giro, el paso 09 emite una factura (33) y, en general, el retracto no aplica, salvo cuando la compradora es micro o pequeña empresa (Ley 20.416).</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>Los estándares llegan hasta donde <span class="sub">empieza la ley chilena.</span></h2>
+      <div class="gap">
+        <div>
+          <h3>UCP y ACP traen</h3>
+          <ul>
+            <li>Catálogo y búsqueda</li>
+            <li>Carro y checkout</li>
+            <li>Pedido y ajustes</li>
+            <li>Políticas y avisos</li>
+            <li>Medios de pago enchufables</li>
+          </ul>
+        </div>
+        <div class="ours">
+          <h3>Comercio IA agrega</h3>
+          <ul>
+            <li>Boleta para personas, factura para empresas</li>
+            <li>Derecho a retracto</li>
+            <li>Garantía legal</li>
+            <li>Notas de crédito</li>
+            <li>Webpay, Mercado Pago, Getnet y Khipu</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
-      <div class="section-head"><p class="label">04 · Para quién</p><h2>Cada uno implementa <span class="sub">su parte.</span></h2></div>
-      <div class="section-body who">
-        <div><p class="tag">/.well-known/ucp</p><h3>Tiendas y proveedores</h3><p>Vendas a personas o a empresas, declara la extensión y tus medios de pago en tu perfil. Si tu plataforma o ERP ya la implementa, solo la activas.</p></div>
-        <div><p class="tag">UCP · ACP</p><h3>Plataformas y ERP</h3><p>Implementa los esquemas en tus endpoints y ofrécelo a todas tus tiendas con tu propia marca.</p></div>
-        <div><p class="tag">document_choice</p><h3>Agentes de IA</h3><p>Asistentes personales y agentes de compra de empresas: anuncia las extensiones que soportas, pide boleta o factura y muestra cada aviso legal sin ocultarlo.</p></div>
-        <div><p class="tag">payment_handlers</p><h3>Proveedores de pago</h3><p>Publicamos tu medio de pago hasta que publiques el tuyo. Revísalo, cofírmalo o asúmelo.</p></div>
+      <h2>Tres extensiones, dos políticas <span class="sub">y cinco medios de pago.</span></h2>
+      <table class="ledger">
+        <thead><tr><th>Nombre</th><th>Qué hace</th><th>Base legal</th></tr></thead>
+        <tbody>
+          <tr><td class="n">cl.comercioia.shopping.<span class="k">tax_document</span></td><td class="w"><b>Boleta o factura</b><span>Boleta para personas; factura con RUT y giro para empresas. El pedido devuelve folio, RUT del emisor y estado en el SII.</span></td><td class="s">DL 825 · Res. SII 74/2020</td></tr>
+          <tr><td class="n">cl.comercioia.shopping.<span class="k">consumer_terms</span></td><td class="w"><b>Información al consumidor</b><span>En ventas a personas: identidad del vendedor, aviso de que compra a través de IA, despacho, cuotas con CAE y confirmación escrita.</span></td><td class="s">Ley 19.496 · DS 6/2021 · Res. SERNAC 33/2022</td></tr>
+          <tr><td class="n">cl.comercioia.shopping.<span class="k">credit_note</span></td><td class="w"><b>Notas de crédito</b><span>Cada devolución o retracto lleva su DTE 61, con referencia al documento original.</span></td><td class="s">DL 825 arts. 21 y 70</td></tr>
+          <tr><td class="n">cl.comercioia.policy.<span class="k">retracto</span></td><td class="w"><b>Derecho a retracto</b><span>10 días desde la recepción, 90 sin confirmación escrita, devolución en 45 días.</span></td><td class="s">Ley 19.496 art. 3 bis</td></tr>
+          <tr><td class="n">cl.comercioia.policy.<span class="k">garantia_legal</span></td><td class="w"><b>Garantía legal</b><span>6 meses desde la recepción: reparación, cambio o devolución, a elección del comprador.</span></td><td class="s">Ley 19.496 arts. 20 y 21</td></tr>
+          <tr><td class="n">cl.comercioia.<span class="k">webpay_plus · oneclick_mall · mercadopago · getnet · khipu</span></td><td class="w"><b>Medios de pago chilenos</b><span>La tienda cobra con su propia cuenta y el comprador paga en la página del proveedor.</span></td><td class="s">Documentación de cada proveedor</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>Cada uno implementa <span class="sub">su parte.</span></h2>
+      <div class="who">
+        <div>
+          <svg viewBox="0 0 96 72" aria-hidden="true" focusable="false"><rect class="ill-fill" x="14" y="30" width="68" height="34"/><path class="ill" d="M10 30h76M14 30v34h68V30M10 30l6-18h64l6 18M40 64V44h16v20"/><path class="ill-red" d="M26 12v18M42 12v18M58 12v18M74 12v18"/></svg>
+          <p class="tag">/.well-known/ucp</p><h3>Tiendas y proveedores</h3><p>Vendas a personas o a empresas, declara la extensión y tus medios de pago en tu perfil. Si tu plataforma o ERP ya la implementa, solo la activas.</p>
+        </div>
+        <div>
+          <svg viewBox="0 0 96 72" aria-hidden="true" focusable="false"><path class="ill-fill" d="M48 42l34-14-34-14-34 14z"/><path class="ill" d="M48 42l34-14-34-14-34 14zM14 38l34 14 34-14M14 48l34 14 34-14"/><path class="ill-red" d="M48 14v28"/></svg>
+          <p class="tag">UCP · ACP</p><h3>Plataformas y ERP</h3><p>Implementa los esquemas en tus endpoints y ofrécelo a todas tus tiendas con tu propia marca.</p>
+        </div>
+        <div>
+          <svg viewBox="0 0 96 72" aria-hidden="true" focusable="false"><rect class="ill-fill" x="12" y="14" width="56" height="36" rx="12"/><path class="ill" d="M24 14h32a12 12 0 0 1 12 12v12a12 12 0 0 1-12 12H36l-10 9v-9h-2a12 12 0 0 1-12-12V26a12 12 0 0 1 12-12z"/><path class="ill-red" d="M80 18v10M75 23h10M84 40v6M81 43h6"/><path class="ill" d="M28 32h24"/></svg>
+          <p class="tag">document_choice</p><h3>Agentes de IA</h3><p>Asistentes personales y agentes de compra de empresas: anuncia las extensiones que soportas, pide boleta o factura y muestra cada aviso legal sin ocultarlo.</p>
+        </div>
+        <div>
+          <svg viewBox="0 0 96 72" aria-hidden="true" focusable="false"><rect class="ill-fill" x="10" y="20" width="52" height="34" rx="5"/><rect class="ill" x="10" y="20" width="52" height="34" rx="5"/><path class="ill" d="M10 30h52M18 44h14"/><rect class="ill-red" x="58" y="10" width="28" height="52" rx="5"/><path class="ill-red" d="M64 20h16M64 28h16"/></svg>
+          <p class="tag">payment_handlers</p><h3>Proveedores de pago</h3><p>Publicamos tu medio de pago hasta que publiques el tuyo. Revísalo, cofírmalo o asúmelo.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="section" id="participa">
     <div class="wrap">
-      <div class="section-head"><p class="label">05 · Estado</p><h2>Lista para implementar. <span class="sub">Estable tras la primera venta real.</span></h2></div>
-      <div class="section-body status-grid">
+      <h2>Lista para implementar. <span class="sub">Estable tras la primera venta real.</span></h2>
+      <div class="status-grid">
         <dl class="kv">
           <dt>Versión</dt><dd><code>2026-10-09</code></dd>
           <dt>Estado</dt><dd>Propuesta abierta: lista para implementar y comentar</dd>
@@ -280,17 +360,15 @@
 
   <section class="section">
     <div class="wrap">
-      <div class="section-head"><p class="label">06 · Camino a la 1.0</p><h2>Cinco condiciones <span class="sub">para declararla estable.</span></h2></div>
-      <div class="section-body">
-        <ol class="road">
+      <h2>Cinco condiciones <span class="sub">para declararla estable.</span></h2>
+      <ol class="road">
           <li class="done"><span class="st">Hecho</span><b>Especificación y esquemas publicados</b><span class="d">9 de octubre de 2026, en comercioia.cl.</span></li>
           <li class="done"><span class="st">Hecho</span><b>Repositorio público y periodo de comentarios</b><span class="d">Comentarios abiertos hasta el 30 de noviembre de 2026.</span></li>
           <li class=""><span class="st">En diseño</span><b>Implementación de referencia</b><span class="d">Synaptik Checkout IA: las tres extensiones y Webpay Plus, con boleta automática.</span></li>
           <li class=""><span class="st">Pendiente</span><b>Primeras ventas reales</b><span class="d">Al menos una boleta, una factura y un retracto con nota de crédito.</span></li>
           <li class=""><span class="st">En curso</span><b>Revisión legal y validación externa</b><span class="d">Respuesta a las preguntas abiertas y un cofirmante o implementador externo.</span></li>
-        </ol>
-        <p class="fine">Las extensiones y los medios de pago se versionan por separado: Oneclick Mall, Getnet y Khipu pueden seguir como propuesta cuando el resto ya sea estable.</p>
-      </div>
+      </ol>
+      <p class="fine">Las extensiones y los medios de pago se versionan por separado: Oneclick Mall, Getnet y Khipu pueden seguir como propuesta cuando el resto ya sea estable.</p>
     </div>
   </section>
 </main>
@@ -298,7 +376,7 @@
 <footer class="footer">
   <div class="wrap">
     <p>Iniciativa abierta impulsada por <a href="https://pintorproject.cl">Pintor Project</a>. Implementación de referencia: <a href="https://synaptiktech.com/es/product/checkout-ia">Synaptik Checkout IA</a>, producto comercial de Pintor Project.</p>
-    <p class="mono"><a href="/spec/">Especificación</a> · <a href="/spec/#esquemas">Esquemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
+    <p><a href="/spec/">Especificación</a> · <a href="/spec/#esquemas">Esquemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
     <p class="links"><a href="/privacidad/">Privacidad</a> <a href="/accesibilidad/">Accesibilidad</a> <button type="button" class="linkish" data-cookie-settings hidden>Preferencias de cookies</button></p>
     <p class="legal">Especificación y esquemas bajo licencia Apache-2.0. No es asesoría legal. Comercio IA no está afiliado a Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu, el SII ni el SERNAC, ni cuenta con su respaldo; las marcas pertenecen a sus dueños.</p>
   </div>

@@ -7,8 +7,8 @@ SITE = sys.argv[1]
 BASE = "https://comercioia.cl"
 LASTMOD = "2026-10-09"
 # Self-hosted (assets/fonts, OFL): no request leaves for a font CDN before consent.
-FONTS = ('<link rel="preload" href="/assets/fonts/geist-400-latin.woff2" as="font" type="font/woff2" crossorigin>\n'
-         '<link rel="preload" href="/assets/fonts/geist-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin>')
+FONTS = ('<link rel="preload" href="/assets/fonts/hanken-grotesk-400-latin.woff2" as="font" type="font/woff2" crossorigin>\n'
+         '<link rel="preload" href="/assets/fonts/hanken-grotesk-300-latin.woff2" as="font" type="font/woff2" crossorigin>')
 ICON = ('<link rel="icon" href="/favicon.svg" type="image/svg+xml">\n'
         '<link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">')
 
@@ -137,7 +137,7 @@ def footer(lang):
         return '''<footer class="footer">
   <div class="wrap">
     <p>Iniciativa abierta impulsada por <a href="https://pintorproject.cl">Pintor Project</a>. Implementación de referencia: <a href="https://synaptiktech.com/es/product/checkout-ia">Synaptik Checkout IA</a>, producto comercial de Pintor Project.</p>
-    <p class="mono"><a href="/spec/">Especificación</a> · <a href="/spec/#esquemas">Esquemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
+    <p><a href="/spec/">Especificación</a> · <a href="/spec/#esquemas">Esquemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
     <p class="links"><a href="/privacidad/">Privacidad</a> <a href="/accesibilidad/">Accesibilidad</a> <button type="button" class="linkish" data-cookie-settings hidden>Preferencias de cookies</button></p>
     <p class="legal">Especificación y esquemas bajo licencia Apache-2.0. No es asesoría legal. Comercio IA no está afiliado a Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu, el SII ni el SERNAC, ni cuenta con su respaldo; las marcas pertenecen a sus dueños.</p>
   </div>
@@ -145,51 +145,11 @@ def footer(lang):
     return '''<footer class="footer">
   <div class="wrap">
     <p>An open initiative led by <a href="https://pintorproject.cl">Pintor Project</a>. Reference implementation: <a href="https://synaptiktech.com/en/product/checkout-ia">Synaptik Checkout IA</a>, a commercial product of Pintor Project.</p>
-    <p class="mono"><a href="/en/spec/">Specification</a> · <a href="/en/spec/#schemas">Schemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
+    <p><a href="/en/spec/">Specification</a> · <a href="/en/spec/#schemas">Schemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
     <p class="links"><a href="/en/privacy/">Privacy</a> <a href="/en/accessibility/">Accessibility</a> <button type="button" class="linkish" data-cookie-settings hidden>Cookie preferences</button></p>
     <p class="legal">Specification and schemas under the Apache-2.0 license. Not legal advice. Comercio IA is not affiliated with or endorsed by Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu, the SII or SERNAC; trademarks belong to their owners.</p>
   </div>
 </footer>'''
-
-RECEIPT_LINES = [
-    '<div class="rutbox"><span>R.U.T.: 76.123.456-0</span><span>BOLETA ELECTRÓNICA</span><span>N° 4512330</span><span>EJEMPLO</span></div>',
-    '<div class="c">TIENDA EJEMPLO SPA</div>',
-    '<div class="c sm">Av. Ejemplo 123, Santiago</div>',
-    '<div class="hr"></div>',
-    '<div class="r"><span>09/10/26 14:22</span><span>vía agente IA</span></div>',
-    '<div class="hr"></div>',
-    '<div class="r"><span>Teclado 61 teclas</span><span>$189.990</span></div>',
-    '<div class="r"><span>Despacho RM</span><span>$4.990</span></div>',
-    '<div class="hr"></div>',
-    '<div class="r tot"><span>TOTAL</span><span>$194.980</span></div>',
-    '<div class="r sm"><span>IVA incluido</span><span>$31.131</span></div>',
-    '<div class="r sm"><span>Webpay Plus</span><span>aprobado</span></div>',
-    '<div class="hr"></div>',
-    '<div class="sm">Derecho a retracto: 10 días</div>',
-    '<div class="sm">Garantía legal: 6 meses</div>',
-    '<img src="/assets/timbre-receipt.svg" alt="">',
-    '<div class="c sm">Timbre electrónico · ejemplo</div>',
-    '<div class="c sm ns">cl.comercioia.shopping.tax_document</div>',
-]
-
-def receipt(lang):
-    out = []
-    for i, l in enumerate(RECEIPT_LINES):
-        if l.startswith('<img'):
-            out.append(l.replace('<img ', f'<img class="ln" style="--i:{i}" ', 1))
-        else:
-            m = re.match(r'<div class="([^"]*)"', l)
-            out.append(l.replace(f'<div class="{m.group(1)}"', f'<div class="{m.group(1)} ln" style="--i:{i}"', 1))
-    aria = ("Ejemplo de boleta electrónica emitida después de una compra hecha a través de un agente de IA" if lang == "es"
-            else "Example of a Chilean electronic receipt issued after a purchase made through an AI agent")
-    note = ("Ejemplo ilustrativo. La tienda emite la boleta y el agente la recibe en el pedido." if lang == "es"
-            else "Illustrative example, in Spanish as a Chilean store would issue it. The agent receives it on the order.")
-    return f'''<figure class="receipt-wrap">
-        <div class="receipt" role="img" aria-label="{aria}">
-{chr(10).join("          " + l for l in out)}
-        </div>
-        <figcaption class="receipt-note">{note}</figcaption>
-      </figure>'''
 
 ORG = {"@type": "Organization", "@id": BASE + "/#org", "name": "Pintor Project SpA", "alternateName": "Pintor Project",
        "url": "https://pintorproject.cl", "email": "contacto@comercioia.cl",
@@ -231,7 +191,7 @@ def seo(lang, title, desc, url, kind):
 <script src="/assets/site.js" defer></script>
 <!-- /seo -->'''
 
-def head(lang, title, desc, canonical, alt_es, alt_en, kind="home"):
+def head(lang, title, desc, canonical, alt_es, alt_en, kind="home", extra=""):
     return f'''<!doctype html>
 <html lang="{"es-CL" if lang == "es" else "en"}">
 <head>
@@ -246,7 +206,7 @@ def head(lang, title, desc, canonical, alt_es, alt_en, kind="home"):
 {seo(lang, title, desc, canonical, kind)}
 {ICON}
 {FONTS}
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/site.css">{extra}
 </head>'''
 
 def ledger_row(prefix, key, title, text, source):
@@ -256,7 +216,7 @@ def ledger_row(prefix, key, title, text, source):
 # ---------------------------------------------------------------- plain-language introduction
 INTRO = {
     "es": dict(
-        label="Para empezar", h2='Cómo compra una IA, <span class="sub">y qué le falta en Chile.</span>',
+        h2='Cómo compra una IA, <span class="sub">y qué le falta en Chile.</span>',
         steps=[
             ("01", "Los asistentes de IA empiezan a comprar",
              "ChatGPT, Gemini o Claude ya no solo recomiendan productos: pueden buscar en una tienda, armar el carro y llevar al cliente a pagar. Para eso, el asistente y la tienda tienen que hablar el mismo idioma."),
@@ -275,7 +235,7 @@ INTRO = {
         who="Esta página es para quien implementa: plataformas de e-commerce, ERPs, proveedores de pago y equipos técnicos de tiendas. Si tienes una tienda y solo quieres vender por IA, tu plataforma o tu proveedor debería encargarse.",
     ),
     "en": dict(
-        label="Start here", h2='How AI shopping works, <span class="sub">and what Chile adds.</span>',
+        h2='How AI shopping works, <span class="sub">and what Chile adds.</span>',
         steps=[
             ("01", "AI assistants are starting to shop",
              "ChatGPT, Gemini and Claude no longer just recommend products: they can search a store, build a cart and take the buyer to pay. For that, the assistant and the store need to speak the same language."),
@@ -297,23 +257,307 @@ INTRO = {
 
 def intro_section(lang):
     d = INTRO[lang]
-    steps = "\n".join(f'          <div><p class="tag">{n}</p><h3>{h}</h3><p>{t}</p></div>' for n, h, t in d["steps"])
+    ideas = "\n".join(f'          <div>\n            {ILL_IDEAS[i]}\n            <h3>{h}</h3>\n            <p>{t}</p>\n          </div>'
+                      for i, (_, h, t) in enumerate(d["steps"]))
     terms = "\n".join(f"            <dt>{a}</dt><dd>{b}</dd>" for a, b in d["terms"])
     return f'''  <section class="section intro" id="{"que-es" if lang == "es" else "what-is-it"}">
     <div class="wrap">
-      <div class="section-head"><p class="label">{d["label"]}</p><h2>{d["h2"]}</h2></div>
-      <div class="section-body">
-        <div class="intro-steps">
-{steps}
-        </div>
-        <h3 class="intro-terms-title">{d["terms_title"]}</h3>
-        <dl class="kv intro-terms">
+      <h2>{d["h2"]}</h2>
+      <div class="ideas">
+{ideas}
+      </div>
+      <div class="glossary">
+        <h3>{d["terms_title"]}</h3>
+        <dl>
 {terms}
         </dl>
-        <p class="fine">{d["who"]}</p>
       </div>
+      <p class="fine">{d["who"]}</p>
     </div>
   </section>'''
+
+# ---------------------------------------------------------------- own line illustrations (one style, one red accent)
+ILL_IDEAS = [
+    # a chat bubble with a cart: assistants start to shop
+    '<svg viewBox="0 0 132 96" aria-hidden="true" focusable="false">'
+    '<rect class="ill-fill" x="10" y="12" width="84" height="50" rx="14"/>'
+    '<path class="ill" d="M24 12h56a14 14 0 0 1 14 14v22a14 14 0 0 1-14 14H46l-14 12v-12h-8a14 14 0 0 1-14-14V26a14 14 0 0 1 14-14z"/>'
+    '<path class="ill" d="M36 30h8l5 18h20l4-12H47"/><circle class="ill-dot" cx="52" cy="53" r="2.2"/><circle class="ill-dot" cx="66" cy="53" r="2.2"/>'
+    '<path class="ill-red" d="M108 20v12M102 26h12M116 48v8M112 52h8"/></svg>',
+    # UCP and ACP speaking the same language
+    '<svg viewBox="0 0 132 96" aria-hidden="true" focusable="false">'
+    '<rect class="ill-fill" x="8" y="26" width="46" height="44" rx="8"/>'
+    '<rect class="ill" x="8" y="26" width="46" height="44" rx="8"/><text class="ill-t" x="31" y="51" text-anchor="middle">UCP</text>'
+    '<rect class="ill" x="78" y="26" width="46" height="44" rx="8"/><text class="ill-t" x="101" y="51" text-anchor="middle">ACP</text>'
+    '<path class="ill" d="M54 40h24M54 56h24" stroke-dasharray="3 4"/><path class="ill" d="M72 36l6 4-6 4M60 52l-6 4 6 4"/></svg>',
+    # a plug-in piece with the red cl. box: the extension
+    '<svg viewBox="0 0 132 96" aria-hidden="true" focusable="false">'
+    '<rect class="ill-fill" x="8" y="22" width="60" height="52" rx="8"/>'
+    '<path class="ill" d="M16 22h44a8 8 0 0 1 8 8v12h-6a6 6 0 0 0 0 12h6v12a8 8 0 0 1-8 8H16a8 8 0 0 1-8-8V30a8 8 0 0 1 8-8z"/>'
+    '<text class="ill-t" x="34" y="52" text-anchor="middle">UCP</text>'
+    '<rect class="ill-red" x="78" y="30" width="46" height="36"/>'
+    '<text class="ill-tr" x="101" y="46" text-anchor="middle">cl.</text><text class="ill-tr" x="101" y="58" text-anchor="middle">SII</text>'
+    '<path class="ill-red" d="M62 48h16"/></svg>',
+]
+ILL_WHO = [
+    # a storefront
+    '<svg viewBox="0 0 96 72" aria-hidden="true" focusable="false"><rect class="ill-fill" x="14" y="30" width="68" height="34"/>'
+    '<path class="ill" d="M10 30h76M14 30v34h68V30M10 30l6-18h64l6 18M40 64V44h16v20"/><path class="ill-red" d="M26 12v18M42 12v18M58 12v18M74 12v18"/></svg>',
+    # stacked layers: a platform or ERP
+    '<svg viewBox="0 0 96 72" aria-hidden="true" focusable="false"><path class="ill-fill" d="M48 42l34-14-34-14-34 14z"/>'
+    '<path class="ill" d="M48 42l34-14-34-14-34 14zM14 38l34 14 34-14M14 48l34 14 34-14"/><path class="ill-red" d="M48 14v28"/></svg>',
+    # a chat bubble: an AI agent
+    '<svg viewBox="0 0 96 72" aria-hidden="true" focusable="false"><rect class="ill-fill" x="12" y="14" width="56" height="36" rx="12"/>'
+    '<path class="ill" d="M24 14h32a12 12 0 0 1 12 12v12a12 12 0 0 1-12 12H36l-10 9v-9h-2a12 12 0 0 1-12-12V26a12 12 0 0 1 12-12z"/>'
+    '<path class="ill-red" d="M80 18v10M75 23h10M84 40v6M81 43h6"/><path class="ill" d="M28 32h24"/></svg>',
+    # a card and a payment terminal: a payment provider
+    '<svg viewBox="0 0 96 72" aria-hidden="true" focusable="false"><rect class="ill-fill" x="10" y="20" width="52" height="34" rx="5"/>'
+    '<rect class="ill" x="10" y="20" width="52" height="34" rx="5"/><path class="ill" d="M10 30h52M18 44h14"/>'
+    '<rect class="ill-red" x="58" y="10" width="28" height="52" rx="5"/><path class="ill-red" d="M64 20h16M64 28h16"/></svg>',
+]
+SPARK = ('<svg viewBox="0 0 22 22" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="11" fill="var(--bg-3)"/>'
+         '<path d="M11 5.5l1.4 4.1 4.1 1.4-4.1 1.4-1.4 4.1-1.4-4.1-4.1-1.4 4.1-1.4z" fill="var(--ink-2)"/></svg>')
+KEYBOARD = ('<svg viewBox="0 0 34 20" aria-hidden="true" focusable="false"><rect x="1" y="1" width="32" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/>'
+            '<path d="M5 6h3M10 6h3M15 6h3M20 6h3M25 6h3M5 10h3M10 10h3M15 10h3M20 10h3M25 10h3M9 14h16" stroke="currentColor" stroke-width="1.4"/></svg>')
+
+# ---------------------------------------------------------------- hero object: the RUT box in volume, with its timbre
+def timbre_symbol():
+    w, h, bars = pdf417_like(6, 9, 39)  # same pattern as /assets/timbre-receipt.svg
+    d = "".join(f"M{x} {y}h{bw}v3h-{bw}z" for x, y, bw in bars)
+    return (f'<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">'
+            f'<symbol id="timbre" viewBox="0 0 {w} {h}" preserveAspectRatio="none"><path d="{d}"/></symbol></svg>')
+
+def hero_art(lang, version):
+    es = lang == "es"
+    title = ("El recuadro del RUT de los documentos tributarios chilenos, en volumen, con su timbre electrónico: boleta electrónica, factura electrónica y nota de crédito."
+             if es else "The RUT box printed on Chilean tax documents, as a solid block with its electronic stamp: electronic boleta, electronic factura and credit note.")
+    caption = ("El recuadro del RUT, presente en todo documento tributario chileno." if es
+               else "The RUT box, printed on every Chilean tax document.")
+    stamp = f"Timbre electrónico · versión {version}" if es else f"Electronic stamp · version {version}"
+    return f'''<figure class="hero-art">
+          <svg class="block" viewBox="0 0 520 450" role="img" aria-labelledby="block-t">
+            <title id="block-t">{title}</title>
+            <g class="lift">
+              <path class="face" d="M40 140 L400 140 L470 90 L110 90 Z"/>
+              <path class="hatch" d="M70 140 L140 90 M110 140 L180 90 M150 140 L220 90 M190 140 L260 90 M230 140 L300 90 M270 140 L340 90 M310 140 L380 90 M350 140 L420 90"/>
+              <path class="solid" d="M400 140 L470 90 L470 370 L400 420 Z"/>
+            </g>
+            <rect class="face" x="40" y="140" width="360" height="280"/>
+            <rect class="frame" x="76" y="170" width="288" height="146"/>
+            <text class="t-big" x="220" y="218" text-anchor="middle">cl.<tspan>comercioia</tspan></text>
+            <text class="t" x="220" y="250" text-anchor="middle">BOLETA ELECTRÓNICA</text>
+            <text class="t" x="220" y="273" text-anchor="middle">FACTURA ELECTRÓNICA</text>
+            <text class="t" x="220" y="296" text-anchor="middle">NOTA DE CRÉDITO</text>
+            <use class="timbre" href="#timbre" x="76" y="336" width="288" height="50"/>
+            <text class="t-dim" x="220" y="406" text-anchor="middle">{stamp}</text>
+          </svg>
+          <figcaption class="block-caption">{caption}</figcaption>
+        </figure>'''
+
+# ---------------------------------------------------------------- purchase demo: what the buyer sees, next to the JSON
+# The JSON in each step is cut from the validated examples in /examples (… marks what is left out),
+# so the demo never shows a field the current schemas don't define.
+EX = {n: json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "examples", n + ".json")))
+      for n in ("checkout-response", "order-after-withdrawal", "profile")}
+
+def pick(d, *keys):
+    return {k: d[k] for k in keys}
+
+def json_lines(value, ours, width=60):
+    """Compact JSON as highlighted lines. Keys in `ours` (at any depth) mark their whole member as added by Comercio IA."""
+    esc = lambda t: html.escape(t, quote=False)
+    def scalar(v):
+        return '<span class="d">…</span>' if v is Ellipsis else f'<span class="s">{esc(json.dumps(v, ensure_ascii=False))}</span>'
+    def plain(v):  # text length of the one-line form
+        if v is Ellipsis: return "…"
+        if isinstance(v, dict): return "{ " + ", ".join(f'"{k}": {plain(x)}' for k, x in v.items()) + " }"
+        if isinstance(v, list): return "[ " + ", ".join(plain(x) for x in v) + " ]"
+        return json.dumps(v, ensure_ascii=False)
+    def inline(v):
+        if isinstance(v, dict): return "{ " + ", ".join(f'<span class="k">"{esc(k)}"</span>: {inline(x)}' for k, x in v.items()) + " }"
+        if isinstance(v, list): return "[ " + ", ".join(inline(x) for x in v) + " ]"
+        return scalar(v)
+    out = []
+    def emit(v, ind, prefix, prefix_len, o, tail):
+        """Render v after `prefix` at indent `ind`; `tail` is "," or ""."""
+        if prefix_len + len(plain(v)) + ind + len(tail) <= width or not isinstance(v, (dict, list)) or not v:
+            out.append((" " * ind + prefix + inline(v) + tail, o)); return
+        opn, cls = ("{", "}") if isinstance(v, dict) else ("[", "]")
+        out.append((" " * ind + prefix + opn, o))
+        items = list(v.items()) if isinstance(v, dict) else [(None, x) for x in v]
+        line, line_len, line_o = None, 0, o
+        for i, (k, x) in enumerate(items):
+            t = "," if i < len(items) - 1 else ""
+            xo = o or (k in ours)
+            p = f'<span class="k">"{esc(k)}"</span>: ' if k is not None else ""
+            pl = len(f'"{k}": ') if k is not None else 0
+            small = not isinstance(x, (dict, list)) or pl + len(plain(x)) <= 28
+            piece, piece_len = p + inline(x) + t, pl + len(plain(x)) + len(t)
+            if small and line is not None and line_o == xo and ind + 2 + line_len + 1 + piece_len <= width:
+                line, line_len = line + " " + piece, line_len + 1 + piece_len
+                continue
+            if line is not None: out.append((" " * (ind + 2) + line, line_o)); line = None
+            if small:
+                line, line_len, line_o = piece, piece_len, xo
+            else:
+                emit(x, ind + 2, p, pl, xo, t)
+        if line is not None: out.append((" " * (ind + 2) + line, line_o))
+        out.append((" " * ind + cls + tail, o))
+    emit(value, 0, "", 0, False, "")
+    return "".join(f'<span class="l{" o" if o else ""}">{t}</span>' for t, o in out)
+
+def code_block(op, direction, blocks, legend):
+    """blocks: [(subtitle or None, value, ours_keys)]"""
+    parts = []
+    for sub, value, ours in blocks:
+        if sub: parts.append(f'<p class="code-sub">{sub}</p>')
+        parts.append(f'<pre tabindex="0"><code>{json_lines(value, ours)}</code></pre>')
+    return (f'<figure class="code"><figcaption><span><b>{op}</b> · {direction}</span><span>UCP</span></figcaption>\n'
+            + "\n".join(parts) + f'\n<p class="code-legend">{legend}</p></figure>')
+
+def phone(time, chat, lang):
+    head_ = "Asistente de IA" if lang == "es" else "AI assistant"
+    typing = "Escribe un mensaje" if lang == "es" else "Type a message"
+    return (f'<div class="phone"><div class="screen">'
+            f'<div class="bar" aria-hidden="true"><span>{time}</span><span>5G</span></div>'
+            f'<div class="ahead">{SPARK}<span>{head_}</span></div>'
+            f'<div class="chat">{chat}</div>'
+            f'<div class="input" aria-hidden="true">{typing}</div></div></div>')
+
+def demo_steps(lang):
+    es = lang == "es"
+    co, order, prof = EX["checkout-response"], EX["order-after-withdrawal"], EX["profile"]["ucp"]
+    retracto, garantia = co["policies"]
+    step1 = {"line_items": [Ellipsis], "tax_document": co["tax_document"],
+             "consumer_terms": pick(co["consumer_terms"], "ai_disclosure")}
+    step2 = {"currency": co["currency"], "totals": [Ellipsis, co["totals"][-1]],
+             "policies": [pick(retracto, "type", "window_days", "refund_within_days"), pick(garantia, "type", "months")],
+             "messages": [dict(pick(co["messages"][0], "type", "code", "presentation"), content=Ellipsis), Ellipsis],
+             "consumer_terms": dict(seller=pick(co["consumer_terms"]["seller"], "razon_social", "rut", "domicilio"),
+                                    ai_disclosure=Ellipsis, price_includes_tax=co["consumer_terms"]["price_includes_tax"])}
+    step3 = dict(pick(co, "id", "status", "continue_url"), messages=[Ellipsis, co["messages"][-1]])
+    step3_profile = {"payment_handlers": {"cl.comercioia.webpay_plus": [pick(prof["payment_handlers"]["cl.comercioia.webpay_plus"][0], "id", "available_instruments")]}}
+    doc = order["tax_documents"][0]
+    step4 = {"id": order["id"],
+             "tax_documents": [pick(doc, "type", "folio", "issuer_rut", "issued_at", "total", "iva", "sii_status", "representation_url")],
+             "consumer_terms": {"confirmation": pick(order["consumer_terms"]["confirmation"], "channel", "contract_copy_url")}}
+    adj = order["adjustments"][0]
+    step5 = {"id": order["id"], "adjustments": [dict(pick(adj, "id", "type", "status", "description"),
+             tax_document=pick(adj["tax_document"], "type", "folio", "ref_type", "ref_folio", "cod_ref", "razon"))]}
+    legend = "Lo que agrega Comercio IA" if es else "What Comercio IA adds"
+    a2s, s2a = ("agente → tienda", "tienda → agente") if es else ("agent → store", "store → agent")
+    order_op = "pedido" if es else "order"
+    profile_sub = "perfil de la tienda · /.well-known/ucp" if es else "store profile · /.well-known/ucp"
+    product = (f'<div class="card prod"><div class="img">{KEYBOARD}</div><div><b>{"Teclado 61 teclas" if es else "61-key keyboard"}</b>'
+               f'<div class="dim">{"Despacho RM · 3 días hábiles" if es else "Delivery in Santiago · 3 business days"}</div><div>$189.990</div></div></div>')
+    totals = (f'<div class="card"><div class="row"><span>{"Teclado 61 teclas" if es else "61-key keyboard"}</span><span>$189.990</span></div>'
+              f'<div class="row"><span>{"Despacho RM" if es else "Delivery (Santiago)"}</span><span>$4.990</span></div>'
+              f'<div class="row tot"><span>Total</span><span>$194.980</span></div>'
+              f'<div class="dim">{"IVA incluido · boleta electrónica" if es else "VAT included · electronic boleta"}</div></div>')
+    receipt = ('<div class="mini-receipt" role="img" aria-label="' + ("Boleta electrónica N° 4512330 de Tienda Ejemplo SpA por $194.980" if es else "Electronic boleta No. 4512330 from Tienda Ejemplo SpA for $194.980") + '">'
+               '<div class="rb">R.U.T.: 76.123.456-0<br>BOLETA ELECTRÓNICA<br>N° 4512330</div>'
+               '<div class="row"><span>Teclado 61 teclas</span><span>$189.990</span></div>'
+               '<div class="row"><span>Despacho RM</span><span>$4.990</span></div>'
+               '<div class="row"><b>TOTAL</b><b>$194.980</b></div>'
+               '<img src="/assets/timbre-receipt.svg" alt=""></div>')
+    if es:
+        S = [
+            ("«Lo quiero», con boleta", "El agente pide boleta al crear el checkout.",
+             "Y declara que es un asistente de IA. La tienda lo repite en su respuesta, para que el comprador sepa que compra a través de un agente.",
+             phone("14:21", '<div class="me">Busco un teclado de 61 teclas que llegue esta semana.</div><div class="ai">Encontré este en Tienda Ejemplo:</div>'
+                   + product + '<div class="ai">¿Lo quieres con boleta o con factura?</div><div class="me">Con boleta.</div>', lang),
+             code_block("create_checkout", a2s, [(None, step1, {"tax_document", "consumer_terms"})], legend)),
+            ("Totales y avisos legales", "La tienda responde con el total en pesos y los avisos legales.",
+             "Quién vende, con RUT y domicilio; el derecho a retracto y la garantía legal. Los avisos también llegan como mensajes del núcleo de UCP, así que hasta un agente que no conoce la extensión debe mostrarlos sin ocultarlos.",
+             phone("14:21", totals
+                   + '<div class="notice"><b>Vende</b>Tienda Ejemplo SpA · RUT 76.123.456-0 · Av. Ejemplo 123, Santiago</div>'
+                   + '<div class="notice"><b>Derecho a retracto</b>Tienes derecho a retracto por 10 días desde que recibes el producto.</div>'
+                   + '<div class="notice"><b>Garantía legal</b>Garantía legal de 6 meses: reparación, cambio o devolución, a tu elección.</div>'
+                   + '<div class="ai small">Estás comprando a través de un asistente de IA.</div>', lang),
+             code_block("checkout", s2a, [(None, step2, {"policies", "consumer_terms"})], legend)),
+            ("Pago en la página del proveedor", "El comprador paga fuera del chat, en la página del proveedor.",
+             "La tienda crea el pago con su propia cuenta de Webpay Plus y responde con un enlace (<code>continue_url</code>). El asistente solo abre ese enlace; el dinero va directo a la cuenta de la tienda.",
+             phone("14:22", '<div class="me">Listo, lo compro.</div><div class="ai">Para pagar, abre la página de pago. Ahí pagas con Webpay Plus.</div>'
+                   + '<div class="card"><b>Total a pagar: $194.980</b><div class="dim">Webpay Plus · tienda-ejemplo.cl</div><span class="paybtn">Abrir la página de pago ↗</span></div>'
+                   + '<div class="ai small">El pago se hace en la página del proveedor, no en este chat.</div>', lang),
+             code_block("complete_checkout", s2a, [(None, step3, set()), (profile_sub, step3_profile, {"cl.comercioia.webpay_plus"})], legend)),
+            ("Boleta emitida al SII", "Con el pago confirmado, la tienda emite la boleta y la envía al SII.",
+             "La tienda confirma el pago directamente con el proveedor. El pedido le devuelve al agente el folio, el RUT del emisor y el estado en el SII; el comprador recibe la boleta y la copia del contrato por correo.",
+             phone("14:23", '<div class="ai">Tienda Ejemplo confirmó tu pago y emitió tu boleta:</div>' + receipt
+                   + '<div class="ai small">Te llegó la copia del contrato por correo.</div>', lang),
+             code_block(order_op, s2a, [(None, step4, {"tax_documents", "consumer_terms"})], legend)),
+            ("Retracto y nota de crédito", "Si el comprador se retracta, la devolución lleva su nota de crédito.",
+             "La tienda registra la devolución en el pedido con una nota de crédito electrónica (DTE 61) que hace referencia a la boleta original.",
+             phone("10:05", '<div class="me">Me arrepentí del teclado. ¿Lo puedo devolver?</div>'
+                   + '<div class="ai">Sí: estás dentro de los 10 días del derecho a retracto. Tienda Ejemplo explica cómo devolverlo en tienda-ejemplo.cl/retracto.</div>'
+                   + '<div class="card"><b>Devolución completada</b><div class="row"><span>Nota de crédito</span><span>N° 88213</span></div>'
+                   + '<div class="row"><span>Anula boleta</span><span>N° 4512330</span></div><div class="row tot"><span>Devuelto</span><span>$194.980</span></div></div>', lang),
+             code_block(order_op, s2a, [(None, step5, {"tax_document"})], legend)),
+        ]
+    else:
+        S = [
+            ("“I'll take it”, with a boleta", "The agent asks for a boleta when it creates the checkout.",
+             "It also declares that it is an AI assistant. The store echoes that back in its response, so the buyer knows they are buying through an agent.",
+             phone("14:21", "<div class=\"me\">I'm looking for a 61-key keyboard that arrives this week.</div><div class=\"ai\">I found this one at Tienda Ejemplo:</div>"
+                   + product + '<div class="ai">Do you want a boleta (consumer receipt) or a factura (business invoice)?</div><div class="me">A boleta, please.</div>', lang),
+             code_block("create_checkout", a2s, [(None, step1, {"tax_document", "consumer_terms"})], legend)),
+            ("Totals and legal notices", "The store answers with the total in pesos and the legal notices.",
+             "Who sells, with RUT and address; the right of withdrawal and the legal warranty. The notices also arrive as core UCP messages, so even an agent that doesn't know the extension must show them without hiding them.",
+             phone("14:21", totals
+                   + '<div class="notice"><b>Seller</b>Tienda Ejemplo SpA · RUT 76.123.456-0 · Av. Ejemplo 123, Santiago</div>'
+                   + '<div class="notice"><b>Right of withdrawal</b>You can withdraw within 10 days of receiving the product.</div>'
+                   + '<div class="notice"><b>Legal warranty</b>6-month legal warranty: repair, replacement or refund, your choice.</div>'
+                   + '<div class="ai small">You are buying through an AI assistant.</div>', lang),
+             code_block("checkout", s2a, [(None, step2, {"policies", "consumer_terms"})], legend)),
+            ("Payment on the provider's page", "The buyer pays outside the chat, on the provider's page.",
+             "The store creates the payment with its own Webpay Plus account and answers with a link (<code>continue_url</code>). The assistant only opens that link; the money goes straight to the store's account.",
+             phone("14:22", "<div class=\"me\">OK, I'll buy it.</div><div class=\"ai\">To pay, open the payment page. You'll pay there with Webpay Plus.</div>"
+                   + '<div class="card"><b>Total to pay: $194.980</b><div class="dim">Webpay Plus · tienda-ejemplo.cl</div><span class="paybtn">Open the payment page ↗</span></div>'
+                   + "<div class=\"ai small\">Payment happens on the provider's page, not in this chat.</div>", lang),
+             code_block("complete_checkout", s2a, [(None, step3, set()), (profile_sub, step3_profile, {"cl.comercioia.webpay_plus"})], legend)),
+            ("Boleta issued to the SII", "Once payment is confirmed, the store issues the boleta and sends it to the SII.",
+             "The store confirms the payment directly with the provider. The order gives the agent the folio, the issuer's RUT and the SII status; the buyer gets the boleta and a copy of the contract by email.",
+             phone("14:23", '<div class="ai">Tienda Ejemplo confirmed your payment and issued your boleta:</div>' + receipt
+                   + '<div class="ai small">A copy of the contract was sent to your email.</div>', lang),
+             code_block(order_op, s2a, [(None, step4, {"tax_documents", "consumer_terms"})], legend)),
+            ("Withdrawal and credit note", "If the buyer withdraws, the refund carries its credit note.",
+             "The store records the refund on the order with an electronic credit note (DTE 61) that references the original boleta.",
+             phone("10:05", '<div class="me">I changed my mind about the keyboard. Can I return it?</div>'
+                   + "<div class=\"ai\">Yes: you're within the 10-day right of withdrawal. Tienda Ejemplo explains how to return it at tienda-ejemplo.cl/retracto.</div>"
+                   + '<div class="card"><b>Refund completed</b><div class="row"><span>Credit note</span><span>No. 88213</span></div>'
+                   + '<div class="row"><span>Cancels boleta</span><span>No. 4512330</span></div><div class="row tot"><span>Refunded</span><span>$194.980</span></div></div>', lang),
+             code_block(order_op, s2a, [(None, step5, {"tax_document"})], legend)),
+        ]
+    return S
+
+def demo(lang):
+    es = lang == "es"
+    steps = demo_steps(lang)
+    pid = "paso" if es else "step"
+    n = len(steps)
+    tabs = "\n".join(f'            <button type="button" id="tab-{i}" aria-controls="{pid}-{i}"><span class="n">{i:02d}</span><span>{t}</span></button>'
+                     for i, (t, *_rest) in enumerate(steps, 1))
+    panels = "\n".join(
+        f'''          <div class="panel" id="{pid}-{i}">
+            <div class="panel-copy"><p class="panel-n">{"Paso" if es else "Step"} {i} {"de" if es else "of"} {n}</p><h3>{h}</h3><p>{p}</p></div>
+            {ph}
+            {code}
+          </div>''' for i, (_t, h, p, ph, code) in enumerate(steps, 1))
+    return f'''<div class="demo-band">
+      <div class="wrap">
+        <div class="demo" data-demo>
+          <div>
+            <div class="steps" data-demo-tabs aria-label="{"Pasos de una compra" if es else "Steps of a purchase"}" hidden>
+{tabs}
+            </div>
+            <p class="demo-note">{"Ejemplo ilustrativo con datos de prueba." if es else "Illustrative example with test data."}</p>
+          </div>
+          <div>
+{panels}
+          </div>
+        </div>
+      </div>
+    </div>'''
 
 # ---------------------------------------------------------------- landing pages
 def landing(lang):
@@ -326,7 +570,8 @@ def landing(lang):
             label="Propuesta abierta · versión 2026-10-09",
             h1="Comercio IA", h1sub="Boleta para personas, factura para empresas. Para cualquier agente de IA.",
             lead="Cuando un asistente de IA vende por una tienda chilena, la venta tiene que cumplir la ley: boleta o factura del SII, derecho a retracto, garantía legal y medios de pago locales. Comercio IA son las reglas abiertas para hacerlo, como complemento de los estándares de compra por IA de Google, Shopify, OpenAI y Stripe.",
-            cta="Leer la especificación", cta_href="/spec/", alt_link="Ver los esquemas", alt_href="/spec/#esquemas",
+            cta="Leer la especificación", cta_href="/spec/", alt_link="Ver una compra paso a paso", alt_href="#demo",
+            covers=(("Extiende", ["UCP", "ACP"]), ("Medios de pago", ["Webpay Plus", "Oneclick Mall", "Mercado Pago", "Getnet", "Khipu"])),
             facts=[("Abierta", "Licencia Apache-2.0, como UCP y ACP. Cualquiera la implementa sin pedir permiso."),
                    ("La tienda vende", "El pago llega a la cuenta de la propia tienda. La especificación nunca toca los fondos."),
                    ("Compatible", "Un agente que no la conoce sigue funcionando, y los avisos legales igual le llegan.")],
@@ -338,7 +583,8 @@ def landing(lang):
             label="Open proposal · version 2026-10-09",
             h1="Comercio IA", h1sub="A boleta for consumers, a factura for businesses. For any AI agent.",
             lead="When an AI assistant sells on behalf of a Chilean store, the sale has to follow Chilean law: an SII tax receipt (boleta or factura), the right of withdrawal, the legal warranty and local payment methods. Comercio IA is the open set of rules to do that, as an add-on to the AI shopping standards from Google, Shopify, OpenAI and Stripe.",
-            cta="Read the specification", cta_href="/en/spec/", alt_link="See the schemas", alt_href="/en/spec/#schemas",
+            cta="Read the specification", cta_href="/en/spec/", alt_link="See a purchase step by step", alt_href="#demo",
+            covers=(("Extends", ["UCP", "ACP"]), ("Payment methods", ["Webpay Plus", "Oneclick Mall", "Mercado Pago", "Getnet", "Khipu"])),
             facts=[("Open", "Apache-2.0 license, like UCP and ACP. Anyone can implement it without asking."),
                    ("The store sells", "Payment goes to the store's own account. The specification never touches funds."),
                    ("Compatible", "An agent that doesn't know it keeps working, and the legal notices still reach it.")],
@@ -367,16 +613,18 @@ def landing(lang):
                 ("Cofirma.", "Plataformas, ERP, proveedores de pago y gremios pueden aparecer como cofirmantes de la versión estable."),
                 ("Implementa.", "Gratis y sin pedir permiso. Si la implementas, avísanos y te listamos.")]
         S = dict(
-            s1l="01 · El vacío", s1h='Los estándares llegan hasta donde <span class="sub">empieza la ley chilena.</span>',
+            s1h='Los estándares llegan hasta donde <span class="sub">empieza la ley chilena.</span>',
             s1a="UCP y ACP traen", s1b="Comercio IA agrega",
-            s2l="02 · Qué contiene", s2h='Tres extensiones, dos políticas <span class="sub">y cinco medios de pago.</span>',
+            s2h='Tres extensiones, dos políticas <span class="sub">y cinco medios de pago.</span>',
             th=("Nombre", "Qué hace", "Base legal"),
-            s3l="03 · Una compra", s3h='De «lo quiero» a una boleta <span class="sub">que el SII ya recibió.</span>',
+            s3h='De «lo quiero» a una boleta <span class="sub">que el SII ya recibió.</span>',
+            s3p="Lo que ve el comprador en su asistente, junto a lo que viaja entre el agente y la tienda. En rojo, lo que agrega Comercio IA.",
+            seq_cap="La misma compra, como diagrama de secuencia",
             leg=("Núcleo de UCP/ACP y proveedor de pago", "Lo que agrega Comercio IA"),
             fine="Ningún estándar define todavía cómo devolver al comprador al agente después de pagar en una página externa (propuesta UCP #486), así que el agente se entera del pago por el pedido. Si compra una empresa, el paso 02 pide factura con su RUT y giro, el paso 09 emite una factura (33) y, en general, el retracto no aplica, salvo cuando la compradora es micro o pequeña empresa (Ley 20.416).",
-            s4l="04 · Para quién", s4h='Cada uno implementa <span class="sub">su parte.</span>',
-            s5l="05 · Estado", s5h='Lista para implementar. <span class="sub">Estable tras la primera venta real.</span>', s5id="participa",
-            s6l="06 · Camino a la 1.0", s6h='Cinco condiciones <span class="sub">para declararla estable.</span>',
+            s4h='Cada uno implementa <span class="sub">su parte.</span>',
+            s5h='Lista para implementar. <span class="sub">Estable tras la primera venta real.</span>', s5id="participa",
+            s6h='Cinco condiciones <span class="sub">para declararla estable.</span>',
             road=[("Hecho", "done", "Especificación y esquemas publicados", "9 de octubre de 2026, en comercioia.cl."),
                   ("Hecho", "done", "Repositorio público y periodo de comentarios", "Comentarios abiertos hasta el 30 de noviembre de 2026."),
                   ("En diseño", "", "Implementación de referencia", "Synaptik Checkout IA: las tres extensiones y Webpay Plus, con boleta automática."),
@@ -406,16 +654,18 @@ def landing(lang):
                 ("Co-sign.", "Platforms, ERPs, payment providers and trade associations can be listed as co-signers of the stable release."),
                 ("Implement.", "Free and without asking. If you implement it, tell us and we'll list you.")]
         S = dict(
-            s1l="01 · The gap", s1h='The standards stop <span class="sub">where Chilean law starts.</span>',
+            s1h='The standards stop <span class="sub">where Chilean law starts.</span>',
             s1a="UCP and ACP cover", s1b="Comercio IA adds",
-            s2l="02 · What's inside", s2h='Three extensions, two policies <span class="sub">and five payment methods.</span>',
+            s2h='Three extensions, two policies <span class="sub">and five payment methods.</span>',
             th=("Name", "What it does", "Legal basis"),
-            s3l="03 · One purchase", s3h='From “I\'ll take it” to a boleta <span class="sub">the SII has received.</span>',
+            s3h='From “I\'ll take it” to a boleta <span class="sub">the SII has received.</span>',
+            s3p="What the buyer sees in their assistant, next to what travels between the agent and the store. In red, what Comercio IA adds.",
+            seq_cap="The same purchase, as a sequence diagram",
             leg=("UCP/ACP core and payment provider", "What Comercio IA adds"),
             fine="Neither standard yet defines how to return the buyer to the agent after paying on an external page (UCP proposal #486), so the agent learns about the payment from the order. When a company buys, step 02 asks for a factura with its RUT and line of business, step 09 issues a factura (33), and the right of withdrawal generally does not apply, except when the buyer is a micro or small business (Ley 20.416).",
-            s4l="04 · Who it's for", s4h='Everyone implements <span class="sub">their part.</span>',
-            s5l="05 · Status", s5h='Ready to implement. <span class="sub">Stable after the first real sale.</span>', s5id="participate",
-            s6l="06 · Path to 1.0", s6h='Five conditions <span class="sub">before we call it stable.</span>',
+            s4h='Everyone implements <span class="sub">their part.</span>',
+            s5h='Ready to implement. <span class="sub">Stable after the first real sale.</span>', s5id="participate",
+            s6h='Five conditions <span class="sub">before we call it stable.</span>',
             road=[("Done", "done", "Specification and schemas published", "9 October 2026, at comercioia.cl."),
                   ("Done", "done", "Public repository and comment period", "Comments open until 30 November 2026."),
                   ("In design", "", "Reference implementation", "Synaptik Checkout IA: the three extensions and Webpay Plus, with automatic boleta."),
@@ -424,53 +674,75 @@ def landing(lang):
             road_note="Extensions and payment methods are versioned separately: Oneclick Mall, Getnet and Khipu can stay as proposals once the rest is stable.",
         )
     li = lambda xs: "\n".join(f"            <li>{x}</li>" for x in xs)
-    who_html = "\n".join(f'        <div><p class="tag">{t}</p><h3>{h}</h3><p>{p}</p></div>' for t, h, p in who)
+    who_html = "\n".join(f'        <div>\n          {ILL_WHO[i]}\n          <p class="tag">{t}</p><h3>{h}</h3><p>{p}</p>\n        </div>' for i, (t, h, p) in enumerate(who))
     kv_html = "\n".join(f"          <dt>{a}</dt><dd>{b}</dd>" for a, b in kv)
     asks_html = "\n".join(f"          <li><b>{a}</b><span>{b}</span></li>" for a, b in asks)
     rows_html = "\n".join("          " + r for r in rows)
     road_html = "\n".join(f'          <li class="{c}"><span class="st">{st}</span><b>{t}</b><span class="d">{d}</span></li>' for st, c, t, d in S["road"])
+    covers_html = "\n".join(f'        <dt>{a}</dt><dd>{"".join(f"<span>{x}</span>" for x in xs)}</dd>' for a, xs in T["covers"])
+    version = re.search(r"\d{4}-\d{2}-\d{2}", T["label"]).group(0)
     canonical = "https://comercioia.cl/" if es else "https://comercioia.cl/en/"
-    return f'''{head(lang, T["title"], T["desc"], canonical, "https://comercioia.cl/", "https://comercioia.cl/en/")}
+    return f'''{head(lang, T["title"], T["desc"], canonical, "https://comercioia.cl/", "https://comercioia.cl/en/", extra=chr(10) + '<script src="/assets/demo.js" defer></script>')}
 <body>
 {masthead(lang, "home")}
+{timbre_symbol()}
 
 <main id="main">
   <section class="hero">
     <div class="wrap">
       <div class="hero-grid">
         <div>
-          <p class="label"><span class="dot"></span>{T["label"]}</p>
+          <p class="status">{T["label"]}</p>
           <h1>{T["h1"]}<span class="sub">{T["h1sub"]}</span></h1>
-          <p class="lead" style="margin-top:28px">{T["lead"]}</p>
+          <p class="lead">{T["lead"]}</p>
           <div class="actions">
             <a class="btn" href="{T["cta_href"]}">{T["cta"]} <span aria-hidden="true">→</span></a>
-            <a class="link-arrow" href="{T["alt_href"]}">{T["alt_link"]}</a>
+            <a class="btn ghost" href="{T["alt_href"]}">{T["alt_link"]}</a>
           </div>
         </div>
-      {receipt(lang)}
+        {hero_art(lang, version)}
       </div>
+      <dl class="covers">
+{covers_html}
+      </dl>
       <div class="facts">
 {facts}
       </div>
     </div>
-    <div class="band" role="presentation"></div>
   </section>
 
 {intro_section(lang)}
 
+  <section class="section" id="demo">
+    <div class="wrap center">
+      <h2>{S["s3h"]}</h2>
+      <p class="intro-p">{S["s3p"]}</p>
+    </div>
+    {demo(lang)}
+    <div class="wrap">
+      <h3 class="seq-head">{S["seq_cap"]}</h3>
+      <div class="seq">
+{seq_svg(lang)}
+      </div>
+      {seq_text(lang)}
+      <p class="legend"><span>{S["leg"][0]}</span><span class="ours">{S["leg"][1]}</span></p>
+      <p class="fine">{S["fine"]}</p>
+    </div>
+  </section>
+
   <section class="section">
     <div class="wrap">
-      <div class="section-head"><p class="label">{S["s1l"]}</p><h2>{S["s1h"]}</h2></div>
-      <div class="section-body cols-2">
+      <h2>{S["s1h"]}</h2>
+      <div class="gap">
         <div>
-          <p class="col-title">{S["s1a"]}</p>
-          <ul class="list-plain">
+          <h3>{S["s1a"]}</h3>
+          <ul>
 {li(gap_left)}
           </ul>
         </div>
-        <div>
-          <p class="col-title red">{S["s1b"]}</p>
-          <ul class="list-plain red">
+        <div class="ours">
+          <h3>{S["s1b"]}</h3>
+          <ul>
 {li(gap_right)}
           </ul>
         </div>
@@ -480,36 +752,20 @@ def landing(lang):
 
   <section class="section">
     <div class="wrap">
-      <div class="section-head"><p class="label">{S["s2l"]}</p><h2>{S["s2h"]}</h2></div>
-      <div class="section-body">
-        <table class="ledger">
-          <thead><tr><th>{S["th"][0]}</th><th>{S["th"][1]}</th><th>{S["th"][2]}</th></tr></thead>
-          <tbody>
+      <h2>{S["s2h"]}</h2>
+      <table class="ledger">
+        <thead><tr><th>{S["th"][0]}</th><th>{S["th"][1]}</th><th>{S["th"][2]}</th></tr></thead>
+        <tbody>
 {rows_html}
-          </tbody>
-        </table>
-      </div>
+        </tbody>
+      </table>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
-      <div class="section-head"><p class="label">{S["s3l"]}</p><h2>{S["s3h"]}</h2></div>
-      <div class="section-body wide">
-        <div class="seq">
-{seq_svg(lang)}
-        </div>
-        {seq_text(lang)}
-        <p class="legend"><span>{S["leg"][0]}</span><span class="ours">{S["leg"][1]}</span></p>
-        <p class="fine">{S["fine"]}</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap">
-      <div class="section-head"><p class="label">{S["s4l"]}</p><h2>{S["s4h"]}</h2></div>
-      <div class="section-body who">
+      <h2>{S["s4h"]}</h2>
+      <div class="who">
 {who_html}
       </div>
     </div>
@@ -517,8 +773,8 @@ def landing(lang):
 
   <section class="section" id="{S["s5id"]}">
     <div class="wrap">
-      <div class="section-head"><p class="label">{S["s5l"]}</p><h2>{S["s5h"]}</h2></div>
-      <div class="section-body status-grid">
+      <h2>{S["s5h"]}</h2>
+      <div class="status-grid">
         <dl class="kv">
 {kv_html}
         </dl>
@@ -531,13 +787,11 @@ def landing(lang):
 
   <section class="section">
     <div class="wrap">
-      <div class="section-head"><p class="label">{S["s6l"]}</p><h2>{S["s6h"]}</h2></div>
-      <div class="section-body">
-        <ol class="road">
+      <h2>{S["s6h"]}</h2>
+      <ol class="road">
 {road_html}
-        </ol>
-        <p class="fine">{S["road_note"]}</p>
-      </div>
+      </ol>
+      <p class="fine">{S["road_note"]}</p>
     </div>
   </section>
 </main>
@@ -749,7 +1003,7 @@ for (lang, kind), d in DOCS.items():
 
 # ---------------------------------------------------------------- hand-written pages: chrome + metadata
 FONT_RE = re.compile(r'(?:<link rel="preconnect" href="https://fonts.googleapis.com">\s*<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\s*<link rel="stylesheet" href="https://fonts.googleapis.com/css2\?[^"]+">'
-                     r'|<link rel="preload" href="/assets/fonts/geist-400-latin.woff2"[^>]*>\s*<link rel="preload" href="/assets/fonts/geist-mono-400-latin.woff2"[^>]*>)', re.S)
+                     r'|<link rel="preload" href="/assets/fonts/[^"]+\.woff2"[^>]*>(?:\s*<link rel="preload" href="/assets/fonts/[^"]+\.woff2"[^>]*>)*)', re.S)
 ICON_RE = re.compile(r'<link rel="icon" href="data:image/svg\+xml,[^"]+">|<link rel="icon" href="/favicon\.svg"[^>]*>\s*<link rel="icon" href="/favicon-192\.png"[^>]*>')
 SEO_RE = re.compile(r'<!-- seo -->.*?<!-- /seo -->', re.S)
 for rel, lang, cur in (("spec/index.html", "es", "spec"), ("en/spec/index.html", "en", "spec"), ("cumplimiento/index.html", "es", "compliance"), ("en/compliance/index.html", "en", "compliance")):
