@@ -1,6 +1,7 @@
 import json, os, sys
 root = sys.argv[1]
-V = "2026-10-09"
+# One file per version: this writes only the current version; earlier versions (2026-10-09) stay as published.
+V = "2026-10-15"
 UCP = "https://ucp.dev/2026-08-25/schemas"
 H = [
  ("webpay_plus", "Webpay Plus (Transbank)", "webpay-plus", "Transbank",
@@ -8,7 +9,7 @@ H = [
   {"token_ttl_seconds": {"type": "integer", "examples": [300], "description": "Lifetime of the Webpay token."},
    "payment_window_seconds": {"type": "integer", "examples": [240], "description": "Time the buyer has on the Webpay form in production."}}),
  ("oneclick_mall", "Oneclick Mall (Transbank)", "oneclick-mall", "Transbank",
-  "Saved-card payment. The buyer enrolls a card once on Transbank's page; later charges are server-to-server with the enrollment's tbk_user and a store commerce code under the business's Mall. PROPOSED: whether charges initiated through an AI agent fit Transbank's Oneclick terms must be confirmed with Transbank before use.",
+  "Saved-card payment. The buyer enrolls a card once on Transbank's page; later charges are server-to-server with the enrollment's tbk_user and a store commerce code under the business's Mall. PROPOSED: whether charges initiated through an AI agent fit Transbank's Oneclick terms must be confirmed with Transbank before use. This flow differs from the redirect flows and is described separately: it involves the buyer's card enrollment and the buyer's authorization of charges, plus any other authorizations that apply.",
   {"enrollment_required": {"type": "boolean", "description": "True when the buyer has no active enrollment and must be sent to enroll via continue_url."},
    "daily_limit_clp": {"type": "integer", "description": "Per-buyer daily limit set at affiliation, if the business chooses to disclose it."}}),
  ("mercadopago", "Mercado Pago Checkout", "mercadopago", "Mercado Pago",
@@ -18,7 +19,7 @@ H = [
   "Redirect payment on Getnet's Web Checkout (PlacetoPay platform). The business creates a session with its own credentials; the buyer pays at the returned processUrl. The notification is sent once, so businesses MUST also poll the session status. Features enabled for Chile must be confirmed with Getnet.",
   {"session_ttl_seconds": {"type": "integer", "examples": [1800], "description": "Session lifetime; the platform default is 30 minutes."}}),
  ("khipu", "Khipu (bank transfer)", "khipu", "Khipu",
-  "Bank-transfer payment initiated by Khipu. The business creates the payment with its own Khipu API key; the buyer pays from their bank account at the returned payment_url. Confirmation is by signed webhook (retried by Khipu) and status query. Payment initiation from bank accounts is regulated under Ley 21.521 (CMF regime from July 2027); an implementer only creates the charge as payee and redirects the buyer to Khipu, never capturing the buyer's bank credentials.",
+  "Bank-transfer payment initiated by Khipu. The business creates the payment with its own Khipu API key; the buyer pays from their bank account at the returned payment_url. Confirmation is by signed webhook (retried by Khipu) and status query. Payment initiation is subject to Ley 21.521 and CMF regulation, on the phased calendar that applies to each participant and service; an implementer only creates the charge as payee and redirects the buyer to Khipu, never capturing the buyer's bank credentials.",
   {"payment_expires_at": {"type": "string", "format": "date-time", "description": "When the payment link expires, if set."}}),
 ]
 for key, title, anchor, provider, desc, resp_extra in H:
@@ -32,6 +33,8 @@ for key, title, anchor, provider, desc, resp_extra in H:
       "description": (f"OPEN PROPOSAL, ready to implement and open for comment. Not yet stable. {desc} "
                       f"Funds go from the buyer to the business's own {provider} account and never pass through the handler author. "
                       f"Published by the Comercio IA initiative until {provider} publishes its own handler; {provider} is invited to review, co-sign or take it over. "
+                      f"This is an integration proposed by the initiative; its publication here does not mean {provider} has reviewed or endorsed it, or that it is available on its platform. "
+                      f"Publishing this schema is not, by itself, operating a financial service: whether an implementation is one depends on the functions it actually performs, including payment processing or initiation, and is not settled only by not holding funds. "
                       f"Not affiliated with or endorsed by {provider}. Spec: https://comercioia.cl/spec/#{anchor}"),
       "$defs": {
         name: {

@@ -15,7 +15,7 @@
       "window_days": 10, "window_starts": "goods_received",
       "window_days_without_confirmation": 90, "refund_within_days": 45 },
     { "type": "cl.comercioia.policy.garantia_legal",
-      "description": { "plain": "Garantía legal de 6 meses: reparación, cambio o devolución." },
+      "description": { "plain": "Garantía legal de seis meses desde la recepción, ante fallas o incumplimientos comprendidos en la ley: reparación gratuita, cambio o devolución, según corresponda." },
       "months": 6, "remedies": ["repair", "replace", "refund"],
       "remote_claim_channel": "https://tienda-ejemplo.cl/garantia" }
   ],
@@ -25,7 +25,7 @@
       "content": "Tienes derecho a retracto por 10 días desde que recibes el producto." },
     { "type": "warning", "code": "cl.comercioia.policy.garantia_legal", "path": "$.policies[1]",
       "presentation": "disclosure",
-      "content": "Garantía legal de 6 meses: reparación, cambio o devolución, a tu elección." },
+      "content": "Garantía legal de seis meses desde la recepción, ante fallas o incumplimientos comprendidos en la ley: reparación gratuita, cambio o devolución, según corresponda." },
     { "type": "error", "code": "payment_redirect", "severity": "requires_buyer_input",
       "content": "Completa el pago en Webpay." }
   ],

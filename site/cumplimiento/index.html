@@ -24,7 +24,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","@id":"https://comercioia.cl/cumplimiento/","url":"https://comercioia.cl/cumplimiento/","name":"Guía de cumplimiento · Comercio IA","description":"Seis reglas tributarias y de protección al consumidor de Chile que todo agente de IA debe respetar al vender, con su fuente oficial.","inLanguage":"es-CL","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"},"headline":"Guía de cumplimiento","datePublished":"2026-10-09","dateModified":"2026-10-09","author":{"@id":"https://comercioia.cl/#org"},"license":"https://www.apache.org/licenses/LICENSE-2.0"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","@id":"https://comercioia.cl/cumplimiento/","url":"https://comercioia.cl/cumplimiento/","name":"Guía de cumplimiento · Comercio IA","description":"Seis reglas tributarias y de protección al consumidor de Chile que todo agente de IA debe respetar al vender, con su fuente oficial.","inLanguage":"es-CL","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"},"headline":"Guía de cumplimiento","datePublished":"2026-10-09","dateModified":"2026-10-15","author":{"@id":"https://comercioia.cl/#org"},"license":"https://www.apache.org/licenses/LICENSE-2.0"}]}</script>
 <script src="/assets/site.js" defer></script>
 <!-- /seo -->
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -64,17 +64,17 @@
 
   <main id="main" class="spec-body">
     <section id="intro">
-      <p class="status">Basada en fuentes oficiales · revisión legal en curso</p>
+      <p class="status">Basada en fuentes oficiales · revisada al 15 de octubre de 2026</p>
       <h1>Guía de cumplimiento<span class="sub">Seis reglas chilenas que todo agente de IA debe respetar al vender.</span></h1>
-      <p class="lede">Reglas tributarias y de protección al consumidor que aplica Comercio IA, cada una con su fuente oficial del SII, el SERNAC o la ley. Las mantenemos al día y nuestro equipo legal las está revisando.</p>
-      <p class="warn">Esta guía resume normas y criterios públicos al 9 de octubre de 2026. No es asesoría legal: cada tienda decide qué le aplica.</p>
+      <p class="lede">Reglas tributarias y de protección al consumidor que aplica Comercio IA, cada una con su fuente oficial del SII, el SERNAC o la ley.</p>
+      <p class="warn">Esta guía resume normas tributarias y de protección al consumidor relevantes para implementar Comercio IA en Chile, revisadas al 15 de octubre de 2026. Su aplicación depende de la operación y del rol de cada participante. No reemplaza el análisis de una implementación concreta.</p>
     </section>
 
     <section id="una-hora">
       <h2>01. La boleta se envía al SII dentro de 1 hora</h2>
-      <p>Cada boleta electrónica debe enviarse al SII de inmediato, con un plazo máximo de 1 hora desde que se genera. El reloj corre desde la generación (firma y timbre), no desde la fecha contable. Las facturas y demás documentos tienen otra regla: se envían antes de entregarlos al receptor o antes del traslado.</p>
+      <p>Cada boleta electrónica debe enviarse al SII de inmediato, con un plazo máximo de 1 hora desde que se genera. El reloj corre desde la generación (firma y timbre), no desde la fecha contable. El plazo de envío no determina el momento legal de emisión. Las facturas y demás documentos tienen otra regla: se envían antes de entregarlos al receptor o antes del traslado.</p>
       <dl class="kv">
-        <dt>Qué significa para una venta con IA</dt><dd>Una venta cerrada por un agente debe emitir y enviar la boleta sola, con reintentos y alertas antes de que se cumpla la hora.</dd>
+        <dt>Qué significa para una venta con IA</dt><dd>La tienda emite la boleta cuando corresponde según la operación y la envía automáticamente al SII dentro de ese plazo, con reintentos y alertas.</dd>
         <dt>En el estándar</dt><dd><code>tax_documents[].issued_at</code>, <code>sii_track_id</code>, <code>sii_status</code></dd>
       </dl>
       <h3>Fuentes</h3>
@@ -85,7 +85,8 @@
     </section>
     <section id="rut-generico">
       <h2>02. RUT genérico 66.666.666-6, salvo sobre 135 UF</h2>
-      <p>Si no se conoce el RUT del comprador, la boleta usa el RUT genérico 66.666.666-6. Desde el 1 de septiembre de 2025, una boleta cuyo total supera 135 UF debe llevar el RUT real del comprador, su nombre, el medio de pago y una descripción clara de los bienes. El 55.555.555-5 es para documentos de exportación, no para boletas.</p>
+      <p>El RUT genérico 66.666.666-6 se utiliza en los casos admitidos por el formato del SII, para ventas o servicios no periódicos ni domiciliarios cuando no se conoce el RUT ni existe el identificador interno aplicable. No es una regla universal para toda boleta.</p>
+      <p>Para las ventas comprendidas en la Resolución SII N° 44 de 2025 cuyo valor exceda el umbral de 135 UF, corresponde identificar al pagador con su nombre y RUT, registrar la forma de pago y describir los bienes. El pagador puede ser distinto del comprador. El umbral en pesos se determina anualmente con la UF del 31 de diciembre anterior; no se recalcula con la UF del día de la compra. Teléfono y email son adicionales, no obligatorios por esta regla. La implementación debe recoger y distinguir estos datos antes de emitir el documento.</p>
       <dl class="kv">
         <dt>Qué significa para una venta con IA</dt><dd>En compras grandes el agente debe pedir los datos del comprador antes de pagar; si faltan, la tienda no emite con el RUT genérico.</dd>
         <dt>En el estándar</dt><dd><code>tax_document.receiver</code> (ver la <a href="https://github.com/Pintor-Project/comercioia/issues/1">propuesta 2026-10-16</a>)</dd>
@@ -111,7 +112,8 @@
     </section>
     <section id="factura-acuse">
       <h2>04. Factura: el comprador acepta o reclama en 8 días</h2>
-      <p>El comprador acepta o reclama la factura electrónica en el registro del SII dentro de 8 días corridos desde que el SII la recibe; si no hace nada, queda aceptada. El plazo de pago es de hasta 30 días corridos, salvo los acuerdos excepcionales que la ley permite. Referenciar la orden de compra, la HES o el contrato no es una exigencia legal, sino práctica de grandes compradores y del Estado.</p>
+      <p>En la factura electrónica, el plazo de ocho días corridos para aceptar o reclamar se computa desde su recepción por el SII, conforme al régimen aplicable. Distinguir la aceptación de la factura del acuse de recibo de mercaderías o servicios. Las facturas informadas como pagadas al contado tienen un tratamiento distinto y no habilitan el mismo procedimiento de reclamo en el registro.</p>
+      <p>El plazo general de pago es de 30 días corridos desde la recepción de la factura por el comprador, sujeto a las excepciones y condiciones legales. Las referencias a orden de compra, HES o contrato dependen de la operación y del régimen aplicable; no debe afirmarse que siempre son opcionales. Un agente puede apoyar actuaciones autorizadas, pero no sustituye la habilitación del comprador ni puede declarar una recepción inexistente.</p>
       <dl class="kv">
         <dt>Qué significa para una venta con IA</dt><dd>El acuse no lo da el agente de compras, sino la empresa compradora en el SII. Que el agente pueda pedir sus referencias evita rechazos comerciales.</dd>
         <dt>En el estándar</dt><dd><code>tax_document.receiver</code>; referencias en la <a href="https://github.com/Pintor-Project/comercioia/issues/1">propuesta 2026-10-16</a></dd>
@@ -121,13 +123,15 @@
           <li><a href="https://www.bcn.cl/leychile/navegar?idNorma=233421">Ley 19.983 arts. 2, 3, 4 y 9</a></li>
           <li><a href="https://www.sii.cl/normativa_legislacion/circulares/2017/circu4.pdf">Circular SII N° 4 de 2017</a></li>
           <li><a href="https://www.sii.cl/servicios_online/docs/formato_dte.pdf">SII, Formato DTE, zona de referencias</a></li>
+          <li><a href="https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_7004.htm">SII, pregunta frecuente 001.003.7004</a></li>
       </ul>
     </section>
     <section id="aviso-ia">
       <h2>05. Si vende una IA, el consumidor debe saberlo</h2>
       <p>Según la interpretación del SERNAC (Res. Ex. 33/2022), hay que informar de forma transparente y oportuna que el consumidor interactúa con una inteligencia artificial, para qué se usa y qué datos trata, y explicar los motivos razonables si la IA rechaza una contratación. El SERNAC también advierte contra los patrones oscuros y la manipulación, y señala que los precios personalizados pueden configurar una discriminación arbitraria.</p>
+      <p>La Resolución SERNAC N° 33 de 2022 contiene un criterio interpretativo de la normativa de consumo. El aviso sobre uso de IA debe ser visible para el comprador; no basta con registrarlo internamente.</p>
       <dl class="kv">
-        <dt>Qué significa para una venta con IA</dt><dd>El agente declara que es una IA y la tienda conserva ese aviso con la venta.</dd>
+        <dt>Qué significa para una venta con IA</dt><dd>El agente declara que es una IA y la tienda muestra ese aviso al comprador y lo conserva con la venta.</dd>
         <dt>En el estándar</dt><dd><code>consumer_terms.ai_disclosure</code></dd>
       </dl>
       <h3>Fuentes</h3>
@@ -137,7 +141,8 @@
     </section>
     <section id="exclusiones-retracto">
       <h2>06. En bienes, el retracto solo se excluye en cuatro casos, y se avisa junto al precio</h2>
-      <p>En compras a distancia, el retracto solo puede excluirse para bienes que no pueden devolverse por haberse instalado o usado, perecibles o que caducan en menos de 10 días, hechos según especificaciones del comprador, o de uso personal o higiene con el sello abierto. La exclusión se informa antes de pagar, en el mismo lugar y momento que el precio, en un tamaño no menor, con la expresión «derecho a retracto». Nunca limita la garantía legal. En servicios, el vendedor puede excluirlo si lo informa de forma expresa.</p>
+      <p>En compras a distancia, el retracto de bienes puede excluirse únicamente en las categorías y condiciones legales: bienes que ya no puedan comercializarse como se ofrecieron por uso o instalación más allá de su inspección; bienes que puedan deteriorarse o caducar en menos de diez días desde su recepción; bienes efectivamente personalizados; y bienes sellados de uso personal o higiene cuya apertura genere riesgo para la salud o higiene. Revisar las condiciones del DS N° 52 para cada producto. Una personalización incumplida no justifica la exclusión.</p>
+      <p>La exclusión debe informarse en español, antes de contratar y pagar, junto al precio y con tamaño no inferior, utilizando “derecho a retracto”. Para servicios también rigen exigencias de información previa; si no se excluye válidamente, el retracto opera dentro de diez días desde contratar y antes de la prestación. El inicio se comunica por el medio utilizado para contratar o por el elegido libremente por el consumidor, conforme al reglamento. La exclusión no elimina la garantía legal.</p>
       <dl class="kv">
         <dt>Qué significa para una venta con IA</dt><dd>El aviso de exclusión viaja como mensaje obligatorio que el agente no puede ocultar, junto al total.</dd>
         <dt>En el estándar</dt><dd><code>cl.comercioia.policy.retracto</code> (<code>excluded</code>, <code>exclusion_reason</code>) y mensajes <code>disclosure</code></dd>
@@ -150,7 +155,7 @@
     </section>
 
     <section id="mas">
-      <p class="note">Las preguntas que aún están en revisión están en la <a href="/spec/#preguntas">especificación</a>. ¿Ves un error? <a href="https://github.com/Pintor-Project/comercioia/issues/new/choose">Abre un issue</a>.</p>
+      <p class="note">Los aspectos que dependen de cada implementación están en la <a href="/spec/#dependen-de-cada-implementacion">especificación</a>. ¿Ves un error? <a href="https://github.com/Pintor-Project/comercioia/issues/new/choose">Abre un issue</a>.</p>
     </section>
   </main>
 </div>
