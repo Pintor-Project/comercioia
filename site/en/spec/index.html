@@ -24,7 +24,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","@id":"https://comercioia.cl/en/spec/","url":"https://comercioia.cl/en/spec/","name":"Specification · Comercio IA","description":"Open-proposal specification of the Comercio IA Chilean extension for UCP and ACP: tax documents, consumer terms, credit notes and Chilean payment methods.","inLanguage":"en","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"},"headline":"Specification","datePublished":"2026-10-09","dateModified":"2026-10-09","author":{"@id":"https://comercioia.cl/#org"},"license":"https://www.apache.org/licenses/LICENSE-2.0"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","@id":"https://comercioia.cl/en/spec/","url":"https://comercioia.cl/en/spec/","name":"Specification · Comercio IA","description":"Open-proposal specification of the Comercio IA Chilean extension for UCP and ACP: tax documents, consumer terms, credit notes and Chilean payment methods.","inLanguage":"en","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"},"headline":"Specification","datePublished":"2026-10-09","dateModified":"2026-10-15","author":{"@id":"https://comercioia.cl/#org"},"license":"https://www.apache.org/licenses/LICENSE-2.0"}]}</script>
 <script src="/assets/site.js" defer></script>
 <!-- /seo -->
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -70,18 +70,18 @@
       <li><a href="#acp">ACP mapping</a></li>
       <li><a href="#schemas">Schemas</a></li>
       <li><a href="#versioning">Versioning and governance</a></li>
-      <li><a href="#open-questions">Open questions</a></li>
+      <li><a href="#implementation-dependent">Aspects that depend on each implementation</a></li>
       <li><a href="#sources">Sources</a></li>
     </ol>
   </nav>
 
   <main id="main" class="spec-body">
     <section id="introduction">
-      <p class="status">Open proposal · version 2026-10-09</p>
+      <p class="status">Open proposal · version 2026-10-15</p>
       <h1>Comercio IA specification</h1>
       <p class="lede">A Chilean extension to the Universal Commerce Protocol (UCP) and the Agentic Commerce Protocol (ACP). It defines how an AI agent and a store exchange the information Chilean law requires to close a distance sale, and how to pay with Chilean payment methods.</p>
       <dl class="kv">
-        <dt>Version</dt><dd><code>2026-10-09</code> (open proposal: ready to implement and comment on)</dd>
+        <dt>Version</dt><dd><code>2026-10-15</code> (open proposal: ready to implement and comment on)</dd>
         <dt>Namespace</dt><dd><code>cl.comercioia.*</code></dd>
         <dt>Schemas served from</dt><dd><code>https://comercioia.cl/ucp/…</code></dd>
         <dt>Requires</dt><dd>UCP <code>2026-08-25</code> or later. ACP <code>2026-04-17</code> mapping in the <a href="#acp">ACP</a> section.</dd>
@@ -113,26 +113,26 @@
       "dev.ucp.shopping.checkout": [{ "version": "2026-08-25" }],
       "dev.ucp.shopping.order":    [{ "version": "2026-08-25" }],
       "cl.comercioia.shopping.tax_document": [{
-        "version": "2026-10-09",
+        "version": "2026-10-15",
         "extends": ["dev.ucp.shopping.checkout", "dev.ucp.shopping.order"],
         "spec":   "https://comercioia.cl/en/spec/#tax-document",
-        "schema": "https://comercioia.cl/ucp/schemas/tax_document/2026-10-09.json" }],
+        "schema": "https://comercioia.cl/ucp/schemas/tax_document/2026-10-15.json" }],
       "cl.comercioia.shopping.consumer_terms": [{
-        "version": "2026-10-09",
+        "version": "2026-10-15",
         "extends": ["dev.ucp.shopping.checkout", "dev.ucp.shopping.order"],
         "spec":   "https://comercioia.cl/en/spec/#consumer-terms",
-        "schema": "https://comercioia.cl/ucp/schemas/consumer_terms/2026-10-09.json" }],
+        "schema": "https://comercioia.cl/ucp/schemas/consumer_terms/2026-10-15.json" }],
       "cl.comercioia.shopping.credit_note": [{
-        "version": "2026-10-09",
+        "version": "2026-10-15",
         "extends": "dev.ucp.shopping.order",
         "spec":   "https://comercioia.cl/en/spec/#credit-note",
-        "schema": "https://comercioia.cl/ucp/schemas/credit_note/2026-10-09.json" }]
+        "schema": "https://comercioia.cl/ucp/schemas/credit_note/2026-10-15.json" }]
     },
     "payment_handlers": {
       "cl.comercioia.webpay_plus": [{
-        "id": "webpay_1", "version": "2026-10-09",
+        "id": "webpay_1", "version": "2026-10-15",
         "spec":   "https://comercioia.cl/en/spec/#webpay-plus",
-        "schema": "https://comercioia.cl/ucp/handlers/webpay_plus/2026-10-09.json",
+        "schema": "https://comercioia.cl/ucp/handlers/webpay_plus/2026-10-15.json",
         "available_instruments": [{ "type": "redirect" }],
         "config": { "environment": "production" } }]
     }
@@ -146,21 +146,21 @@
       <h3>On checkout: <code>tax_document</code></h3>
       <div class="table-scroll"><table>
         <tr><th>Field</th><th>Rule</th><th>Source</th></tr>
-        <tr><td><code>document_choice</code></td><td><code>boleta</code> (default) or <code>factura</code>. Consumers get a boleta (39, or 41 exempt); a factura (33 or 34) is only for VAT-registered buyers. An unknown value MUST be treated as a boleta, with a notice in <code>messages[]</code>.</td><td>DL 825 arts. 52–53</td></tr>
+        <tr><td><code>document_choice</code></td><td><code>boleta</code> (default) or <code>factura</code>. Boletas or facturas according to the operation and the buyer's tax status. The choice at checkout is subject to the legal requirements of the document (boleta 39, or 41 exempt; factura 33 or 34). An unknown value MUST be treated as a boleta, with a notice in <code>messages[]</code>.</td><td>DL 825 arts. 52–53</td></tr>
         <tr><td><code>receiver</code></td><td>Required for a factura: <code>rut</code>, <code>razon_social</code> (≤100), <code>giro</code> (line of business, ≤40), <code>direccion</code> (≤70), <code>comuna</code> (≤20); optional <code>ciudad</code> and <code>email</code>.</td><td>SII DTE format; DS 55 art. 69</td></tr>
       </table></div>
       <h3>On the order: <code>tax_documents[]</code></h3>
       <div class="table-scroll"><table>
         <tr><th>Field</th><th>Rule</th><th>Source</th></tr>
         <tr><td><code>type</code>, <code>folio</code></td><td>DTE type and the folio number authorized by the SII.</td><td>DTE format</td></tr>
-        <tr><td><code>issuer_rut</code>, <code>receiver_rut</code></td><td>A boleta to an unidentified consumer carries the generic RUT <code>66666666-6</code>.</td><td>DTE format</td></tr>
-        <tr><td><code>issued_at</code>, <code>issue_trigger</code></td><td>Issued no later than delivery. The recommended default is to issue on payment confirmation (<code>payment_confirmed</code>). A factura issued after dispatch needs a dispatch guide (52) at dispatch.</td><td>DL 825 art. 55</td></tr>
+        <tr><td><code>issuer_rut</code>, <code>receiver_rut</code></td><td>The generic RUT 66.666.666-6 is used in the cases the SII format allows, for non-periodic, non-residential sales or services when the RUT is unknown and no applicable internal identifier exists. It is not a universal rule for every boleta.</td><td>DTE format</td></tr>
+        <tr><td><code>issued_at</code>, <code>issue_trigger</code></td><td>In sales of goods, issuance is tied to their actual or symbolic delivery, under art. 55 of DL 825. For services, the boleta is issued when the remuneration is received or made available; the factura follows the rules of its tax period. <code>payment_confirmed</code> can be an operational option, but it does not replace those rules. If the factura for goods is lawfully postponed, the corresponding dispatch guide must be issued. The store must configure the applicable event.</td><td>DL 825 arts. 55 and 57</td></tr>
         <tr><td><code>total</code>, <code>net</code>, <code>iva</code>, <code>exempt</code></td><td>Integer pesos. The total includes VAT.</td><td>DL 825</td></tr>
         <tr><td><code>sii_track_id</code>, <code>sii_status</code></td><td>Each boleta reaches the SII within one hour of issue.</td><td>SII Res. Ex. 74/2020</td></tr>
         <tr><td><code>representation_url</code></td><td>An https link to a representation the buyer can keep, delivered immediately by email, chat, link or QR.</td><td>SII Res. Ex. 74/2020</td></tr>
       </table></div>
       <h3>Sales to companies</h3>
-      <p>A factura (33 or 34) is for VAT-registered buyers: the agent sends <code>document_choice: "factura"</code> and a <code>receiver</code> with the company's RUT, legal name, line of business, address and comuna. The consumer-law right of withdrawal and legal warranty do not apply to these sales, except when the buyer is a micro or small business: Ley 20.416 extends to it, in principle, the right of withdrawal, the warranty and the information duties (under legal review).</p>
+      <p>A factura (33 or 34) is for VAT-registered buyers: the agent sends <code>document_choice: "factura"</code> and a <code>receiver</code> with the company's RUT, legal name, line of business, address and comuna. Issuing a factura does not by itself decide whether the Consumer Law applies or is excluded. The buyer's status as final recipient must be reviewed and, where relevant, the protection that Ley 20.416 extends to micro and small businesses.</p>
       <p>Credit payment terms, for example net 30, use the UCP core extension <code>dev.ucp.common.payment.terms</code>. Version <code>2026-10-16</code> proposes adding the references large buyers require: purchase order (801), HES, contract (803) and dispatch guide (52). <a href="https://github.com/Pintor-Project/comercioia/issues/1">Comment on the proposal</a>.</p>
     </section>
 
@@ -174,7 +174,7 @@
         <tr><td><code>price_includes_tax</code></td><td>MUST be <code>true</code> for consumer sales: the total price includes taxes.</td><td>Ley 19.496 art. 30</td></tr>
         <tr><td><code>delivery</code></td><td>Shipping cost and estimated delivery, shown before payment.</td><td>DS 6/2021</td></tr>
         <tr><td><code>installments</code></td><td>Only when installments are offered: <code>count</code>, <code>installment_amount</code>, monthly rate, <code>cae</code> (annual equivalent cost), <code>total_cost</code> and <code>cash_price</code>. The cash price MUST be at least as visible as the installment price.</td><td>Ley 19.496 arts. 17 G and 37</td></tr>
-        <tr><td><code>confirmation</code> (order)</td><td>Written confirmation with a full copy of the contract, sent once the sale closes: <code>channel</code>, <code>sent_at</code>, <code>contract_copy_url</code>. Without it, the withdrawal window extends from 10 to 90 days.</td><td>Ley 19.496 art. 12 A</td></tr>
+        <tr><td><code>confirmation</code> (order)</td><td>Once the contract is concluded, the store must send the consumer a written confirmation containing a full, clear and legible copy of the contract. A link must let the buyer keep that version. The law sets no general number of hours here; the standard requires sending it when the sale closes. Its absence can extend the withdrawal window from ten to ninety days. Fields: <code>channel</code>, <code>sent_at</code>, <code>contract_copy_url</code>.</td><td>Ley 19.496 art. 12 A</td></tr>
       </table></div>
     </section>
 
@@ -184,17 +184,17 @@
       <h3><code>cl.comercioia.policy.retracto</code></h3>
       <div class="table-scroll"><table>
         <tr><th>Field</th><th>Default and rule</th></tr>
-        <tr><td><code>window_days</code></td><td>10 calendar days from receipt of the goods, or from contracting for services.</td></tr>
-        <tr><td><code>window_days_without_confirmation</code></td><td>90, if the art. 12 A written confirmation wasn't sent.</td></tr>
+        <tr><td><code>window_days</code></td><td>10 calendar days from receipt of the goods; for services, within ten days of contracting and before the service is provided.</td></tr>
+        <tr><td><code>window_days_without_confirmation</code></td><td>Up to 90, if the art. 12 A written confirmation wasn't sent.</td></tr>
         <tr><td><code>refund_within_days</code></td><td>45, with no deductions.</td></tr>
-        <tr><td><code>excluded</code>, <code>exclusion_reason</code></td><td>Goods can only be excluded by their nature: not returnable, perishable, made to order, or opened personal-hygiene items (DS 52/2022). Services can be excluded by the seller. Example codes: <code>not_returnable</code>, <code>perishable</code>, <code>made_to_order</code>, <code>hygiene_opened</code>, <code>service_excluded_by_seller</code>.</td></tr>
+        <tr><td><code>excluded</code>, <code>exclusion_reason</code></td><td>In distance sales, the right of withdrawal for goods can be excluded only in the legal categories and conditions: goods that can no longer be marketed as offered because of use or installation beyond inspection; goods that may deteriorate or expire within less than ten days of receipt; goods actually customized; and sealed personal-use or hygiene goods whose opening creates a health or hygiene risk. Check the conditions of DS No. 52 for each product. A customization that was not carried out does not justify the exclusion. Prior-information requirements also apply to services; if the right is not validly excluded, withdrawal operates within ten days of contracting and before the service is provided. Example codes: <code>not_returnable</code>, <code>perishable</code>, <code>made_to_order</code>, <code>hygiene_opened</code>, <code>service_excluded_by_seller</code>.</td></tr>
       </table></div>
-      <p>Source: Ley 19.496 art. 3 bis b), as amended by Ley 21.398. The notice is shown before payment, next to the price and no smaller, with the words <span lang="es">«derecho a retracto»</span>.</p>
+      <p>Source: Ley 19.496 art. 3 bis b), as amended by Ley 21.398. The exclusion must be disclosed in Spanish, before contracting and paying, next to the price and in a size no smaller, using the words <span lang="es">“derecho a retracto”</span>. The exclusion does not remove the legal warranty.</p>
       <h3><code>cl.comercioia.policy.garantia_legal</code></h3>
       <div class="table-scroll"><table>
         <tr><th>Field</th><th>Default and rule</th></tr>
-        <tr><td><code>months</code></td><td>6 months from receipt.</td></tr>
-        <tr><td><code>remedies</code></td><td><code>repair</code>, <code>replace</code> or <code>refund</code>, at the buyer's choice.</td></tr>
+        <tr><td><code>months</code></td><td>Legal warranty of six months from receipt, for failures or non-conformities covered by law.</td></tr>
+        <tr><td><code>remedies</code></td><td><code>repair</code>, <code>replace</code> or <code>refund</code>: free repair, replacement or refund, as applicable.</td></tr>
         <tr><td><code>remote_claim_channel</code></td><td>A distance seller offers a remote claim channel or free pickup.</td></tr>
       </table></div>
       <p>Source: Ley 19.496 arts. 20 and 21; SERNAC Res. Ex. 779/2023.</p>
@@ -212,19 +212,20 @@
         <tr><td><code>cod_ref</code></td><td>1 cancels the document, 2 corrects text, 3 corrects amounts.</td></tr>
         <tr><td><code>razon</code></td><td>Reason printed on the document (≤90).</td></tr>
       </table></div>
-      <p>The VAT on a credit note can only be recovered within 6 months of delivery (DL 825 arts. 21 N°2 and 70).</p>
+      <p>The tax effects of a credit note depend on its cause. For returns or mutual terminations, the six-month period for the adjustments provided in arts. 21 and 70 of DL 825 applies. It is not a general rule for every credit note: error corrections and exempt operations follow different rules. Issuing the document and reducing the VAT debit must be validated separately.</p>
     </section>
 
     <section id="payment-methods">
       <h2>7. Payment methods</h2>
-      <p>All five payment methods follow the same pattern, which in UCP is the core escalation pattern:</p>
+      <p>The redirect payment methods (Webpay Plus, Mercado Pago, Getnet and Khipu) follow the same pattern, which in UCP is the core escalation pattern. Oneclick Mall (proposed) works differently and is described separately, below:</p>
       <ol>
         <li>The store creates the payment with <b>its own account</b> at the provider.</li>
         <li>The checkout answers <code>status: "requires_escalation"</code> with a <code>continue_url</code> and a message with <code>severity: "requires_buyer_input"</code>.</li>
         <li>The buyer pays on the provider's page.</li>
         <li>The store confirms the result directly with the provider and creates the order.</li>
       </ol>
-      <p>The agent never receives card data or credentials. Public configuration (<code>config</code>) MUST NOT include keys or secrets. These payment methods are published by the Comercio IA initiative until each provider publishes its own; every provider is invited to review, co-sign or take theirs over.</p>
+      <p>The agent never receives card data or credentials. Public configuration (<code>config</code>) MUST NOT include keys or secrets. These payment methods are published by the Comercio IA initiative until each provider publishes its own; every provider is invited to review, co-sign or take theirs over. These are integrations proposed by the initiative: their appearance here does not mean the provider has reviewed or endorsed them, or that they are available on its platform.</p>
+      <p>Publishing this specification is not, by itself, operating a financial service. In an implementation, the classification depends on the functions actually performed, including payment processing or initiation; it is not settled only by not holding funds. Redirect flows and Oneclick must be described separately, with the authorizations that apply.</p>
       <h3>Failures and their UCP equivalents</h3>
       <div class="table-scroll"><table>
         <tr><th>Situation</th><th><code>code</code></th><th><code>severity</code></th><th>What the agent does</th></tr>
@@ -279,7 +280,7 @@
         <dt>Create</dt><dd><code>POST https://payment-api.khipu.com/v3/payments</code> with the store's API key.</dd>
         <dt>How the buyer pays</dt><dd>From their bank account, at the returned <code>payment_url</code>.</dd>
         <dt>Confirmation</dt><dd>Signed webhook (<code>x-khipu-signature</code>), retried by Khipu, plus status query (<code>pending</code>, <code>verifying</code>, <code>done</code>).</dd>
-        <dt>Design for</dt><dd>No idempotency key is documented. Initiating payments from bank accounts will be regulated by the CMF (Ley 21.521, regime in force from July 2027). An implementer of this specification only creates the charge as the payee and hands the buyer off to Khipu, never capturing the buyer's bank credentials.</dd>
+        <dt>Design for</dt><dd>No idempotency key is documented. Payment initiation is subject to Ley 21.521 and CMF regulation, on the phased calendar that applies to each participant and service. An implementer of this specification only creates the charge as the payee and hands the buyer off to Khipu, never capturing the buyer's bank credentials.</dd>
       </dl>
     </section>
 
@@ -303,7 +304,7 @@
       "url": "https://tienda-ejemplo.cl/retracto",
       "window_days": 10, "window_days_without_confirmation": 90, "refund_within_days": 45 },
     { "type": "cl.comercioia.policy.garantia_legal",
-      "description": { "plain": "Garantía legal de 6 meses: reparación, cambio o devolución." },
+      "description": { "plain": "Garantía legal de seis meses desde la recepción, ante fallas o incumplimientos comprendidos en la ley: reparación gratuita, cambio o devolución, según corresponda." },
       "months": 6, "remedies": ["repair", "replace", "refund"] }
   ],
   "messages": [
@@ -366,21 +367,21 @@
       <p>JSON Schema draft 2020-12, self-describing (<code>$id</code>, <code>name</code>, <code>version</code>), with one <code>$defs</code> entry per capability they extend, composed with <code>allOf</code>, and a <code>requires</code> block with the minimum core version.</p>
       <div class="table-scroll"><table>
         <tr><th>Name</th><th>Schema</th></tr>
-        <tr><td><code>cl.comercioia.shopping.tax_document</code></td><td><a href="/ucp/schemas/tax_document/2026-10-09.json">/ucp/schemas/tax_document/2026-10-09.json</a></td></tr>
-        <tr><td><code>cl.comercioia.shopping.consumer_terms</code></td><td><a href="/ucp/schemas/consumer_terms/2026-10-09.json">/ucp/schemas/consumer_terms/2026-10-09.json</a></td></tr>
-        <tr><td><code>cl.comercioia.shopping.credit_note</code></td><td><a href="/ucp/schemas/credit_note/2026-10-09.json">/ucp/schemas/credit_note/2026-10-09.json</a></td></tr>
-        <tr><td><code>cl.comercioia.webpay_plus</code></td><td><a href="/ucp/handlers/webpay_plus/2026-10-09.json">/ucp/handlers/webpay_plus/2026-10-09.json</a></td></tr>
-        <tr><td><code>cl.comercioia.oneclick_mall</code></td><td><a href="/ucp/handlers/oneclick_mall/2026-10-09.json">/ucp/handlers/oneclick_mall/2026-10-09.json</a></td></tr>
-        <tr><td><code>cl.comercioia.mercadopago</code></td><td><a href="/ucp/handlers/mercadopago/2026-10-09.json">/ucp/handlers/mercadopago/2026-10-09.json</a></td></tr>
-        <tr><td><code>cl.comercioia.getnet</code></td><td><a href="/ucp/handlers/getnet/2026-10-09.json">/ucp/handlers/getnet/2026-10-09.json</a></td></tr>
-        <tr><td><code>cl.comercioia.khipu</code></td><td><a href="/ucp/handlers/khipu/2026-10-09.json">/ucp/handlers/khipu/2026-10-09.json</a></td></tr>
+        <tr><td><code>cl.comercioia.shopping.tax_document</code></td><td><a href="/ucp/schemas/tax_document/2026-10-15.json">/ucp/schemas/tax_document/2026-10-15.json</a></td></tr>
+        <tr><td><code>cl.comercioia.shopping.consumer_terms</code></td><td><a href="/ucp/schemas/consumer_terms/2026-10-15.json">/ucp/schemas/consumer_terms/2026-10-15.json</a></td></tr>
+        <tr><td><code>cl.comercioia.shopping.credit_note</code></td><td><a href="/ucp/schemas/credit_note/2026-10-15.json">/ucp/schemas/credit_note/2026-10-15.json</a></td></tr>
+        <tr><td><code>cl.comercioia.webpay_plus</code></td><td><a href="/ucp/handlers/webpay_plus/2026-10-15.json">/ucp/handlers/webpay_plus/2026-10-15.json</a></td></tr>
+        <tr><td><code>cl.comercioia.oneclick_mall</code></td><td><a href="/ucp/handlers/oneclick_mall/2026-10-15.json">/ucp/handlers/oneclick_mall/2026-10-15.json</a></td></tr>
+        <tr><td><code>cl.comercioia.mercadopago</code></td><td><a href="/ucp/handlers/mercadopago/2026-10-15.json">/ucp/handlers/mercadopago/2026-10-15.json</a></td></tr>
+        <tr><td><code>cl.comercioia.getnet</code></td><td><a href="/ucp/handlers/getnet/2026-10-15.json">/ucp/handlers/getnet/2026-10-15.json</a></td></tr>
+        <tr><td><code>cl.comercioia.khipu</code></td><td><a href="/ucp/handlers/khipu/2026-10-15.json">/ucp/handlers/khipu/2026-10-15.json</a></td></tr>
       </table></div>
     </section>
 
     <section id="versioning">
       <h2>11. Versioning and governance</h2>
       <ul>
-        <li>Every version is dated (<code>YYYY-MM-DD</code>) and stays published at its own address. A published version is never modified: changes ship in a new version.</li>
+        <li>Every version is dated (<code>YYYY-MM-DD</code>) and stays published at its own address. A published version is never modified: changes ship in a new version. Version <code>2026-10-15</code> corrects statements in <code>2026-10-09</code> after a legal review; the earlier version stays published at its own addresses.</li>
         <li>Third-party extensions version independently of the core, as UCP and ACP allow. Each version states which core versions it requires.</li>
         <li>Compatibility is kept with the current UCP release and the previous one.</li>
         <li>Comments are open until 30 November 2026 in the <a href="https://github.com/Pintor-Project/comercioia">public repository</a>. The first stable release is planned for January 2027, once the <a href="/en/#participate">path to 1.0</a> is complete.</li>
@@ -389,16 +390,9 @@
       </ul>
     </section>
 
-    <section id="open-questions">
-      <h2>12. Open questions</h2>
-      <p>Topics for legal review before the stable release:</p>
-      <ul>
-        <li>When delivery happens in a distance sale for the purposes of DL 825 art. 55, and whether issuing the boleta on payment confirmation is the right default.</li>
-        <li>Whether an AI agent that completes a purchase counts as a "platform" or "operator" under DS 6/2021, and what liability follows.</li>
-        <li>Whether an orchestrator that never holds funds is outside Banco Central chapter III.J.2 and CMF NCG 541.</li>
-        <li>Data-processing roles under Ley 21.719 (in force from 1 December 2026) when an agent shares buyer data with the store, and the form of the buyer's mandate.</li>
-        <li>Whether SERNAC sets a deadline for the art. 12 A confirmation.</li>
-      </ul>
+    <section id="implementation-dependent">
+      <h2 id="open-questions">12. Aspects that depend on each implementation</h2>
+      <p>Before operating, each implementation must define who sells and who operates the platform under DS 6/2021; what authorization lets the agent act for the buyer; what data each participant shares and under what role and basis; and whether it carries out regulated payment activities. The purchase authorization must define the operation and does not replace the data authorization when one is needed. These obligations are not automatically attributed to the publisher of the specification.</p>
     </section>
 
     <section id="sources">
@@ -411,7 +405,9 @@
         <li>Getnet Web Checkout (PlacetoPay): <a href="https://docs.placetopay.dev/">docs.placetopay.dev</a></li>
         <li>Khipu API v3: <a href="https://docs.khipu.com/">docs.khipu.com</a></li>
         <li>SII, Res. Ex. 74/2020 and DTE format: <a href="https://www.sii.cl/">sii.cl</a></li>
-        <li>DL 825, Ley 19.496, Ley 21.398, DS 6/2021 and Ley 21.719: <a href="https://www.bcn.cl/leychile/">BCN Ley Chile</a></li>
+        <li>DL 825 (arts. 21, 53, 55, 57 and 70), Ley 19.496 (arts. 3 bis, 12 A, 20 and 21), Ley 20.416 (art. 9), Ley 21.398, DS 6/2021 and Ley 21.719: <a href="https://www.bcn.cl/leychile/">BCN Ley Chile</a></li>
+        <li>SII FAQ 001.003.7335: <a href="https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_7335.htm">sii.cl/preguntas_frecuentes/factura_electronica/001_003_7335.htm</a></li>
+        <li>Ley 21.521 and CMF NCG 514 and its amendments, including NCG 569/2026: <a href="https://www.cmfchile.cl/normativa/ncg_569_2026.pdf">cmfchile.cl/normativa/ncg_569_2026.pdf</a></li>
         <li>SERNAC, Res. Ex. 33/2022 and 779/2023: <a href="https://www.sernac.cl/">sernac.cl</a></li>
       </ul>
     </section>

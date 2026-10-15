@@ -5,7 +5,7 @@ import html, json, os, random, re, sys
 
 SITE = sys.argv[1]
 BASE = "https://comercioia.cl"
-LASTMOD = "2026-10-09"
+LASTMOD = "2026-10-15"
 # Self-hosted (assets/fonts, OFL): no request leaves for a font CDN before consent.
 FONTS = ('<link rel="preload" href="/assets/fonts/hanken-grotesk-400-latin.woff2" as="font" type="font/woff2" crossorigin>\n'
          '<link rel="preload" href="/assets/fonts/hanken-grotesk-300-latin.woff2" as="font" type="font/woff2" crossorigin>')
@@ -153,7 +153,7 @@ def footer(lang):
 
 ORG = {"@type": "Organization", "@id": BASE + "/#org", "name": "Pintor Project SpA", "alternateName": "Pintor Project",
        "url": "https://pintorproject.cl", "email": "contacto@comercioia.cl",
-       "address": {"@type": "PostalAddress", "streetAddress": "San Pío X 2460", "addressLocality": "Providencia",
+       "address": {"@type": "PostalAddress", "streetAddress": "Pío X 2460, departamento 706", "addressLocality": "Providencia",
                    "addressRegion": "Región Metropolitana", "postalCode": "7510041", "addressCountry": "CL"}}
 WEBSITE = {"@type": "WebSite", "@id": BASE + "/#website", "name": "Comercio IA", "url": BASE + "/",
            "inLanguage": ["es-CL", "en"], "publisher": {"@id": BASE + "/#org"}}
@@ -472,7 +472,7 @@ def demo_steps(lang):
              phone("14:21", totals
                    + '<div class="notice"><b>Vende</b>Tienda Ejemplo SpA · RUT 76.123.456-0 · Av. Ejemplo 123, Santiago</div>'
                    + '<div class="notice"><b>Derecho a retracto</b>Tienes derecho a retracto por 10 días desde que recibes el producto.</div>'
-                   + '<div class="notice"><b>Garantía legal</b>Garantía legal de 6 meses: reparación, cambio o devolución, a tu elección.</div>'
+                   + '<div class="notice"><b>Garantía legal</b>Garantía legal de seis meses desde la recepción, ante fallas o incumplimientos comprendidos en la ley: reparación gratuita, cambio o devolución, según corresponda.</div>'
                    + '<div class="ai small">Estás comprando a través de un asistente de IA.</div>', lang),
              code_block("checkout", s2a, [(None, step2, {"policies", "consumer_terms"})], legend)),
             ("Pago en la página del proveedor", "El comprador paga fuera del chat, en la página del proveedor.",
@@ -481,8 +481,8 @@ def demo_steps(lang):
                    + '<div class="card"><b>Total a pagar: $194.980</b><div class="dim">Webpay Plus · tienda-ejemplo.cl</div><span class="paybtn">Abrir la página de pago ↗</span></div>'
                    + '<div class="ai small">El pago se hace en la página del proveedor, no en este chat.</div>', lang),
              code_block("complete_checkout", s2a, [(None, step3, set()), (profile_sub, step3_profile, {"cl.comercioia.webpay_plus"})], legend)),
-            ("Boleta emitida al SII", "Con el pago confirmado, la tienda emite la boleta y la envía al SII.",
-             "La tienda confirma el pago directamente con el proveedor. El pedido le devuelve al agente el folio, el RUT del emisor y el estado en el SII; el comprador recibe la boleta y la copia del contrato por correo.",
+            ("Boleta emitida al SII", "Cuando corresponde según la operación, la tienda emite la boleta y la envía al SII.",
+             "La tienda confirma el pago directamente con el proveedor y emite la boleta con el evento que configuró (aquí, la confirmación del pago). El pedido le devuelve al agente el folio, el RUT del emisor y el estado en el SII; el comprador recibe la boleta y la copia del contrato por correo.",
              phone("14:23", '<div class="ai">Tienda Ejemplo confirmó tu pago y emitió tu boleta:</div>' + receipt
                    + '<div class="ai small">Te llegó la copia del contrato por correo.</div>', lang),
              code_block(order_op, s2a, [(None, step4, {"tax_documents", "consumer_terms"})], legend)),
@@ -506,7 +506,7 @@ def demo_steps(lang):
              phone("14:21", totals
                    + '<div class="notice"><b>Seller</b>Tienda Ejemplo SpA · RUT 76.123.456-0 · Av. Ejemplo 123, Santiago</div>'
                    + '<div class="notice"><b>Right of withdrawal</b>You can withdraw within 10 days of receiving the product.</div>'
-                   + '<div class="notice"><b>Legal warranty</b>6-month legal warranty: repair, replacement or refund, your choice.</div>'
+                   + '<div class="notice"><b>Legal warranty</b>Legal warranty of six months from receipt, for failures or non-conformities covered by law: free repair, replacement or refund, as applicable.</div>'
                    + '<div class="ai small">You are buying through an AI assistant.</div>', lang),
              code_block("checkout", s2a, [(None, step2, {"policies", "consumer_terms"})], legend)),
             ("Payment on the provider's page", "The buyer pays outside the chat, on the provider's page.",
@@ -515,8 +515,8 @@ def demo_steps(lang):
                    + '<div class="card"><b>Total to pay: $194.980</b><div class="dim">Webpay Plus · tienda-ejemplo.cl</div><span class="paybtn">Open the payment page ↗</span></div>'
                    + "<div class=\"ai small\">Payment happens on the provider's page, not in this chat.</div>", lang),
              code_block("complete_checkout", s2a, [(None, step3, set()), (profile_sub, step3_profile, {"cl.comercioia.webpay_plus"})], legend)),
-            ("Boleta issued to the SII", "Once payment is confirmed, the store issues the boleta and sends it to the SII.",
-             "The store confirms the payment directly with the provider. The order gives the agent the folio, the issuer's RUT and the SII status; the buyer gets the boleta and a copy of the contract by email.",
+            ("Boleta issued to the SII", "When appropriate for the operation, the store issues the boleta and sends it to the SII.",
+             "The store confirms the payment directly with the provider and issues the boleta on the event it configured (here, payment confirmation). The order gives the agent the folio, the issuer's RUT and the SII status; the buyer gets the boleta and a copy of the contract by email.",
              phone("14:23", '<div class="ai">Tienda Ejemplo confirmed your payment and issued your boleta:</div>' + receipt
                    + '<div class="ai small">A copy of the contract was sent to your email.</div>', lang),
              code_block(order_op, s2a, [(None, step4, {"tax_documents", "consumer_terms"})], legend)),
@@ -567,46 +567,46 @@ def landing(lang):
         T.update(
             title="Comercio IA · La extensión chilena abierta para UCP y ACP",
             desc="Boleta, retracto, garantía legal, notas de crédito y medios de pago chilenos para que cualquier agente de IA cierre una venta legal en Chile, sobre UCP y ACP.",
-            label="Propuesta abierta · versión 2026-10-09",
-            h1="Comercio IA", h1sub="Boleta para personas, factura para empresas. Para cualquier agente de IA.",
-            lead="Cuando un asistente de IA vende por una tienda chilena, la venta tiene que cumplir la ley: boleta o factura del SII, derecho a retracto, garantía legal y medios de pago locales. Comercio IA son las reglas abiertas para hacerlo, como complemento de los estándares de compra por IA de Google, Shopify, OpenAI y Stripe.",
+            label="Propuesta abierta · versión 2026-10-15",
+            h1="Comercio IA", h1sub="Boletas o facturas según la operación y la calidad tributaria del comprador. Para cualquier agente de IA.",
+            lead="Cuando un asistente de IA vende por una tienda chilena, la venta tiene que cumplir la ley: boleta o factura del SII, derecho a retracto, garantía legal y medios de pago locales. La elección en el checkout está sujeta a los requisitos legales del documento. Comercio IA son las reglas abiertas para hacerlo, como complemento de los estándares de compra por IA de Google, Shopify, OpenAI y Stripe.",
             cta="Leer la especificación", cta_href="/spec/", alt_link="Ver una compra paso a paso", alt_href="#demo",
-            covers=(("Extiende", ["UCP", "ACP"]), ("Medios de pago", ["Webpay Plus", "Oneclick Mall", "Mercado Pago", "Getnet", "Khipu"])),
+            covers=(("Extiende", ["UCP", "ACP"]), ("Medios de pago", ["Webpay Plus", "Oneclick Mall (propuesto)", "Mercado Pago", "Getnet", "Khipu"])),
             facts=[("Abierta", "Licencia Apache-2.0, como UCP y ACP. Cualquiera la implementa sin pedir permiso."),
-                   ("La tienda vende", "El pago llega a la cuenta de la propia tienda. La especificación nunca toca los fondos."),
+                   ("La tienda vende", "El pago llega a la cuenta de la propia tienda. Publicar esta especificación no equivale por sí solo a operar un servicio financiero."),
                    ("Compatible", "Un agente que no la conoce sigue funcionando, y los avisos legales igual le llegan.")],
         )
     else:
         T.update(
             title="Comercio IA · The open Chilean extension for UCP and ACP",
             desc="Chilean tax receipts, withdrawal rights, legal warranty, credit notes and payment methods, so any AI agent can make a legal sale in Chile. On UCP and ACP.",
-            label="Open proposal · version 2026-10-09",
-            h1="Comercio IA", h1sub="A boleta for consumers, a factura for businesses. For any AI agent.",
+            label="Open proposal · version 2026-10-15",
+            h1="Comercio IA", h1sub="Boletas or facturas according to the operation and the buyer's tax status. For any AI agent.",
             lead="When an AI assistant sells on behalf of a Chilean store, the sale has to follow Chilean law: an SII tax receipt (boleta or factura), the right of withdrawal, the legal warranty and local payment methods. Comercio IA is the open set of rules to do that, as an add-on to the AI shopping standards from Google, Shopify, OpenAI and Stripe.",
             cta="Read the specification", cta_href="/en/spec/", alt_link="See a purchase step by step", alt_href="#demo",
-            covers=(("Extends", ["UCP", "ACP"]), ("Payment methods", ["Webpay Plus", "Oneclick Mall", "Mercado Pago", "Getnet", "Khipu"])),
+            covers=(("Extends", ["UCP", "ACP"]), ("Payment methods", ["Webpay Plus", "Oneclick Mall (proposed)", "Mercado Pago", "Getnet", "Khipu"])),
             facts=[("Open", "Apache-2.0 license, like UCP and ACP. Anyone can implement it without asking."),
-                   ("The store sells", "Payment goes to the store's own account. The specification never touches funds."),
+                   ("The store sells", "Payment goes to the store's own account. Publishing this specification is not, by itself, operating a financial service."),
                    ("Compatible", "An agent that doesn't know it keeps working, and the legal notices still reach it.")],
         )
     facts = "\n".join(f'        <div><h2>{a}</h2><p>{b}</p></div>' for a, b in T["facts"])
 
     if es:
         gap_left = ["Catálogo y búsqueda", "Carro y checkout", "Pedido y ajustes", "Políticas y avisos", "Medios de pago enchufables"]
-        gap_right = ["Boleta para personas, factura para empresas", "Derecho a retracto", "Garantía legal", "Notas de crédito", "Webpay, Mercado Pago, Getnet y Khipu"]
+        gap_right = ["Boleta o factura según la operación y el comprador", "Derecho a retracto", "Garantía legal", "Notas de crédito", "Webpay, Mercado Pago, Getnet y Khipu"]
         rows = [
-            ledger_row("cl.comercioia.shopping.", "tax_document", "Boleta o factura", "Boleta para personas; factura con RUT y giro para empresas. El pedido devuelve folio, RUT del emisor y estado en el SII.", "DL 825 · Res. SII 74/2020"),
+            ledger_row("cl.comercioia.shopping.", "tax_document", "Boleta o factura", "Boletas o facturas según la operación y la calidad tributaria del comprador. La elección en el checkout está sujeta a los requisitos legales del documento. El pedido devuelve folio, RUT del emisor y estado en el SII.", "DL 825 · Res. SII 74/2020"),
             ledger_row("cl.comercioia.shopping.", "consumer_terms", "Información al consumidor", "En ventas a personas: identidad del vendedor, aviso de que compra a través de IA, despacho, cuotas con CAE y confirmación escrita.", "Ley 19.496 · DS 6/2021 · Res. SERNAC 33/2022"),
             ledger_row("cl.comercioia.shopping.", "credit_note", "Notas de crédito", "Cada devolución o retracto lleva su DTE 61, con referencia al documento original.", "DL 825 arts. 21 y 70"),
-            ledger_row("cl.comercioia.policy.", "retracto", "Derecho a retracto", "10 días desde la recepción, 90 sin confirmación escrita, devolución en 45 días.", "Ley 19.496 art. 3 bis"),
-            ledger_row("cl.comercioia.policy.", "garantia_legal", "Garantía legal", "6 meses desde la recepción: reparación, cambio o devolución, a elección del comprador.", "Ley 19.496 arts. 20 y 21"),
-            ledger_row("cl.comercioia.", "webpay_plus · oneclick_mall · mercadopago · getnet · khipu", "Medios de pago chilenos", "La tienda cobra con su propia cuenta y el comprador paga en la página del proveedor.", "Documentación de cada proveedor"),
+            ledger_row("cl.comercioia.policy.", "retracto", "Derecho a retracto", "10 días desde la recepción (hasta 90 si falta la confirmación escrita), devolución en 45 días.", "Ley 19.496 art. 3 bis"),
+            ledger_row("cl.comercioia.policy.", "garantia_legal", "Garantía legal", "Seis meses desde la recepción, ante fallas o incumplimientos comprendidos en la ley: reparación gratuita, cambio o devolución, según corresponda.", "Ley 19.496 arts. 20 y 21"),
+            ledger_row("cl.comercioia.", "webpay_plus · oneclick_mall (propuesto) · mercadopago · getnet · khipu", "Medios de pago chilenos", "Integraciones propuestas por la iniciativa; Oneclick Mall es una propuesta con un flujo distinto. En los medios con redirección, la tienda cobra con su propia cuenta y el comprador paga en la página del proveedor.", "Documentación de cada proveedor"),
         ]
         who = [("/.well-known/ucp", "Tiendas y proveedores", "Vendas a personas o a empresas, declara la extensión y tus medios de pago en tu perfil. Si tu plataforma o ERP ya la implementa, solo la activas."),
                ("UCP · ACP", "Plataformas y ERP", "Implementa los esquemas en tus endpoints y ofrécelo a todas tus tiendas con tu propia marca."),
                ("document_choice", "Agentes de IA", "Asistentes personales y agentes de compra de empresas: anuncia las extensiones que soportas, pide boleta o factura y muestra cada aviso legal sin ocultarlo."),
                ("payment_handlers", "Proveedores de pago", "Publicamos tu medio de pago hasta que publiques el tuyo. Revísalo, cofírmalo o asúmelo.")]
-        kv = [("Versión", "<code>2026-10-09</code>"), ("Estado", "Propuesta abierta: lista para implementar y comentar"), ("Espacio de nombres", "<code>cl.comercioia.*</code>"),
+        kv = [("Versión", "<code>2026-10-15</code>"), ("Estado", "Propuesta abierta: lista para implementar y comentar"), ("Espacio de nombres", "<code>cl.comercioia.*</code>"),
               ("Requiere", "UCP <code>2026-08-25</code> o posterior"), ("Licencia", "Apache-2.0"), ("Versión estable", "Enero de 2027, al cumplir el camino a la 1.0"), ("Próxima versión", '<code>2026-10-16</code>: <a href="https://github.com/Pintor-Project/comercioia/issues/1">referencias B2B</a> (orden de compra, HES, contrato)'),
               ("Contacto", '<a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a>')]
         asks = [("Comenta.", "Errores, campos que faltan, casos de tu negocio. Todo comentario se responde antes de la versión estable."),
@@ -621,7 +621,7 @@ def landing(lang):
             s3p="Lo que ve el comprador en su asistente, junto a lo que viaja entre el agente y la tienda. En rojo, lo que agrega Comercio IA.",
             seq_cap="La misma compra, como diagrama de secuencia",
             leg=("Núcleo de UCP/ACP y proveedor de pago", "Lo que agrega Comercio IA"),
-            fine="Ningún estándar define todavía cómo devolver al comprador al agente después de pagar en una página externa (propuesta UCP #486), así que el agente se entera del pago por el pedido. Si compra una empresa, el paso 02 pide factura con su RUT y giro, el paso 09 emite una factura (33) y, en general, el retracto no aplica, salvo cuando la compradora es micro o pequeña empresa (Ley 20.416).",
+            fine="Ningún estándar define todavía cómo devolver al comprador al agente después de pagar en una página externa (propuesta UCP #486), así que el agente se entera del pago por el pedido. Si compra una empresa, el paso 02 pide factura con su RUT y giro y el paso 09 emite una factura (33). Emitir una factura no determina por sí solo la aplicación o exclusión de la Ley del Consumidor. Debe revisarse la calidad de destinatario final y, cuando corresponda, la protección que la Ley 20.416 extiende a micro y pequeñas empresas.",
             s4h='Cada uno implementa <span class="sub">su parte.</span>',
             s5h='Lista para implementar. <span class="sub">Estable tras la primera venta real.</span>', s5id="participa",
             s6h='Cinco condiciones <span class="sub">para declararla estable.</span>',
@@ -629,25 +629,25 @@ def landing(lang):
                   ("Hecho", "done", "Repositorio público y periodo de comentarios", "Comentarios abiertos hasta el 30 de noviembre de 2026."),
                   ("En diseño", "", "Implementación de referencia", "Synaptik Checkout IA: las tres extensiones y Webpay Plus, con boleta automática."),
                   ("Pendiente", "", "Primeras ventas reales", "Al menos una boleta, una factura y un retracto con nota de crédito."),
-                  ("En curso", "", "Revisión legal y validación externa", "Respuesta a las preguntas abiertas y un cofirmante o implementador externo.")],
+                  ("En curso", "", "Revisión legal y validación externa", "Los aspectos que dependen de cada implementación y un cofirmante o implementador externo.")],
             road_note="Las extensiones y los medios de pago se versionan por separado: Oneclick Mall, Getnet y Khipu pueden seguir como propuesta cuando el resto ya sea estable.",
         )
     else:
         gap_left = ["Catalog and search", "Cart and checkout", "Order and adjustments", "Policies and notices", "Pluggable payment methods"]
-        gap_right = ["A boleta for consumers, a factura for businesses", "Right of withdrawal (retracto)", "Legal warranty", "Credit notes", "Webpay, Mercado Pago, Getnet and Khipu"]
+        gap_right = ["Boleta or factura according to the operation and the buyer", "Right of withdrawal (retracto)", "Legal warranty", "Credit notes", "Webpay, Mercado Pago, Getnet and Khipu"]
         rows = [
-            ledger_row("cl.comercioia.shopping.", "tax_document", "Boleta or factura", "A boleta for consumers; a factura with RUT and line of business for companies. The order returns the folio, issuer RUT and SII status.", "DL 825 · SII Res. 74/2020"),
+            ledger_row("cl.comercioia.shopping.", "tax_document", "Boleta or factura", "Boletas or facturas according to the operation and the buyer's tax status. The choice at checkout is subject to the legal requirements of the document. The order returns the folio, issuer RUT and SII status.", "DL 825 · SII Res. 74/2020"),
             ledger_row("cl.comercioia.shopping.", "consumer_terms", "Consumer information", "In consumer sales: seller identity, notice that the purchase is made through AI, delivery, installments with CAE and written confirmation.", "Ley 19.496 · DS 6/2021 · SERNAC Res. 33/2022"),
             ledger_row("cl.comercioia.shopping.", "credit_note", "Credit notes", "Every refund or withdrawal carries its DTE 61, referencing the original document.", "DL 825 arts. 21 and 70"),
-            ledger_row("cl.comercioia.policy.", "retracto", "Right of withdrawal", "10 days from receipt, 90 without written confirmation, refund within 45 days.", "Ley 19.496 art. 3 bis"),
-            ledger_row("cl.comercioia.policy.", "garantia_legal", "Legal warranty", "6 months from receipt: repair, replacement or refund, at the buyer's choice.", "Ley 19.496 arts. 20 and 21"),
-            ledger_row("cl.comercioia.", "webpay_plus · oneclick_mall · mercadopago · getnet · khipu", "Chilean payment methods", "The store charges with its own account and the buyer pays on the provider's page.", "Each provider's documentation"),
+            ledger_row("cl.comercioia.policy.", "retracto", "Right of withdrawal", "10 days from receipt (up to 90 if the written confirmation is missing), refund within 45 days.", "Ley 19.496 art. 3 bis"),
+            ledger_row("cl.comercioia.policy.", "garantia_legal", "Legal warranty", "Six months from receipt, for failures or non-conformities covered by law: free repair, replacement or refund, as applicable.", "Ley 19.496 arts. 20 and 21"),
+            ledger_row("cl.comercioia.", "webpay_plus · oneclick_mall (proposed) · mercadopago · getnet · khipu", "Chilean payment methods", "Integrations proposed by the initiative; Oneclick Mall is a proposal with a different flow. In the redirect methods, the store charges with its own account and the buyer pays on the provider's page.", "Each provider's documentation"),
         ]
         who = [("/.well-known/ucp", "Stores and suppliers", "Whether you sell to consumers or to companies, declare the extension and your payment methods in your profile. If your platform or ERP already implements it, just turn it on."),
                ("UCP · ACP", "Platforms and ERPs", "Implement the schemas in your endpoints and offer it to all your stores under your own brand."),
                ("document_choice", "AI agents", "Personal assistants and corporate purchasing agents: announce the extensions you support, ask for a boleta or factura, and show every legal notice without hiding it."),
                ("payment_handlers", "Payment providers", "We publish your payment method until you publish your own. Review it, co-sign it or take it over.")]
-        kv = [("Version", "<code>2026-10-09</code>"), ("Status", "Open proposal: ready to implement and comment on"), ("Namespace", "<code>cl.comercioia.*</code>"),
+        kv = [("Version", "<code>2026-10-15</code>"), ("Status", "Open proposal: ready to implement and comment on"), ("Namespace", "<code>cl.comercioia.*</code>"),
               ("Requires", "UCP <code>2026-08-25</code> or later"), ("License", "Apache-2.0"), ("Stable release", "January 2027, once the path to 1.0 is complete"), ("Next version", '<code>2026-10-16</code>: <a href="https://github.com/Pintor-Project/comercioia/issues/1">B2B references</a> (purchase order, HES, contract)'),
               ("Contact", '<a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a>')]
         asks = [("Comment.", "Errors, missing fields, cases from your business. Every comment gets an answer before the stable release."),
@@ -662,7 +662,7 @@ def landing(lang):
             s3p="What the buyer sees in their assistant, next to what travels between the agent and the store. In red, what Comercio IA adds.",
             seq_cap="The same purchase, as a sequence diagram",
             leg=("UCP/ACP core and payment provider", "What Comercio IA adds"),
-            fine="Neither standard yet defines how to return the buyer to the agent after paying on an external page (UCP proposal #486), so the agent learns about the payment from the order. When a company buys, step 02 asks for a factura with its RUT and line of business, step 09 issues a factura (33), and the right of withdrawal generally does not apply, except when the buyer is a micro or small business (Ley 20.416).",
+            fine="Neither standard yet defines how to return the buyer to the agent after paying on an external page (UCP proposal #486), so the agent learns about the payment from the order. When a company buys, step 02 asks for a factura with its RUT and line of business and step 09 issues a factura (33). Issuing a factura does not by itself decide whether the Consumer Law applies or is excluded. The buyer's status as final recipient must be reviewed and, where relevant, the protection that Ley 20.416 extends to micro and small businesses.",
             s4h='Everyone implements <span class="sub">their part.</span>',
             s5h='Ready to implement. <span class="sub">Stable after the first real sale.</span>', s5id="participate",
             s6h='Five conditions <span class="sub">before we call it stable.</span>',
@@ -670,7 +670,7 @@ def landing(lang):
                   ("Done", "done", "Public repository and comment period", "Comments open until 30 November 2026."),
                   ("In design", "", "Reference implementation", "Synaptik Checkout IA: the three extensions and Webpay Plus, with automatic boleta."),
                   ("Pending", "", "First real sales", "At least one boleta, one factura and one withdrawal with a credit note."),
-                  ("In progress", "", "Legal review and outside validation", "Answers to the open questions and one co-signer or outside implementer.")],
+                  ("In progress", "", "Legal review and outside validation", "The aspects that depend on each implementation and one co-signer or outside implementer.")],
             road_note="Extensions and payment methods are versioned separately: Oneclick Mall, Getnet and Khipu can stay as proposals once the rest is stable.",
         )
     li = lambda xs: "\n".join(f"            <li>{x}</li>" for x in xs)
@@ -812,11 +812,11 @@ DOCS = {
         path="privacidad/index.html", url=BASE + "/privacidad/", alt=BASE + "/en/privacy/",
         title="Política de privacidad · Comercio IA",
         desc="Qué datos trata comercioia.cl, para qué, con qué proveedores y cómo ejercer tus derechos. Analítica solo con tu consentimiento.",
-        status="Vigente desde el 9 de octubre de 2026", h1="Política de privacidad", sub="Sin cookies hasta que digas que sí.",
+        status="Vigente desde el 15 de octubre de 2026", h1="Política de privacidad", sub="Sin cookies hasta que digas que sí.",
         lede="Este sitio publica una especificación técnica. No tiene cuentas, formularios ni publicidad. Solo usamos analítica para saber qué páginas se leen, y solo si la aceptas.",
         sections=[
             ("responsable", "Quién es responsable",
-             "<p>Pintor Project SpA, San Pío X 2460, Providencia, Santiago, Chile, impulsa Comercio IA y es responsable de los datos que se tratan en comercioia.cl. Escríbenos a <a href=\"mailto:contacto@comercioia.cl\">contacto@comercioia.cl</a>.</p>"),
+             "<p>Pintor Project SpA, RUT 76.629.267-4, representada por Tomás Stevanovic, domiciliada en Pío X N° 2460, departamento 706, Providencia, Santiago, Chile, impulsa Comercio IA y es responsable de los datos que se tratan en comercioia.cl. Contacto: <a href=\"mailto:contacto@comercioia.cl\">contacto@comercioia.cl</a>.</p>"),
             ("datos", "Qué datos tratamos",
              "<dl class=\"kv\">"
              "<dt>Al visitar el sitio</dt><dd>Nuestro proveedor de alojamiento, Microsoft Azure, procesa tu dirección IP y los datos técnicos de cada solicitud para entregarte las páginas y proteger el servicio. Nosotros no guardamos registros de visitas.</dd>"
@@ -828,21 +828,17 @@ DOCS = {
             ("cookies", "Cookies",
              "<p>Sin tu consentimiento el sitio no instala cookies. Si aceptas la analítica, Google Analytics instala estas dos:</p>"
              "<dl class=\"kv\">"
-             f"<dt><code>_ga</code></dt><dd>Distingue visitantes de forma anónima. Dura 2 años.</dd>"
+             f"<dt><code>_ga</code></dt><dd>Utiliza un identificador del navegador para distinguir visitas. Aunque no utilice tu nombre, no tratamos esta información como anónima por ese solo motivo. Dura 2 años.</dd>"
              f"<dt><code>{GA_COOKIE}</code></dt><dd>Mantiene el estado de la sesión. Dura 2 años.</dd>"
              "</dl>"
-             "<p>Puedes cambiar tu decisión cuando quieras: <button type=\"button\" class=\"linkish\" data-cookie-settings hidden>preferencias de cookies</button>. Si la retiras, borramos estas cookies de tu navegador.</p>"),
-            ("finalidad", "Para qué y con qué base",
-             "<dl class=\"kv\">"
-             "<dt>Analítica</dt><dd>Saber qué partes de la especificación se leen y mejorarlas. Base: tu consentimiento, que puedes retirar.</dd>"
-             "<dt>Funcionamiento y seguridad</dt><dd>Entregar las páginas y protegerlas de abusos. Base: es necesario para prestar el servicio.</dd>"
-             "<dt>Correos</dt><dd>Responderte. Base: tu propia solicitud.</dd>"
-             "</dl>"
-             "<p>No vendemos ni cedemos datos, no hacemos perfiles y no tomamos decisiones automatizadas sobre ti.</p>"),
+             "<p>Puedes cambiar tu decisión en <button type=\"button\" class=\"linkish\" data-cookie-settings hidden>Preferencias de cookies</button>. Si retiras el consentimiento, detenemos la medición con Google Analytics y eliminamos sus cookies de este navegador. La retirada no elimina por sí sola los datos ya enviados; para solicitar su supresión puedes escribirnos.</p>"),
+            ("finalidad", "Finalidades",
+             "<p>La analítica se activa únicamente con tu consentimiento. Los datos técnicos indispensables se utilizan para entregar las páginas y proteger el servicio, sin reutilizarlos para analítica o publicidad. Si nos escribes, usamos tus datos de contacto y el contenido del mensaje para atender la consulta y darle seguimiento.</p>"
+             "<p>No vendemos datos personales. Utilizamos los proveedores descritos para operar el sitio y, si lo autorizas, medir su uso. No hacemos perfiles y no tomamos decisiones automatizadas sobre ti.</p>"),
             ("proveedores", "Proveedores y transferencias",
              "<p>Google LLC (analítica) y Microsoft Corporation (alojamiento y correo) pueden tratar los datos fuera de Chile, incluso en Estados Unidos, bajo sus términos de tratamiento de datos. Conservamos los datos de analítica durante 14 meses, y los correos mientras sean necesarios para responder y dar seguimiento a la especificación.</p>"),
             ("derechos", "Tus derechos",
-             "<p>Puedes pedir acceso, rectificación, cancelación o bloqueo de tus datos (Ley 19.628). Desde el 1 de diciembre de 2026, con la Ley 21.719, se suman la portabilidad, la oposición y los derechos frente a decisiones automatizadas, y podrás reclamar ante la Agencia de Protección de Datos Personales. Escribe a <a href=\"mailto:contacto@comercioia.cl\">contacto@comercioia.cl</a>; respondemos dentro de los plazos legales.</p>"),
+             "<p>Puedes solicitar acceso, rectificación y, cuando corresponda, eliminación o bloqueo de tus datos, conforme a la Ley 19.628, y revocar tu consentimiento. Desde el 1 de diciembre de 2026 se aplicará el régimen reformado por la Ley 21.719, con sus derechos y mecanismos de reclamación. Escribe a <a href=\"mailto:contacto@comercioia.cl\">contacto@comercioia.cl</a>.</p>"),
             ("cambios", "Cambios",
              "<p>Si cambiamos esta política, publicaremos aquí la nueva versión con su fecha. El historial completo está en el <a href=\"https://github.com/Pintor-Project/comercioia\">repositorio público</a>.</p>"),
         ]),
@@ -850,11 +846,11 @@ DOCS = {
         path="en/privacy/index.html", url=BASE + "/en/privacy/", alt=BASE + "/privacidad/",
         title="Privacy policy · Comercio IA",
         desc="What data comercioia.cl processes, why, with which providers and how to exercise your rights. Analytics only with your consent.",
-        status="In force from 9 October 2026", h1="Privacy policy", sub="No cookies until you say yes.",
+        status="In force from 15 October 2026", h1="Privacy policy", sub="No cookies until you say yes.",
         lede="This site publishes a technical specification. It has no accounts, forms or ads. We only use analytics to learn which pages are read, and only if you accept it.",
         sections=[
             ("controller", "Who is responsible",
-             "<p>Pintor Project SpA, San Pío X 2460, Providencia, Santiago, Chile, leads Comercio IA and is responsible for the data processed on comercioia.cl. Write to us at <a href=\"mailto:contacto@comercioia.cl\">contacto@comercioia.cl</a>.</p>"),
+             "<p>Pintor Project SpA, RUT 76.629.267-4, represented by Tomás Stevanovic, with address at Pío X N° 2460, apartment 706, Providencia, Santiago, Chile, leads Comercio IA and is responsible for the data processed on comercioia.cl. Contact: <a href=\"mailto:contacto@comercioia.cl\">contacto@comercioia.cl</a>.</p>"),
             ("data", "What data we process",
              "<dl class=\"kv\">"
              "<dt>When you visit</dt><dd>Our hosting provider, Microsoft Azure, processes your IP address and the technical data of each request to serve the pages and protect the service. We keep no visit logs ourselves.</dd>"
@@ -866,21 +862,17 @@ DOCS = {
             ("cookies", "Cookies",
              "<p>Without your consent the site sets no cookies. If you accept analytics, Google Analytics sets these two:</p>"
              "<dl class=\"kv\">"
-             f"<dt><code>_ga</code></dt><dd>Tells visitors apart anonymously. Lasts 2 years.</dd>"
+             f"<dt><code>_ga</code></dt><dd>Uses a browser identifier to tell visits apart. Even though it does not use your name, we do not treat this information as anonymous for that reason alone. Lasts 2 years.</dd>"
              f"<dt><code>{GA_COOKIE}</code></dt><dd>Keeps the session state. Lasts 2 years.</dd>"
              "</dl>"
-             "<p>You can change your choice at any time: <button type=\"button\" class=\"linkish\" data-cookie-settings hidden>cookie preferences</button>. If you withdraw it, we delete these cookies from your browser.</p>"),
-            ("purpose", "Why, and on what basis",
-             "<dl class=\"kv\">"
-             "<dt>Analytics</dt><dd>To learn which parts of the specification are read and improve them. Basis: your consent, which you can withdraw.</dd>"
-             "<dt>Operation and security</dt><dd>To serve the pages and protect them from abuse. Basis: necessary to provide the service.</dd>"
-             "<dt>Email</dt><dd>To reply to you. Basis: your own request.</dd>"
-             "</dl>"
-             "<p>We do not sell or share data, build profiles, or make automated decisions about you.</p>"),
+             "<p>You can change your decision in <button type=\"button\" class=\"linkish\" data-cookie-settings hidden>Cookie preferences</button>. If you withdraw your consent, we stop measurement with Google Analytics and delete its cookies from this browser. Withdrawal does not by itself delete the data already sent; to ask for its deletion you can write to us.</p>"),
+            ("purpose", "Purposes",
+             "<p>Analytics is activated only with your consent. The technical data that is indispensable is used to serve the pages and protect the service, without reusing it for analytics or advertising. If you write to us, we use your contact details and the content of your message to handle the inquiry and follow up on it.</p>"
+             "<p>We do not sell personal data. We use the providers described to operate the site and, if you authorize it, to measure its use. We do not build profiles or make automated decisions about you.</p>"),
             ("providers", "Providers and transfers",
              "<p>Google LLC (analytics) and Microsoft Corporation (hosting and email) may process data outside Chile, including in the United States, under their data processing terms. We keep analytics data for 14 months, and emails for as long as needed to reply and follow up on the specification.</p>"),
             ("rights", "Your rights",
-             "<p>You can request access to, correction, deletion or blocking of your data (Chilean Ley 19.628). From 1 December 2026, Ley 21.719 adds portability, objection and rights regarding automated decisions, and you will be able to complain to the Chilean Personal Data Protection Agency. Write to <a href=\"mailto:contacto@comercioia.cl\">contacto@comercioia.cl</a>; we reply within the legal deadlines.</p>"),
+             "<p>You can request access, correction and, where applicable, deletion or blocking of your data, under Ley 19.628, and withdraw your consent. From 1 December 2026 the regime reformed by Ley 21.719 will apply, with its rights and complaint mechanisms. Write to <a href=\"mailto:contacto@comercioia.cl\">contacto@comercioia.cl</a>.</p>"),
             ("changes", "Changes",
              "<p>If we change this policy, we will publish the new version here with its date. The full history is in the <a href=\"https://github.com/Pintor-Project/comercioia\">public repository</a>.</p>"),
         ]),
