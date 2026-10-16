@@ -4,7 +4,7 @@
   "name": "cl.comercioia.shopping.tax_document",
   "version": "2026-10-16",
   "title": "Chilean Tax Document (boleta / factura)",
-  "description": "OPEN PROPOSAL, ready to implement and open for comment. Not yet stable: fields may change before the first stable release. Lets the buyer choose a boleta or a factura at checkout (according to the operation and the buyer's tax status, subject to the legal requirements of the document) and returns the SII electronic tax documents (DTE) issued for the order. Amounts are integer CLP (CLP has no minor unit). Version 2026-10-16 adds the references a business buyer requires on its factura (purchase order, HES, contract, dispatch guide) and the buyer identification and payment method a boleta above 135 UF must carry (SII Res. Ex. 44/2025); it only adds optional fields to 2026-10-15. Spec: https://comercioia.cl/spec/#tax-document",
+  "description": "OPEN PROPOSAL, ready to implement and open for comment. Not yet stable: fields may change before the first stable release. Lets the buyer choose a boleta or a factura at checkout (according to the operation and the buyer's tax status, subject to the legal requirements of the document) and returns the SII electronic tax documents (DTE) issued for the order. Amounts are integer CLP (CLP has no minor unit). Version 2026-10-16 adds the references a business buyer requires on its factura (purchase order, HES, contract, dispatch guide) and the payer identification and payment method required on a boleta for a sale covered by SII Res. Ex. 44/2025 whose value exceeds the 135 UF threshold; it only adds optional fields to 2026-10-15. Spec: https://comercioia.cl/spec/#tax-document",
   "requires": {
     "protocol": { "min": "2026-08-25" },
     "capabilities": {
@@ -26,7 +26,7 @@
     },
     "receiver": {
       "type": "object",
-      "description": "Receiver of the document: the buying company on a factura, or the person who pays on a boleta. Required for a factura, with rut, razon_social, giro, direccion and comuna. Required for a boleta whose total exceeds 135 UF, with at least rut and razon_social (SII Res. Ex. 44/2025); on other boletas it is optional. Lengths follow the SII DTE and boleta formats.",
+      "description": "Receiver of the document: the buying company on a factura, or the payer (who pays, who may differ from the buyer) on a boleta. Required for a factura, with rut, razon_social, giro, direccion and comuna. Required on a boleta for a sale covered by SII Res. Ex. 44/2025 whose value exceeds the 135 UF threshold, with at least the payer's rut and razon_social; on other boletas it is optional. Lengths follow the SII DTE and boleta formats.",
       "required": ["rut", "razon_social"],
       "properties": {
         "rut": {
@@ -77,7 +77,7 @@
     },
     "payment_method": {
       "type": "integer",
-      "description": "SII MedioPago of a boleta (Formato Boletas Electrónicas v4.2): 1 efectivo, 2 pago electrónico, 3 transferencia electrónica, 4 cheque, 5 otro. Mandatory and printed on a boleta whose total exceeds 135 UF (SII Res. Ex. 44/2025). Businesses MUST treat unknown values as 5.",
+      "description": "SII MedioPago of a boleta (Formato Boletas Electrónicas v4.2): 1 efectivo, 2 pago electrónico, 3 transferencia electrónica, 4 cheque, 5 otro. Mandatory and printed on a boleta for a sale covered by SII Res. Ex. 44/2025 whose value exceeds the 135 UF threshold. Businesses MUST treat unknown values as 5.",
       "examples": [2, 3, 1, 4, 5]
     },
     "tax_document_request": {
@@ -98,7 +98,7 @@
         },
         "payment_method": {
           "$ref": "#/$defs/payment_method",
-          "description": "SII MedioPago the business will print on the boleta. Businesses derive it from the payment handler used and SHOULD echo it in responses when the total exceeds 135 UF; a platform MAY send it only when the buyer pays outside the negotiated payment handlers, e.g. cash on delivery."
+          "description": "SII MedioPago the business will print on the boleta. Businesses derive it from the payment handler used and SHOULD echo it in responses when the boleta is for a sale covered by SII Res. Ex. 44/2025 whose value exceeds the 135 UF threshold; a platform MAY send it only when the buyer pays outside the negotiated payment handlers, e.g. cash on delivery."
         }
       },
       "if": {
@@ -123,7 +123,7 @@
         "issuer_rut": { "$ref": "#/$defs/rut" },
         "receiver_rut": {
           "$ref": "#/$defs/rut",
-          "description": "The generic RUT 66666666-6 is used in the cases the SII format allows, for non-periodic, non-residential sales or services when the RUT is unknown and no applicable internal identifier exists. It is not a universal rule for every boleta. It is never used on a boleta whose total exceeds 135 UF."
+          "description": "The generic RUT 66666666-6 is used in the cases the SII format allows, for non-periodic, non-residential sales or services when the RUT is unknown and no applicable internal identifier exists. It is not a universal rule for every boleta. It is never used on a boleta for a sale covered by SII Res. Ex. 44/2025 whose value exceeds the 135 UF threshold."
         },
         "issued_at": { "type": "string", "format": "date-time" },
         "total": { "type": "integer", "minimum": 0, "description": "Total in integer CLP, VAT included." },
@@ -132,7 +132,7 @@
         "exempt": { "type": "integer", "minimum": 0 },
         "payment_method": {
           "$ref": "#/$defs/payment_method",
-          "description": "SII MedioPago printed on the boleta. Present on every boleta whose total exceeds 135 UF."
+          "description": "SII MedioPago printed on the boleta. Present on every boleta for a sale covered by SII Res. Ex. 44/2025 whose value exceeds the 135 UF threshold."
         },
         "references": {
           "type": "array",
