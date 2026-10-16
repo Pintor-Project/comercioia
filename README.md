@@ -1,6 +1,6 @@
 # Comercio IA
 
-**La extensión chilena abierta para UCP y ACP.** Boleta y factura del SII, derecho a retracto, garantía legal, notas de crédito y medios de pago chilenos, para que cualquier agente de IA pueda cerrar una venta legal en Chile.
+**La extensión chilena abierta para UCP y ACP.** Boleta o factura del SII, derecho a retracto, garantía legal, notas de crédito y medios de pago chilenos, para que cualquier agente de IA pueda cerrar una venta legal en Chile.
 
 **The open Chilean extension for UCP and ACP.** SII tax receipts, the right of withdrawal, the legal warranty, credit notes and Chilean payment methods, so any AI agent can complete a legal sale in Chile.
 
@@ -14,14 +14,22 @@
 
 | Nombre · Name | Qué hace · What it does | Esquema · Schema |
 |---|---|---|
-| `cl.comercioia.shopping.tax_document` | Boleta o factura en el checkout, con referencias B2B y comprador identificado sobre 135 UF; documentos del SII en el pedido | [2026-10-16](site/ucp/schemas/tax_document/2026-10-16.json) · anterior · previous: [2026-10-09](site/ucp/schemas/tax_document/2026-10-09.json) |
-| `cl.comercioia.shopping.consumer_terms` | Identidad del vendedor, aviso de IA, despacho, cuotas, confirmación escrita; políticas de retracto y garantía legal | [2026-10-09](site/ucp/schemas/consumer_terms/2026-10-09.json) |
-| `cl.comercioia.shopping.credit_note` | Nota de crédito (DTE 61) en cada ajuste del pedido | [2026-10-09](site/ucp/schemas/credit_note/2026-10-09.json) |
-| `cl.comercioia.webpay_plus` | Webpay Plus (Transbank) | [2026-10-09](site/ucp/handlers/webpay_plus/2026-10-09.json) |
-| `cl.comercioia.oneclick_mall` | Oneclick Mall (Transbank), propuesto | [2026-10-09](site/ucp/handlers/oneclick_mall/2026-10-09.json) |
-| `cl.comercioia.mercadopago` | Mercado Pago Checkout | [2026-10-09](site/ucp/handlers/mercadopago/2026-10-09.json) |
-| `cl.comercioia.getnet` | Getnet Web Checkout | [2026-10-09](site/ucp/handlers/getnet/2026-10-09.json) |
-| `cl.comercioia.khipu` | Khipu (transferencia bancaria) | [2026-10-09](site/ucp/handlers/khipu/2026-10-09.json) |
+| `cl.comercioia.shopping.tax_document` | Boleta o factura según la operación y el comprador, en el checkout, con referencias B2B y comprador identificado sobre 135 UF; documentos del SII en el pedido | [2026-10-16](site/ucp/schemas/tax_document/2026-10-16.json) · anterior · previous: [2026-10-15](site/ucp/schemas/tax_document/2026-10-15.json) |
+| `cl.comercioia.shopping.consumer_terms` | Identidad del vendedor, aviso de IA, despacho, cuotas, confirmación escrita; políticas de retracto y garantía legal | [2026-10-15](site/ucp/schemas/consumer_terms/2026-10-15.json) |
+| `cl.comercioia.shopping.credit_note` | Nota de crédito (DTE 61) en cada ajuste del pedido | [2026-10-15](site/ucp/schemas/credit_note/2026-10-15.json) |
+| `cl.comercioia.webpay_plus` | Webpay Plus (Transbank) | [2026-10-15](site/ucp/handlers/webpay_plus/2026-10-15.json) |
+| `cl.comercioia.oneclick_mall` | Oneclick Mall (Transbank), propuesto; flujo distinto al de redirección | [2026-10-15](site/ucp/handlers/oneclick_mall/2026-10-15.json) |
+| `cl.comercioia.mercadopago` | Mercado Pago Checkout | [2026-10-15](site/ucp/handlers/mercadopago/2026-10-15.json) |
+| `cl.comercioia.getnet` | Getnet Web Checkout | [2026-10-15](site/ucp/handlers/getnet/2026-10-15.json) |
+| `cl.comercioia.khipu` | Khipu (transferencia bancaria) | [2026-10-15](site/ucp/handlers/khipu/2026-10-15.json) |
+
+La versión anterior, `2026-10-09`, sigue publicada en sus direcciones (`…/2026-10-09.json`); la `2026-10-15` la corrige tras una revisión legal, ver el [CHANGELOG](CHANGELOG.md).
+
+The previous version, `2026-10-09`, stays published at its addresses (`…/2026-10-09.json`); `2026-10-15` corrects it after a legal review, see the [CHANGELOG](CHANGELOG.md).
+
+La `2026-10-16` solo agrega campos opcionales a `tax_document` (referencias B2B y boletas sobre 135 UF); las demás extensiones y los medios de pago siguen en `2026-10-15`, y la `2026-10-15` de `tax_document` también sigue publicada.
+
+`2026-10-16` only adds optional fields to `tax_document` (B2B references and boletas above 135 UF); the other extensions and the payment handlers stay at `2026-10-15`, and `tax_document` `2026-10-15` also stays published.
 
 Los esquemas se sirven desde `https://comercioia.cl/ucp/…`, el dominio que corresponde al espacio de nombres `cl.comercioia.*`, sin redirecciones, como exige UCP. Ejemplos completos en [`examples/`](examples/).
 

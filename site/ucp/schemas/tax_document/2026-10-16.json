@@ -4,7 +4,7 @@
   "name": "cl.comercioia.shopping.tax_document",
   "version": "2026-10-16",
   "title": "Chilean Tax Document (boleta / factura)",
-  "description": "OPEN PROPOSAL, ready to implement and open for comment. Not yet stable: fields may change before the first stable release. Lets the buyer choose a boleta or a factura at checkout and returns the SII electronic tax documents (DTE) issued for the order. Amounts are integer CLP (CLP has no minor unit). Version 2026-10-16 adds the references a business buyer requires on its factura (purchase order, HES, contract, dispatch guide) and the buyer identification and payment method a boleta above 135 UF must carry (SII Res. Ex. 44/2025); it only adds optional fields to 2026-10-09. Spec: https://comercioia.cl/spec/#tax-document",
+  "description": "OPEN PROPOSAL, ready to implement and open for comment. Not yet stable: fields may change before the first stable release. Lets the buyer choose a boleta or a factura at checkout (according to the operation and the buyer's tax status, subject to the legal requirements of the document) and returns the SII electronic tax documents (DTE) issued for the order. Amounts are integer CLP (CLP has no minor unit). Version 2026-10-16 adds the references a business buyer requires on its factura (purchase order, HES, contract, dispatch guide) and the buyer identification and payment method a boleta above 135 UF must carry (SII Res. Ex. 44/2025); it only adds optional fields to 2026-10-15. Spec: https://comercioia.cl/spec/#tax-document",
   "requires": {
     "protocol": { "min": "2026-08-25" },
     "capabilities": {
@@ -16,7 +16,7 @@
     "rut": {
       "type": "string",
       "pattern": "^[0-9]{1,8}-[0-9Kk]$",
-      "description": "Chilean taxpayer ID (RUT) without dots, with a hyphen and the modulo 11 check digit, e.g. 76123456-0. Receivers MUST validate the check digit.",
+      "description": "Chilean taxpayer ID (RUT) without dots, with a hyphen and the modulo 11 check digit, e.g. 76123456-0. Receivers MUST validate the check digit. The generic RUT 66666666-6 is used only in the cases the SII format allows, not in every boleta.",
       "examples": ["76123456-0", "66666666-6"]
     },
     "document_type": {
@@ -86,7 +86,7 @@
       "properties": {
         "document_choice": {
           "type": "string",
-          "description": "'boleta' for consumers (default) or 'factura' for VAT-registered buyers. Businesses MUST treat unknown values as 'boleta' and say so in messages[].",
+          "description": "'boleta' (default) or 'factura', according to the operation and the buyer's tax status. The choice at checkout is subject to the legal requirements of the document. Businesses MUST treat unknown values as 'boleta' and say so in messages[].",
           "examples": ["boleta", "factura"]
         },
         "receiver": { "$ref": "#/$defs/receiver" },
@@ -123,7 +123,7 @@
         "issuer_rut": { "$ref": "#/$defs/rut" },
         "receiver_rut": {
           "$ref": "#/$defs/rut",
-          "description": "66666666-6 for a boleta to an unidentified consumer, never on a boleta whose total exceeds 135 UF."
+          "description": "The generic RUT 66666666-6 is used in the cases the SII format allows, for non-periodic, non-residential sales or services when the RUT is unknown and no applicable internal identifier exists. It is not a universal rule for every boleta. It is never used on a boleta whose total exceeds 135 UF."
         },
         "issued_at": { "type": "string", "format": "date-time" },
         "total": { "type": "integer", "minimum": 0, "description": "Total in integer CLP, VAT included." },
@@ -142,7 +142,7 @@
         },
         "issue_trigger": {
           "type": "string",
-          "description": "Event that triggered issuance.",
+          "description": "Event that triggered issuance. In sales of goods, issuance is tied to their actual or symbolic delivery (DL 825 art. 55); for services, the boleta is issued when the remuneration is received or made available, and the factura follows the rules of its tax period. payment_confirmed can be an operational option but does not replace those rules. The business must configure the applicable event.",
           "examples": ["payment_confirmed", "dispatched", "delivered"]
         },
         "sii_track_id": { "type": "string", "description": "SII submission tracking ID." },

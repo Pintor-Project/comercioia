@@ -19,24 +19,24 @@
         "extends": ["dev.ucp.shopping.checkout", "dev.ucp.shopping.order"],
         "spec": "https://comercioia.cl/spec/#tax-document",
         "schema": "https://comercioia.cl/ucp/schemas/tax_document/2026-10-16.json" }],
-      "cl.comercioia.shopping.consumer_terms": [{ "version": "2026-10-09",
+      "cl.comercioia.shopping.consumer_terms": [{ "version": "2026-10-15",
         "extends": ["dev.ucp.shopping.checkout", "dev.ucp.shopping.order"],
         "spec": "https://comercioia.cl/spec/#consumer-terms",
-        "schema": "https://comercioia.cl/ucp/schemas/consumer_terms/2026-10-09.json" }],
-      "cl.comercioia.shopping.credit_note": [{ "version": "2026-10-09",
+        "schema": "https://comercioia.cl/ucp/schemas/consumer_terms/2026-10-15.json" }],
+      "cl.comercioia.shopping.credit_note": [{ "version": "2026-10-15",
         "extends": "dev.ucp.shopping.order",
         "spec": "https://comercioia.cl/spec/#credit-note",
-        "schema": "https://comercioia.cl/ucp/schemas/credit_note/2026-10-09.json" }]
+        "schema": "https://comercioia.cl/ucp/schemas/credit_note/2026-10-15.json" }]
     },
     "payment_handlers": {
-      "cl.comercioia.webpay_plus": [{ "id": "webpay_1", "version": "2026-10-09",
+      "cl.comercioia.webpay_plus": [{ "id": "webpay_1", "version": "2026-10-15",
         "spec": "https://comercioia.cl/spec/#webpay-plus",
-        "schema": "https://comercioia.cl/ucp/handlers/webpay_plus/2026-10-09.json",
+        "schema": "https://comercioia.cl/ucp/handlers/webpay_plus/2026-10-15.json",
         "available_instruments": [{ "type": "redirect" }],
         "config": { "environment": "production" } }],
-      "cl.comercioia.khipu": [{ "id": "khipu_1", "version": "2026-10-09",
+      "cl.comercioia.khipu": [{ "id": "khipu_1", "version": "2026-10-15",
         "spec": "https://comercioia.cl/spec/#khipu",
-        "schema": "https://comercioia.cl/ucp/handlers/khipu/2026-10-09.json",
+        "schema": "https://comercioia.cl/ucp/handlers/khipu/2026-10-15.json",
         "available_instruments": [{ "type": "redirect" }],
         "config": { "environment": "production" } }]
     }

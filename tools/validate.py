@@ -70,6 +70,7 @@ for path in sorted(glob.glob(os.path.join(SITE, "ucp", "**", "*.json"), recursiv
     caps = set(doc.get("requires", {}).get("capabilities", {}))
     if not caps <= set(doc.get("$defs", {})):
         fail(f"{rel}: requires.capabilities {caps - set(doc['$defs'])} missing from $defs")
+    # Several versions of one name stay published; the examples target the newest.
     if name in schemas and schemas[name][0]["version"] < version:
         previous[name] = schemas[name]
     if name not in schemas or schemas[name][0]["version"] < version:

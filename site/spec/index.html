@@ -72,7 +72,7 @@
       <li><a href="#acp">Equivalencias en ACP</a></li>
       <li><a href="#esquemas">Esquemas</a></li>
       <li><a href="#versionado">Versionado y gobernanza</a></li>
-      <li><a href="#preguntas">Preguntas abiertas</a></li>
+      <li><a href="#dependen-de-cada-implementacion">Aspectos que dependen de cada implementación</a></li>
       <li><a href="#fuentes">Fuentes</a></li>
     </ol>
   </nav>
@@ -83,13 +83,13 @@
       <h1>Especificación Comercio IA</h1>
       <p class="lede">Extensión chilena para el Universal Commerce Protocol (UCP) y el Agentic Commerce Protocol (ACP). Define cómo un agente de IA y una tienda intercambian la información que la ley chilena exige para cerrar una venta a distancia, y cómo se paga con medios de pago chilenos.</p>
       <dl class="kv">
-        <dt>Versión</dt><dd><code>2026-10-16</code> (propuesta abierta: lista para implementar y comentar). La versión anterior, <code>2026-10-09</code>, sigue publicada.</dd>
+        <dt>Versión</dt><dd><code>2026-10-16</code> (propuesta abierta: lista para implementar y comentar). Las versiones anteriores, <code>2026-10-15</code> y <code>2026-10-09</code>, siguen publicadas.</dd>
         <dt>Espacio de nombres</dt><dd><code>cl.comercioia.*</code></dd>
         <dt>Esquemas servidos desde</dt><dd><code>https://comercioia.cl/ucp/…</code></dd>
         <dt>Requiere</dt><dd>UCP <code>2026-08-25</code> o posterior. Equivalencias para ACP <code>2026-04-17</code> en la sección <a href="#acp">ACP</a>.</dd>
         <dt>Licencia</dt><dd>Apache-2.0</dd>
       </dl>
-      <p class="note"><b>Novedades de 2026-10-16.</b> Solo cambia <code>tax_document</code>, con campos opcionales: una implementación de 2026-10-09 sigue siendo válida. Agrega las referencias que exigen las empresas compradoras en su factura (<a href="#referencias"><code>references[]</code></a>, <a href="https://github.com/Pintor-Project/comercioia/issues/1">issue #1</a>) y la identificación del comprador y el medio de pago en boletas sobre 135 UF (<a href="#boleta-135-uf"><code>receiver</code> en boleta y <code>payment_method</code></a>). <code>consumer_terms</code>, <code>credit_note</code> y los medios de pago siguen en <code>2026-10-09</code>. Historial en el <a href="https://github.com/Pintor-Project/comercioia/blob/main/CHANGELOG.md">CHANGELOG</a>.</p>
+      <p class="note"><b>Novedades de 2026-10-16.</b> Solo cambia <code>tax_document</code>, con campos opcionales: una implementación de 2026-10-15 sigue siendo válida. Agrega las referencias que exigen las empresas compradoras en su factura (<a href="#referencias"><code>references[]</code></a>, <a href="https://github.com/Pintor-Project/comercioia/issues/1">issue #1</a>) y la identificación de quien paga y el medio de pago en boletas sobre 135 UF (<a href="#boleta-135-uf"><code>receiver</code> en boleta y <code>payment_method</code></a>). <code>consumer_terms</code>, <code>credit_note</code> y los medios de pago siguen en <code>2026-10-15</code>. Historial en el <a href="https://github.com/Pintor-Project/comercioia/blob/main/CHANGELOG.md">CHANGELOG</a>.</p>
       <p class="warn">Esta especificación describe reglas tributarias y de protección al consumidor, pero no es asesoría legal. Cada tienda es responsable de decidir qué avisos le aplican.</p>
     </section>
 
@@ -121,21 +121,21 @@
         "spec":   "https://comercioia.cl/spec/#tax-document",
         "schema": "https://comercioia.cl/ucp/schemas/tax_document/2026-10-16.json" }],
       "cl.comercioia.shopping.consumer_terms": [{
-        "version": "2026-10-09",
+        "version": "2026-10-15",
         "extends": ["dev.ucp.shopping.checkout", "dev.ucp.shopping.order"],
         "spec":   "https://comercioia.cl/spec/#consumer-terms",
-        "schema": "https://comercioia.cl/ucp/schemas/consumer_terms/2026-10-09.json" }],
+        "schema": "https://comercioia.cl/ucp/schemas/consumer_terms/2026-10-15.json" }],
       "cl.comercioia.shopping.credit_note": [{
-        "version": "2026-10-09",
+        "version": "2026-10-15",
         "extends": "dev.ucp.shopping.order",
         "spec":   "https://comercioia.cl/spec/#credit-note",
-        "schema": "https://comercioia.cl/ucp/schemas/credit_note/2026-10-09.json" }]
+        "schema": "https://comercioia.cl/ucp/schemas/credit_note/2026-10-15.json" }]
     },
     "payment_handlers": {
       "cl.comercioia.webpay_plus": [{
-        "id": "webpay_1", "version": "2026-10-09",
+        "id": "webpay_1", "version": "2026-10-15",
         "spec":   "https://comercioia.cl/spec/#webpay-plus",
-        "schema": "https://comercioia.cl/ucp/handlers/webpay_plus/2026-10-09.json",
+        "schema": "https://comercioia.cl/ucp/handlers/webpay_plus/2026-10-15.json",
         "available_instruments": [{ "type": "redirect" }],
         "config": { "environment": "production" } }]
     }
@@ -149,7 +149,7 @@
       <h3>En el checkout: <code>tax_document</code></h3>
       <div class="table-scroll"><table>
         <tr><th>Campo</th><th>Regla</th><th>Fuente</th></tr>
-        <tr><td><code>document_choice</code></td><td><code>boleta</code> (por defecto) o <code>factura</code>. Las personas reciben boleta (39, o 41 exenta); la factura (33 o 34) es solo para compradores con inicio de actividades. Un valor desconocido DEBE tratarse como boleta, avisando en <code>messages[]</code>.</td><td>DL 825 arts. 52–53</td></tr>
+        <tr><td><code>document_choice</code></td><td><code>boleta</code> (por defecto) o <code>factura</code>. Boletas o facturas según la operación y la calidad tributaria del comprador. La elección en el checkout está sujeta a los requisitos legales del documento (boleta 39, o 41 exenta; factura 33 o 34). Un valor desconocido DEBE tratarse como boleta, avisando en <code>messages[]</code>.</td><td>DL 825 arts. 52–53</td></tr>
         <tr><td><code>receiver</code></td><td>Quien recibe el documento: la empresa en una factura, o la persona que paga en una boleta. En una factura es obligatorio con <code>rut</code>, <code>razon_social</code> (≤100), <code>giro</code> (≤40), <code>direccion</code> (≤70) y <code>comuna</code> (≤20); opcionales <code>ciudad</code> y <code>email</code>. En una boleta sobre 135 UF es obligatorio con al menos <code>rut</code> y <code>razon_social</code> (de una persona, sus nombres y apellidos); en las demás boletas es opcional. El <code>rut</code> es el RUT real, nunca el genérico <code>66666666-6</code>.</td><td>Formato DTE del SII; DS 55 art. 69; Res. Ex. SII 44/2025</td></tr>
         <tr><td><code>references</code></td><td>Nuevo en 2026-10-16. Hasta 40 referencias que el comprador exige en su documento, en general una factura: <code>type</code>, <code>number</code>, <code>date</code> y <code>reason</code>. La tienda las imprime o rechaza el checkout con un mensaje; NO DEBE descartarlas en silencio. Ver <a href="#referencias">Ventas a empresas</a>.</td><td>Formato DTE, zona de referencias</td></tr>
         <tr><td><code>payment_method</code></td><td>Nuevo en 2026-10-16. Medio de pago que se imprime en la boleta (<code>MedioPago</code> del SII): <code>1</code> efectivo, <code>2</code> pago electrónico, <code>3</code> transferencia electrónica, <code>4</code> cheque, <code>5</code> otro. La tienda lo deriva del medio de pago usado y DEBERÍA repetirlo en sus respuestas cuando el total supera 135 UF. El agente solo lo envía si el comprador paga fuera de los medios de pago negociados, por ejemplo en efectivo contra entrega. Un valor desconocido se trata como <code>5</code>.</td><td>Formato Boletas Electrónicas v4.2; Res. Ex. SII 44/2025</td></tr>
@@ -158,8 +158,8 @@
       <div class="table-scroll"><table>
         <tr><th>Campo</th><th>Regla</th><th>Fuente</th></tr>
         <tr><td><code>type</code>, <code>folio</code></td><td>Tipo de DTE y folio autorizado por el SII.</td><td>Formato DTE</td></tr>
-        <tr><td><code>issuer_rut</code>, <code>receiver_rut</code></td><td>Una boleta a un consumidor no identificado lleva el RUT genérico <code>66666666-6</code>, salvo que su total supere 135 UF: entonces lleva el RUT real de quien paga.</td><td>Formato DTE; Res. Ex. SII 44/2025</td></tr>
-        <tr><td><code>issued_at</code>, <code>issue_trigger</code></td><td>Se emite a más tardar en la entrega. Lo recomendado es emitir al confirmarse el pago (<code>payment_confirmed</code>). Una factura emitida después del despacho requiere guía de despacho (52) al despachar.</td><td>DL 825 art. 55</td></tr>
+        <tr><td><code>issuer_rut</code>, <code>receiver_rut</code></td><td>El RUT genérico 66.666.666-6 se utiliza en los casos admitidos por el formato del SII, para ventas o servicios no periódicos ni domiciliarios cuando no se conoce el RUT ni existe el identificador interno aplicable. No es una regla universal para toda boleta. En las ventas comprendidas en la Res. Ex. SII 44/2025 cuyo valor excede 135 UF, la boleta lleva el RUT de quien paga.</td><td>Formato DTE; Res. Ex. SII 44/2025</td></tr>
+        <tr><td><code>issued_at</code>, <code>issue_trigger</code></td><td>En ventas de bienes, la emisión se vincula a su entrega real o simbólica, según el art. 55 del DL 825. En servicios, la boleta se emite al percibir o ponerse a disposición la remuneración; la factura sigue las reglas de su período tributario. <code>payment_confirmed</code> puede ser una opción operativa, pero no reemplaza esas reglas. Si se posterga legalmente la factura de bienes, debe emitirse la guía de despacho correspondiente. La tienda debe configurar el evento aplicable.</td><td>DL 825 arts. 55 y 57</td></tr>
         <tr><td><code>total</code>, <code>net</code>, <code>iva</code>, <code>exempt</code></td><td>Pesos enteros. El total incluye IVA.</td><td>DL 825</td></tr>
         <tr><td><code>payment_method</code></td><td>Nuevo en 2026-10-16. Medio de pago impreso en la boleta, con los mismos códigos del checkout. Presente en toda boleta sobre 135 UF.</td><td>Formato Boletas Electrónicas v4.2</td></tr>
         <tr><td><code>references</code></td><td>Nuevo en 2026-10-16. Las referencias tal como quedaron en el documento emitido, en orden de línea (<code>NroLinRef</code>).</td><td>Formato DTE, zona de referencias</td></tr>
@@ -167,16 +167,16 @@
         <tr><td><code>representation_url</code></td><td>Enlace https a una representación que el comprador pueda guardar, entregado de inmediato por correo, chat, enlace o QR.</td><td>Res. Ex. SII 74/2020</td></tr>
       </table></div>
       <h3 id="boleta-135-uf">Boletas sobre 135 UF</h3>
-      <p>Desde el 1 de septiembre de 2025, una boleta cuyo total supera 135 UF debe identificar a la persona que paga: sus nombres y apellidos, su RUT, el medio de pago y una descripción clara de los bienes (Código Tributario art. 92 ter; Res. Ex. SII 44/2025). El SII fija cada diciembre el límite en pesos, con la UF del 31 de diciembre anterior; para 2025 fue de $5.186.253. Más contexto en la <a href="/cumplimiento/#rut-generico">guía de cumplimiento</a>.</p>
+      <p>En las ventas comprendidas en la Resolución SII N° 44 de 2025 cuyo valor exceda el umbral de 135 UF, la boleta debe identificar al pagador con su nombre y RUT, registrar el medio de pago y describir los bienes (Código Tributario art. 92 ter). El pagador puede ser distinto del comprador. El umbral en pesos se determina anualmente con la UF del 31 de diciembre anterior, no con la UF del día de la compra; para 2025 fue de $5.186.253. Más contexto en la <a href="/cumplimiento/#rut-generico">guía de cumplimiento</a>.</p>
       <ul>
-        <li>Cuando el total supera 135 UF, el agente DEBE reunir el RUT y el nombre del comprador antes del pago y enviarlos en <code>tax_document.receiver</code>.</li>
+        <li>Cuando el total supera 135 UF, el agente DEBE reunir el RUT y el nombre de quien paga antes del pago y enviarlos en <code>tax_document.receiver</code>.</li>
         <li>Si faltan, la tienda NO DEBE emitir con el RUT genérico ni completar el checkout. Responde con un mensaje <code>error</code> con <code>code: "cl.comercioia.tax_document.receiver_required"</code> y <code>path: "$.tax_document.receiver"</code>. La severidad es <code>recoverable</code> si el agente negoció esta extensión y puede enviar el dato, o <code>requires_buyer_input</code>, con un <code>continue_url</code> donde el comprador lo ingrese, si no la negoció.</li>
         <li>La tienda imprime el medio de pago según el instrumento con que efectivamente se pagó, por ejemplo <code>2</code> para una tarjeta (Webpay Plus, Oneclick Mall, Getnet) y <code>3</code> para una transferencia (Khipu). En Mercado Pago depende del instrumento que informe el proveedor.</li>
         <li>El nombre de cada producto en <code>line_items[]</code> pasa a la boleta (<code>NmbItem</code>), así que DEBE describir el bien con claridad.</li>
       </ul>
       <h3 id="referencias">Ventas a empresas</h3>
-      <p>La factura (33 o 34) es para compradores con inicio de actividades: el agente envía <code>document_choice: "factura"</code> y un <code>receiver</code> con el RUT, la razón social, el giro, la dirección y la comuna de la empresa. En estas ventas no aplican el retracto ni la garantía legal de la Ley del Consumidor, salvo cuando la compradora es micro o pequeña empresa: la Ley 20.416 le extiende, en principio, el retracto, la garantía y los deberes de información (en revisión legal).</p>
-      <p>Los compradores grandes y el Estado suelen rechazar una factura que no referencia su orden de compra, su hoja de entrada de servicios (HES) o su contrato. El agente las pide en <code>tax_document.references[]</code>; cada una es una línea de la zona de referencias del DTE:</p>
+      <p>La factura (33 o 34) es para compradores con inicio de actividades: el agente envía <code>document_choice: "factura"</code> y un <code>receiver</code> con el RUT, la razón social, el giro, la dirección y la comuna de la empresa. Emitir una factura no determina por sí solo la aplicación o exclusión de la Ley del Consumidor. Debe revisarse la calidad de destinatario final y, cuando corresponda, la protección que la Ley 20.416 extiende a micro y pequeñas empresas.</p>
+      <p>Las referencias a orden de compra, hoja de entrada de servicios (HES) o contrato dependen de la operación y del régimen aplicable; los compradores grandes y el Estado suelen rechazar una factura que no las incluye. El agente las pide en <code>tax_document.references[]</code>; cada una es una línea de la zona de referencias del DTE:</p>
       <div class="table-scroll"><table>
         <tr><th>Campo</th><th>En el DTE</th><th>Regla</th></tr>
         <tr><td><code>type</code></td><td><code>TpoDocRef</code> (≤3)</td><td>Código del tipo de documento, como texto. Uno numérico DEBE estar en la lista del Formato DTE: <code>801</code> orden de compra, <code>802</code> nota de pedido, <code>803</code> contrato, <code>52</code> guía de despacho electrónica o <code>33</code> factura electrónica, entre otros. Uno alfabético, de hasta 3 letras, el SII no lo valida y sirve para documentos fuera de esa lista, como <code>HES</code>.</td></tr>
@@ -198,7 +198,7 @@
         <tr><td><code>price_includes_tax</code></td><td>DEBE ser <code>true</code> en ventas a consumidores: el precio total incluye impuestos.</td><td>Ley 19.496 art. 30</td></tr>
         <tr><td><code>delivery</code></td><td>Costo de despacho y plazo estimado, informados antes del pago.</td><td>DS 6/2021</td></tr>
         <tr><td><code>installments</code></td><td>Solo si se ofrecen cuotas: <code>count</code>, <code>installment_amount</code>, tasa mensual, <code>cae</code>, <code>total_cost</code> y <code>cash_price</code>. El precio contado DEBE ser al menos igual de visible que el precio en cuotas.</td><td>Ley 19.496 arts. 17 G y 37</td></tr>
-        <tr><td><code>confirmation</code> (pedido)</td><td>Confirmación escrita con copia íntegra del contrato, enviada al cerrarse la venta: <code>channel</code>, <code>sent_at</code>, <code>contract_copy_url</code>. Sin ella, el plazo de retracto se extiende de 10 a 90 días.</td><td>Ley 19.496 art. 12 A</td></tr>
+        <tr><td><code>confirmation</code> (pedido)</td><td>Una vez perfeccionado el contrato, la tienda debe enviar al consumidor una confirmación escrita que contenga una copia íntegra, clara y legible del contrato. Un enlace debe permitir conservar esa versión. La ley no establece aquí un número general de horas; el estándar exige enviarla al cierre de la venta. Su falta puede extender el retracto de diez a noventa días. Campos: <code>channel</code>, <code>sent_at</code>, <code>contract_copy_url</code>.</td><td>Ley 19.496 art. 12 A</td></tr>
       </table></div>
     </section>
 
@@ -208,17 +208,17 @@
       <h3><code>cl.comercioia.policy.retracto</code></h3>
       <div class="table-scroll"><table>
         <tr><th>Campo</th><th>Valor por defecto y regla</th></tr>
-        <tr><td><code>window_days</code></td><td>10 días corridos desde la recepción del producto, o desde la contratación en servicios.</td></tr>
-        <tr><td><code>window_days_without_confirmation</code></td><td>90, si no se envió la confirmación escrita del art. 12 A.</td></tr>
+        <tr><td><code>window_days</code></td><td>10 días corridos desde la recepción del producto; en servicios, dentro de diez días desde contratar y antes de la prestación.</td></tr>
+        <tr><td><code>window_days_without_confirmation</code></td><td>Hasta 90, si no se envió la confirmación escrita del art. 12 A.</td></tr>
         <tr><td><code>refund_within_days</code></td><td>45, sin descuentos.</td></tr>
-        <tr><td><code>excluded</code>, <code>exclusion_reason</code></td><td>Un producto solo puede excluirse por su naturaleza: no retornable, perecible, hecho a medida o de higiene personal abierto (DS 52/2022). Los servicios pueden excluirse por decisión del vendedor. Ejemplos de código: <code>not_returnable</code>, <code>perishable</code>, <code>made_to_order</code>, <code>hygiene_opened</code>, <code>service_excluded_by_seller</code>.</td></tr>
+        <tr><td><code>excluded</code>, <code>exclusion_reason</code></td><td>En compras a distancia, el retracto de bienes puede excluirse únicamente en las categorías y condiciones legales: bienes que ya no puedan comercializarse como se ofrecieron por uso o instalación más allá de su inspección; bienes que puedan deteriorarse o caducar en menos de diez días desde su recepción; bienes efectivamente personalizados; y bienes sellados de uso personal o higiene cuya apertura genere riesgo para la salud o higiene. Revisar las condiciones del DS N° 52 para cada producto. Una personalización incumplida no justifica la exclusión. Para servicios también rigen exigencias de información previa; si no se excluye válidamente, el retracto opera dentro de diez días desde contratar y antes de la prestación. Ejemplos de código: <code>not_returnable</code>, <code>perishable</code>, <code>made_to_order</code>, <code>hygiene_opened</code>, <code>service_excluded_by_seller</code>.</td></tr>
       </table></div>
-      <p>Fuente: Ley 19.496 art. 3 bis b), modificada por la Ley 21.398. El aviso se muestra antes de pagar, junto al precio y con un tamaño no menor, con las palabras «derecho a retracto».</p>
+      <p>Fuente: Ley 19.496 art. 3 bis b), modificada por la Ley 21.398. La exclusión debe informarse en español, antes de contratar y pagar, junto al precio y con tamaño no inferior, utilizando “derecho a retracto”. La exclusión no elimina la garantía legal.</p>
       <h3><code>cl.comercioia.policy.garantia_legal</code></h3>
       <div class="table-scroll"><table>
         <tr><th>Campo</th><th>Valor por defecto y regla</th></tr>
-        <tr><td><code>months</code></td><td>6 meses desde la recepción.</td></tr>
-        <tr><td><code>remedies</code></td><td><code>repair</code>, <code>replace</code> o <code>refund</code>, a elección del comprador.</td></tr>
+        <tr><td><code>months</code></td><td>Garantía legal de seis meses desde la recepción, ante fallas o incumplimientos comprendidos en la ley.</td></tr>
+        <tr><td><code>remedies</code></td><td><code>repair</code>, <code>replace</code> o <code>refund</code>: reparación gratuita, cambio o devolución, según corresponda.</td></tr>
         <tr><td><code>remote_claim_channel</code></td><td>Un vendedor a distancia ofrece un canal de reclamo a distancia o retiro gratuito.</td></tr>
       </table></div>
       <p>Fuente: Ley 19.496 arts. 20 y 21; SERNAC Res. Ex. 779/2023.</p>
@@ -236,19 +236,20 @@
         <tr><td><code>cod_ref</code></td><td>1 anula el documento, 2 corrige texto, 3 corrige montos.</td></tr>
         <tr><td><code>razon</code></td><td>Motivo impreso en el documento (≤90).</td></tr>
       </table></div>
-      <p>El IVA de una nota de crédito solo se recupera dentro de los 6 meses siguientes a la entrega (DL 825 arts. 21 N°2 y 70).</p>
+      <p>Los efectos tributarios de una nota de crédito dependen de su causal. En devoluciones o resciliaciones rige el plazo de seis meses para los ajustes previstos en los arts. 21 y 70 del DL 825. No es una regla general para toda nota de crédito: las correcciones de errores y operaciones exentas tienen reglas distintas. La emisión del documento y la rebaja del débito fiscal deben validarse separadamente.</p>
     </section>
 
     <section id="medios-de-pago">
       <h2>7. Medios de pago</h2>
-      <p>Los cinco medios de pago siguen el mismo patrón, que en UCP es el patrón de escalamiento del núcleo:</p>
+      <p>Los medios de pago con redirección (Webpay Plus, Mercado Pago, Getnet y Khipu) siguen el mismo patrón, que en UCP es el patrón de escalamiento del núcleo. Oneclick Mall (propuesto) funciona distinto y se describe por separado, más abajo:</p>
       <ol>
         <li>La tienda crea el pago con <b>su propia cuenta</b> en el proveedor.</li>
         <li>El checkout responde <code>status: "requires_escalation"</code> con un <code>continue_url</code> y un mensaje con <code>severity: "requires_buyer_input"</code>.</li>
         <li>El comprador paga en la página del proveedor.</li>
         <li>La tienda confirma el resultado directamente con el proveedor y crea el pedido.</li>
       </ol>
-      <p>El agente nunca recibe datos de tarjeta ni credenciales. La configuración pública (<code>config</code>) NO DEBE incluir claves ni secretos. Estos medios de pago están publicados por la iniciativa Comercio IA hasta que cada proveedor publique el suyo; cada proveedor está invitado a revisarlo, cofirmarlo o asumirlo.</p>
+      <p>El agente nunca recibe datos de tarjeta ni credenciales. La configuración pública (<code>config</code>) NO DEBE incluir claves ni secretos. Estos medios de pago están publicados por la iniciativa Comercio IA hasta que cada proveedor publique el suyo; cada proveedor está invitado a revisarlo, cofirmarlo o asumirlo. Son integraciones propuestas por la iniciativa: que figuren aquí no implica que el proveedor las haya revisado ni respaldado, ni que estén disponibles en su plataforma.</p>
+      <p>Publicar esta especificación no equivale por sí solo a operar un servicio financiero. En una implementación, la calificación depende de las funciones efectivas, incluidos el procesamiento o la iniciación de pagos; no se resuelve únicamente por no retener fondos. Los flujos de redirección y Oneclick deben describirse por separado, con las autorizaciones que corresponda.</p>
       <h3>Fallas y su equivalente en UCP</h3>
       <div class="table-scroll"><table>
         <tr><th>Situación</th><th><code>code</code></th><th><code>severity</code></th><th>Qué hace el agente</th></tr>
@@ -303,7 +304,7 @@
         <dt>Crear</dt><dd><code>POST https://payment-api.khipu.com/v3/payments</code> con la API key de la tienda.</dd>
         <dt>Cómo paga</dt><dd>Desde su cuenta bancaria, en el <code>payment_url</code> devuelto.</dd>
         <dt>Confirmación</dt><dd>Webhook firmado (<code>x-khipu-signature</code>), que Khipu reintenta, más consulta de estado (<code>pending</code>, <code>verifying</code>, <code>done</code>).</dd>
-        <dt>Diseñar para</dt><dd>No hay clave de idempotencia documentada. La iniciación de pagos desde cuentas bancarias quedará regulada por la CMF (Ley 21.521, régimen vigente desde julio de 2027). Quien implementa esta especificación solo crea el cobro como beneficiario y deriva al comprador a Khipu, sin capturar sus credenciales bancarias.</dd>
+        <dt>Diseñar para</dt><dd>No hay clave de idempotencia documentada. La iniciación de pagos queda sujeta a la Ley 21.521 y a la normativa CMF, con el calendario gradual aplicable al participante y servicio. Quien implementa esta especificación solo crea el cobro como beneficiario y deriva al comprador a Khipu, sin capturar sus credenciales bancarias.</dd>
       </dl>
     </section>
 
@@ -327,7 +328,7 @@
       "url": "https://tienda-ejemplo.cl/retracto",
       "window_days": 10, "window_days_without_confirmation": 90, "refund_within_days": 45 },
     { "type": "cl.comercioia.policy.garantia_legal",
-      "description": { "plain": "Garantía legal de 6 meses: reparación, cambio o devolución." },
+      "description": { "plain": "Garantía legal de seis meses desde la recepción, ante fallas o incumplimientos comprendidos en la ley: reparación gratuita, cambio o devolución, según corresponda." },
       "months": 6, "remedies": ["repair", "replace", "refund"] }
   ],
   "messages": [
@@ -421,21 +422,21 @@
       <p>JSON Schema draft 2020-12, autodescriptivos (<code>$id</code>, <code>name</code>, <code>version</code>), con una entrada en <code>$defs</code> por cada capacidad que extienden, compuesta con <code>allOf</code>, y un bloque <code>requires</code> con la versión mínima del núcleo.</p>
       <div class="table-scroll"><table>
         <tr><th>Nombre</th><th>Esquema</th></tr>
-        <tr><td><code>cl.comercioia.shopping.tax_document</code></td><td><a href="/ucp/schemas/tax_document/2026-10-16.json">/ucp/schemas/tax_document/2026-10-16.json</a><br>Anterior: <a href="/ucp/schemas/tax_document/2026-10-09.json">2026-10-09</a></td></tr>
-        <tr><td><code>cl.comercioia.shopping.consumer_terms</code></td><td><a href="/ucp/schemas/consumer_terms/2026-10-09.json">/ucp/schemas/consumer_terms/2026-10-09.json</a></td></tr>
-        <tr><td><code>cl.comercioia.shopping.credit_note</code></td><td><a href="/ucp/schemas/credit_note/2026-10-09.json">/ucp/schemas/credit_note/2026-10-09.json</a></td></tr>
-        <tr><td><code>cl.comercioia.webpay_plus</code></td><td><a href="/ucp/handlers/webpay_plus/2026-10-09.json">/ucp/handlers/webpay_plus/2026-10-09.json</a></td></tr>
-        <tr><td><code>cl.comercioia.oneclick_mall</code></td><td><a href="/ucp/handlers/oneclick_mall/2026-10-09.json">/ucp/handlers/oneclick_mall/2026-10-09.json</a></td></tr>
-        <tr><td><code>cl.comercioia.mercadopago</code></td><td><a href="/ucp/handlers/mercadopago/2026-10-09.json">/ucp/handlers/mercadopago/2026-10-09.json</a></td></tr>
-        <tr><td><code>cl.comercioia.getnet</code></td><td><a href="/ucp/handlers/getnet/2026-10-09.json">/ucp/handlers/getnet/2026-10-09.json</a></td></tr>
-        <tr><td><code>cl.comercioia.khipu</code></td><td><a href="/ucp/handlers/khipu/2026-10-09.json">/ucp/handlers/khipu/2026-10-09.json</a></td></tr>
+        <tr><td><code>cl.comercioia.shopping.tax_document</code></td><td><a href="/ucp/schemas/tax_document/2026-10-16.json">/ucp/schemas/tax_document/2026-10-16.json</a><br>Anterior: <a href="/ucp/schemas/tax_document/2026-10-15.json">2026-10-15</a></td></tr>
+        <tr><td><code>cl.comercioia.shopping.consumer_terms</code></td><td><a href="/ucp/schemas/consumer_terms/2026-10-15.json">/ucp/schemas/consumer_terms/2026-10-15.json</a></td></tr>
+        <tr><td><code>cl.comercioia.shopping.credit_note</code></td><td><a href="/ucp/schemas/credit_note/2026-10-15.json">/ucp/schemas/credit_note/2026-10-15.json</a></td></tr>
+        <tr><td><code>cl.comercioia.webpay_plus</code></td><td><a href="/ucp/handlers/webpay_plus/2026-10-15.json">/ucp/handlers/webpay_plus/2026-10-15.json</a></td></tr>
+        <tr><td><code>cl.comercioia.oneclick_mall</code></td><td><a href="/ucp/handlers/oneclick_mall/2026-10-15.json">/ucp/handlers/oneclick_mall/2026-10-15.json</a></td></tr>
+        <tr><td><code>cl.comercioia.mercadopago</code></td><td><a href="/ucp/handlers/mercadopago/2026-10-15.json">/ucp/handlers/mercadopago/2026-10-15.json</a></td></tr>
+        <tr><td><code>cl.comercioia.getnet</code></td><td><a href="/ucp/handlers/getnet/2026-10-15.json">/ucp/handlers/getnet/2026-10-15.json</a></td></tr>
+        <tr><td><code>cl.comercioia.khipu</code></td><td><a href="/ucp/handlers/khipu/2026-10-15.json">/ucp/handlers/khipu/2026-10-15.json</a></td></tr>
       </table></div>
     </section>
 
     <section id="versionado">
       <h2>11. Versionado y gobernanza</h2>
       <ul>
-        <li>Cada versión tiene fecha (<code>AAAA-MM-DD</code>) y queda publicada en su propia dirección. Una versión publicada no se modifica: los cambios salen en una versión nueva.</li>
+        <li>Cada versión tiene fecha (<code>AAAA-MM-DD</code>) y queda publicada en su propia dirección. Una versión publicada no se modifica: los cambios salen en una versión nueva. La versión <code>2026-10-15</code> corrige afirmaciones de la <code>2026-10-09</code> tras una revisión legal; la anterior sigue publicada en sus direcciones.</li>
         <li>Las extensiones de terceros se versionan de forma independiente del núcleo, como permiten UCP y ACP. Cada versión declara qué versiones del núcleo requiere.</li>
         <li>Se mantiene compatibilidad con la versión vigente de UCP y la anterior.</li>
         <li>Comentarios abiertos hasta el 30 de noviembre de 2026 en el <a href="https://github.com/Pintor-Project/comercioia">repositorio público</a>. Primera versión estable prevista para enero de 2027, al cumplir el <a href="/#participa">camino a la 1.0</a>.</li>
@@ -444,16 +445,9 @@
       </ul>
     </section>
 
-    <section id="preguntas">
-      <h2>12. Preguntas abiertas</h2>
-      <p>Temas que deben revisar abogados antes de la versión estable:</p>
-      <ul>
-        <li>En una venta a distancia, cuándo ocurre la entrega para efectos del DL 825 art. 55, y si emitir la boleta al confirmarse el pago es el criterio correcto por defecto.</li>
-        <li>Si un agente de IA que completa una compra cuenta como «plataforma» u «operador» bajo el DS 6/2021, y qué responsabilidad le corresponde.</li>
-        <li>Si un orquestador que no retiene fondos queda fuera del capítulo III.J.2 del Banco Central y de la NCG 541 de la CMF.</li>
-        <li>Los roles de tratamiento de datos bajo la Ley 21.719 (vigente desde el 1 de diciembre de 2026) cuando un agente comparte datos del comprador con la tienda, y la forma del mandato del comprador.</li>
-        <li>Si SERNAC fija un plazo para la confirmación del art. 12 A.</li>
-      </ul>
+    <section id="dependen-de-cada-implementacion">
+      <h2 id="preguntas">12. Aspectos que dependen de cada implementación</h2>
+      <p>Antes de operar, cada implementación debe definir quién vende y quién opera la plataforma conforme al DS 6/2021; qué autorización permite al agente actuar por el comprador; qué datos comparte cada participante y bajo qué rol y base; y si realiza actividades de pago reguladas. La autorización de compra debe delimitar la operación y no sustituye la autorización de datos cuando sea necesaria. Estas obligaciones no se atribuyen automáticamente al editor de la especificación.</p>
     </section>
 
     <section id="fuentes">
@@ -469,7 +463,9 @@
         <li>SII, Formato Documentos Tributarios Electrónicos v2.5 (2026-02), sección E «Información de referencia» (<code>TpoDocRef</code>, <code>FolioRef</code>, <code>FchRef</code>, <code>RazonRef</code>): <a href="https://www.sii.cl/factura_electronica/factura_mercado/formato_dte_202602.pdf">sii.cl</a></li>
         <li>SII, Formato Boletas Electrónicas de Ventas y Servicios v4.2 (2025-09-08), campos <code>MedioPago</code>, <code>RUTRecep</code>, <code>RznSocRecep</code> y <code>NmbItem</code>: <a href="https://www.sii.cl/factura_electronica/factura_mercado/formato_boleta_electronica.pdf">sii.cl</a></li>
         <li>SII, Res. Ex. 44/2025 (Código Tributario art. 92 ter), boletas sobre 135 UF: <a href="https://www.sii.cl/normativa_legislacion/resoluciones/2025/reso44.pdf">sii.cl</a></li>
-        <li>DL 825, Ley 19.496, Ley 21.398, DS 6/2021 y Ley 21.719: <a href="https://www.bcn.cl/leychile/">BCN Ley Chile</a></li>
+        <li>DL 825 (arts. 21, 53, 55, 57 y 70), Ley 19.496 (arts. 3 bis, 12 A, 20 y 21), Ley 20.416 (art. 9), Ley 21.398, DS 6/2021 y Ley 21.719: <a href="https://www.bcn.cl/leychile/">BCN Ley Chile</a></li>
+        <li>SII, pregunta frecuente 001.003.7335: <a href="https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_7335.htm">sii.cl/preguntas_frecuentes/factura_electronica/001_003_7335.htm</a></li>
+        <li>Ley 21.521 y NCG CMF 514 y sus modificaciones, incluida la NCG 569/2026: <a href="https://www.cmfchile.cl/normativa/ncg_569_2026.pdf">cmfchile.cl/normativa/ncg_569_2026.pdf</a></li>
         <li>SERNAC, Res. Ex. 33/2022 y 779/2023: <a href="https://www.sernac.cl/">sernac.cl</a></li>
       </ul>
     </section>

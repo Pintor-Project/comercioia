@@ -117,12 +117,33 @@
   window.dataLayer = window.dataLayer || [];
   function gtag() { window.dataLayer.push(arguments); }
 
+  // Only the path of a URL ever reaches Google Analytics: no query string and no fragment,
+  // so an email address or any other personal data in a URL is never sent.
+  function cleanUrl(u) {
+    try {
+      var x = new URL(u, location.href);
+      if (x.protocol !== "http:" && x.protocol !== "https:") return "";
+      return x.origin + x.pathname;
+    } catch (e) { return ""; }
+  }
+
+  // Measurement runs only while the stored decision is still "accepted". Checked before every event,
+  // so a withdrawal made in another tab also stops this one.
+  function analyticsAllowed() {
+    var c = load(KEY_CONSENT);
+    return !!(c && c.analytics === true);
+  }
+
   function startAnalytics() {
     if (!GA_ID || window.__ciaGa) return;
     window.__ciaGa = true;
+    window["ga-disable-" + GA_ID] = false;
     gtag("consent", "default", { ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", analytics_storage: "granted" });
     gtag("js", new Date());
-    gtag("config", GA_ID, { anonymize_ip: true, allow_google_signals: false, allow_ad_personalization_signals: false });
+    gtag("config", GA_ID, {
+      anonymize_ip: true, allow_google_signals: false, allow_ad_personalization_signals: false,
+      page_location: cleanUrl(location.href), page_referrer: cleanUrl(document.referrer)
+    });
     var s = document.createElement("script");
     s.async = true;
     s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(GA_ID);
@@ -130,6 +151,11 @@
   }
 
   function stopAnalytics() {
+    // Withdrawal stops the measurement itself, not only the cookies: the documented GA switch is set first
+    // (nothing more is sent from this page), storage is denied, and only then the cookies are removed.
+    window["ga-disable-" + GA_ID] = true;
+    if (window.__ciaGa) gtag("consent", "update", { analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" });
+    window.__ciaGa = false;
     // Remove GA cookies set on this domain after a withdrawal.
     document.cookie.split(";").forEach(function (c) {
       var name = c.split("=")[0].trim();
@@ -152,7 +178,13 @@
       target.focus({ preventScroll: true });
     }
     returnFocus = null;
-    if (granted) startAnalytics(); else { stopAnalytics(); if (window.__ciaGa) location.reload(); }
+    if (granted) startAnalytics();
+    else {
+      var wasOn = !!window.__ciaGa || !!document.querySelector('script[src*="googletagmanager.com/gtag/js"]');
+      stopAnalytics();
+      // Reload so the Google script is not left running in this page.
+      if (wasOn) location.reload();
+    }
   }
 
   var banner = null;
@@ -185,6 +217,19 @@
   if (consent && consent.analytics === true) startAnalytics();
   else if (!consent) showBanner();
 
+  // The decision was changed in another tab of this site: follow it here too.
+  window.addEventListener("storage", function (e) {
+    if (e.key !== KEY_CONSENT) return;
+    if (!analyticsAllowed()) {
+      var wasOn = !!window.__ciaGa;
+      stopAnalytics();
+      if (wasOn) location.reload();
+    } else if (!window.__ciaGa) {
+      hideBanner();
+      startAnalytics();
+    }
+  });
+
   document.querySelectorAll("[data-cookie-settings]").forEach(function (b) {
     if (!GA_ID) return;
     b.hidden = false;
@@ -194,11 +239,12 @@
   /* ---------------- Events ---------------- */
   document.addEventListener("click", function (e) {
     var a = e.target.closest && e.target.closest("a[href]");
-    if (!a || !window.__ciaGa) return;
+    if (!a || !window.__ciaGa || !analyticsAllowed()) return;
     var href = a.getAttribute("href");
-    if (href.indexOf("/ucp/") === 0) gtag("event", "schema_open", { schema_path: href });
-    else if (href.indexOf("github.com/Pintor-Project/comercioia") !== -1) gtag("event", "github_click", { link_url: href });
+    // Events carry no email address and no query string: mailto links send only the method, other links only the path.
+    if (href.indexOf("/ucp/") === 0) gtag("event", "schema_open", { schema_path: cleanUrl(href).replace(location.origin, "") });
+    else if (href.indexOf("github.com/Pintor-Project/comercioia") !== -1) gtag("event", "github_click", { link_url: cleanUrl(href) });
     else if (href.indexOf("mailto:") === 0) gtag("event", "contact_click", { method: "email" });
-    else if (href.indexOf("synaptiktech.com") !== -1) gtag("event", "reference_implementation_click", { link_url: href });
+    else if (href.indexOf("synaptiktech.com") !== -1) gtag("event", "reference_implementation_click", { link_url: cleanUrl(href) });
   });
 })();
