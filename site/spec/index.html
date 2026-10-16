@@ -99,7 +99,7 @@
         <li><b>DEBE</b>, <b>NO DEBE</b>, <b>DEBERÍA</b> y <b>PUEDE</b> tienen el sentido de MUST, MUST NOT, SHOULD y MAY del RFC 2119.</li>
         <li><b>Montos</b> en pesos chilenos enteros. El peso no tiene decimales, así que la unidad mínima es el peso, igual que en los estándares.</li>
         <li><b>RUT</b> sin puntos, con guion y dígito verificador módulo 11, por ejemplo <code>76123456-0</code>. Quien recibe un RUT DEBE validar el dígito verificador.</li>
-        <li><b>Fechas</b> en RFC 3339 con zona horaria, por ejemplo <code>2026-12-03T14:22:05-03:00</code>.</li>
+        <li><b>Fechas</b> en RFC 3339 con zona horaria, por ejemplo <code>2026-10-19T14:22:05-03:00</code>.</li>
         <li><b>Objetos abiertos.</b> Como pide UCP, los esquemas no cierran objetos ni usan listas cerradas: los códigos se documentan como ejemplos, y un valor desconocido DEBE tratarse como se indica en cada campo.</li>
         <li><b>Autoridad del dominio.</b> Todo esquema <code>cl.comercioia.*</code> se sirve desde <code>comercioia.cl</code>, sin redirecciones ni CDN con otro nombre. Si un esquema llega desde otro dominio, el agente lo ignora.</li>
       </ul>
@@ -375,7 +375,7 @@
       <p>Y la boleta emitida en el pedido:</p>
 <pre><code>"tax_documents": [{
   "type": 39, "folio": 4519877, "issuer_rut": "76123456-0", "receiver_rut": "15987654-3",
-  "issued_at": "2026-12-05T11:40:12-03:00", "total": 6489990, "net": 5453773, "iva": 1036217,
+  "issued_at": "2026-10-21T11:40:12-03:00", "total": 6489990, "net": 5453773, "iva": 1036217,
   "payment_method": 2, "issue_trigger": "payment_confirmed", "sii_status": "accepted",
   "representation_url": "https://tienda-ejemplo.cl/dte/39/4519877" }]</code></pre>
       <h3>El pedido después del pago y de un retracto</h3>
@@ -386,19 +386,19 @@
   "totals": [{ "type": "total", "amount": 194980 }],
   "tax_documents": [{
     "type": 39, "folio": 4512330, "issuer_rut": "76123456-0", "receiver_rut": "66666666-6",
-    "issued_at": "2026-12-03T14:22:05-03:00", "total": 194980, "net": 163849, "iva": 31131,
+    "issued_at": "2026-10-19T14:22:05-03:00", "total": 194980, "net": 163849, "iva": 31131,
     "issue_trigger": "payment_confirmed", "sii_status": "accepted",
     "representation_url": "https://tienda-ejemplo.cl/dte/39/4512330" }],
   "consumer_terms": {
-    "confirmation": { "channel": "email", "sent_at": "2026-12-03T14:22:40-03:00",
+    "confirmation": { "channel": "email", "sent_at": "2026-10-19T14:22:40-03:00",
                       "contract_copy_url": "https://tienda-ejemplo.cl/contrato/ord_5521" } },
   "adjustments": [{
     "id": "adj_1", "type": "refund", "status": "completed",
-    "occurred_at": "2026-12-09T10:00:00-03:00",
+    "occurred_at": "2026-10-25T10:00:00-03:00",
     "description": "Retracto dentro de 10 días",
-    "tax_document": { "type": 61, "folio": 88213, "issued_at": "2026-12-09T10:05:00-03:00",
+    "tax_document": { "type": 61, "folio": 88213, "issued_at": "2026-10-25T10:05:00-03:00",
                       "total": 194980, "ref_type": 39, "ref_folio": 4512330,
-                      "ref_date": "2026-12-03", "cod_ref": 1,
+                      "ref_date": "2026-10-19", "cod_ref": 1,
                       "razon": "Anula boleta por retracto" } }]
 }</code></pre>
     </section>

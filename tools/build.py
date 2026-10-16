@@ -607,7 +607,7 @@ def landing(lang):
                ("document_choice", "Agentes de IA", "Asistentes personales y agentes de compra de empresas: anuncia las extensiones que soportas, pide boleta o factura y muestra cada aviso legal sin ocultarlo."),
                ("payment_handlers", "Proveedores de pago", "Publicamos tu medio de pago hasta que publiques el tuyo. Revísalo, cofírmalo o asúmelo.")]
         kv = [("Versión", '<code>2026-10-16</code>: <a href="/spec/#referencias">referencias B2B</a> (orden de compra, HES, contrato) y <a href="/spec/#boleta-135-uf">boletas sobre 135 UF</a>'), ("Estado", "Propuesta abierta: lista para implementar y comentar"), ("Espacio de nombres", "<code>cl.comercioia.*</code>"),
-              ("Requiere", "UCP <code>2026-08-25</code> o posterior"), ("Licencia", "Apache-2.0"), ("Versión estable", "Enero de 2027, al cumplir el camino a la 1.0"), ("Versión anterior", '<code>2026-10-15</code>, que corrige a la <code>2026-10-09</code>; ambas siguen publicadas (<a href="https://github.com/Pintor-Project/comercioia/blob/main/CHANGELOG.md">historial</a>)'),
+              ("Requiere", "UCP <code>2026-08-25</code> o posterior"), ("Licencia", "Apache-2.0"), ("Versión estable", "Enero de 2027, al cumplir el camino a la 1.0"), ("Comentarios", 'Abiertos hasta el 30 de noviembre de 2026 (<a href="https://github.com/Pintor-Project/comercioia/blob/main/CHANGELOG.md">historial de versiones</a>)'),
               ("Contacto", '<a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a>')]
         asks = [("Comenta.", "Errores, campos que faltan, casos de tu negocio. Todo comentario se responde antes de la versión estable."),
                 ("Cofirma.", "Plataformas, ERP, proveedores de pago y gremios pueden aparecer como cofirmantes de la versión estable."),
@@ -621,7 +621,7 @@ def landing(lang):
             s3p="Lo que ve el comprador en su asistente, junto a lo que viaja entre el agente y la tienda. En rojo, lo que agrega Comercio IA.",
             seq_cap="La misma compra, como diagrama de secuencia",
             leg=("Núcleo de UCP/ACP y proveedor de pago", "Lo que agrega Comercio IA"),
-            fine="Ningún estándar define todavía cómo devolver al comprador al agente después de pagar en una página externa (propuesta UCP #486), así que el agente se entera del pago por el pedido. Si compra una empresa, el paso 02 pide factura con su RUT y giro y el paso 09 emite una factura (33). Emitir una factura no determina por sí solo la aplicación o exclusión de la Ley del Consumidor. Debe revisarse la calidad de destinatario final y, cuando corresponda, la protección que la Ley 20.416 extiende a micro y pequeñas empresas.",
+            fine="Ningún estándar define todavía cómo devolver al comprador al agente después de pagar en una página externa (propuesta UCP #486), así que el agente se entera del pago por el pedido. Para compras de empresas, ver <a href=\"/spec/#referencias\">Ventas a empresas</a>.",
             s4h='Cada uno implementa <span class="sub">su parte.</span>',
             s5h='Lista para implementar. <span class="sub">Estable tras la primera venta real.</span>', s5id="participa",
             s6h='Cinco condiciones <span class="sub">para declararla estable.</span>',
@@ -648,7 +648,7 @@ def landing(lang):
                ("document_choice", "AI agents", "Personal assistants and corporate purchasing agents: announce the extensions you support, ask for a boleta or factura, and show every legal notice without hiding it."),
                ("payment_handlers", "Payment providers", "We publish your payment method until you publish your own. Review it, co-sign it or take it over.")]
         kv = [("Version", '<code>2026-10-16</code>: <a href="/en/spec/#references">B2B references</a> (purchase order, HES, contract) and <a href="/en/spec/#boleta-135-uf">boletas above 135 UF</a>'), ("Status", "Open proposal: ready to implement and comment on"), ("Namespace", "<code>cl.comercioia.*</code>"),
-              ("Requires", "UCP <code>2026-08-25</code> or later"), ("License", "Apache-2.0"), ("Stable release", "January 2027, once the path to 1.0 is complete"), ("Previous version", '<code>2026-10-15</code>, which corrects <code>2026-10-09</code>; both still published (<a href="https://github.com/Pintor-Project/comercioia/blob/main/CHANGELOG.md">history</a>)'),
+              ("Requires", "UCP <code>2026-08-25</code> or later"), ("License", "Apache-2.0"), ("Stable release", "January 2027, once the path to 1.0 is complete"), ("Comments", 'Open until 30 November 2026 (<a href="https://github.com/Pintor-Project/comercioia/blob/main/CHANGELOG.md">version history</a>)'),
               ("Contact", '<a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a>')]
         asks = [("Comment.", "Errors, missing fields, cases from your business. Every comment gets an answer before the stable release."),
                 ("Co-sign.", "Platforms, ERPs, payment providers and trade associations can be listed as co-signers of the stable release."),
@@ -662,7 +662,7 @@ def landing(lang):
             s3p="What the buyer sees in their assistant, next to what travels between the agent and the store. In red, what Comercio IA adds.",
             seq_cap="The same purchase, as a sequence diagram",
             leg=("UCP/ACP core and payment provider", "What Comercio IA adds"),
-            fine="Neither standard yet defines how to return the buyer to the agent after paying on an external page (UCP proposal #486), so the agent learns about the payment from the order. When a company buys, step 02 asks for a factura with its RUT and line of business and step 09 issues a factura (33). Issuing a factura does not by itself decide whether the Consumer Law applies or is excluded. The buyer's status as final recipient must be reviewed and, where relevant, the protection that Ley 20.416 extends to micro and small businesses.",
+            fine="Neither standard yet defines how to return the buyer to the agent after paying on an external page (UCP proposal #486), so the agent learns about the payment from the order. For purchases by companies, see <a href=\"/en/spec/#references\">Sales to companies</a>.",
             s4h='Everyone implements <span class="sub">their part.</span>',
             s5h='Ready to implement. <span class="sub">Stable after the first real sale.</span>', s5id="participate",
             s6h='Five conditions <span class="sub">before we call it stable.</span>',
@@ -693,7 +693,7 @@ def landing(lang):
       <div class="hero-grid">
         <div>
           <p class="status">{T["label"]}</p>
-          <h1>{T["h1"]}<span class="sub">{T["h1sub"]}</span></h1>
+          <h1><span class="name">{T["h1"]}</span> <span class="sub">{T["h1sub"]}</span></h1>
           <p class="lead">{T["lead"]}</p>
           <div class="actions">
             <a class="btn" href="{T["cta_href"]}">{T["cta"]} <span aria-hidden="true">→</span></a>
