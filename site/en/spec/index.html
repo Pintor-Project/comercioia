@@ -24,7 +24,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","@id":"https://comercioia.cl/en/spec/","url":"https://comercioia.cl/en/spec/","name":"Specification · Comercio IA","description":"Open-proposal specification of the Comercio IA Chilean extension for UCP and ACP: tax documents, consumer terms, credit notes and Chilean payment methods.","inLanguage":"en","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"},"headline":"Specification","datePublished":"2026-10-09","dateModified":"2026-10-15","author":{"@id":"https://comercioia.cl/#org"},"license":"https://www.apache.org/licenses/LICENSE-2.0"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","@id":"https://comercioia.cl/en/spec/","url":"https://comercioia.cl/en/spec/","name":"Specification · Comercio IA","description":"Open-proposal specification of the Comercio IA Chilean extension for UCP and ACP: tax documents, consumer terms, credit notes and Chilean payment methods.","inLanguage":"en","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"},"headline":"Specification","datePublished":"2026-10-09","dateModified":"2026-10-16","author":{"@id":"https://comercioia.cl/#org"},"license":"https://www.apache.org/licenses/LICENSE-2.0"}]}</script>
 <script src="/assets/site.js" defer></script>
 <!-- /seo -->
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -57,6 +57,8 @@
       <li><a href="#conventions">Conventions</a></li>
       <li><a href="#profile">Profile declaration</a></li>
       <li><a href="#tax-document">tax_document</a></li>
+      <li><a href="#boleta-135-uf">· Boletas above 135 UF</a></li>
+      <li><a href="#references">· Sales to companies</a></li>
       <li><a href="#consumer-terms">consumer_terms</a></li>
       <li><a href="#policies">Withdrawal and warranty</a></li>
       <li><a href="#credit-note">credit_note</a></li>
@@ -77,16 +79,17 @@
 
   <main id="main" class="spec-body">
     <section id="introduction">
-      <p class="status">Open proposal · version 2026-10-15</p>
+      <p class="status">Open proposal · version 2026-10-16</p>
       <h1>Comercio IA specification</h1>
       <p class="lede">A Chilean extension to the Universal Commerce Protocol (UCP) and the Agentic Commerce Protocol (ACP). It defines how an AI agent and a store exchange the information Chilean law requires to close a distance sale, and how to pay with Chilean payment methods.</p>
       <dl class="kv">
-        <dt>Version</dt><dd><code>2026-10-15</code> (open proposal: ready to implement and comment on)</dd>
+        <dt>Version</dt><dd><code>2026-10-16</code> (open proposal: ready to implement and comment on). The previous versions, <code>2026-10-15</code> and <code>2026-10-09</code>, stay published.</dd>
         <dt>Namespace</dt><dd><code>cl.comercioia.*</code></dd>
         <dt>Schemas served from</dt><dd><code>https://comercioia.cl/ucp/…</code></dd>
         <dt>Requires</dt><dd>UCP <code>2026-08-25</code> or later. ACP <code>2026-04-17</code> mapping in the <a href="#acp">ACP</a> section.</dd>
         <dt>License</dt><dd>Apache-2.0</dd>
       </dl>
+      <p class="note"><b>What's new in 2026-10-16.</b> Only <code>tax_document</code> changes, with optional fields: a 2026-10-15 implementation remains valid. It adds the references business buyers require on their factura (<a href="#references"><code>references[]</code></a>, <a href="https://github.com/Pintor-Project/comercioia/issues/1">issue #1</a>) and the identification of the person who pays and the payment method on boletas above 135 UF (<a href="#boleta-135-uf"><code>receiver</code> on a boleta and <code>payment_method</code></a>). <code>consumer_terms</code>, <code>credit_note</code> and the payment handlers stay at <code>2026-10-15</code>. History in the <a href="https://github.com/Pintor-Project/comercioia/blob/main/CHANGELOG.md">CHANGELOG</a>.</p>
       <p class="warn">This specification describes tax and consumer-protection rules, but it is not legal advice. Each store is responsible for deciding which notices apply to it.</p>
     </section>
 
@@ -96,7 +99,7 @@
         <li><b>MUST</b>, <b>MUST NOT</b>, <b>SHOULD</b> and <b>MAY</b> are used as in RFC 2119.</li>
         <li><b>Amounts</b> are integer Chilean pesos. The peso has no minor unit, so the minor unit is the peso, as in the standards.</li>
         <li><b>RUT</b> (Chilean taxpayer ID) without dots, with a hyphen and the modulo 11 check digit, e.g. <code>76123456-0</code>. Anyone receiving a RUT MUST validate the check digit.</li>
-        <li><b>Dates</b> in RFC 3339 with a time zone, e.g. <code>2026-12-03T14:22:05-03:00</code>.</li>
+        <li><b>Dates</b> in RFC 3339 with a time zone, e.g. <code>2026-10-19T14:22:05-03:00</code>.</li>
         <li><b>Open objects.</b> As UCP asks, the schemas don't close objects or use closed lists: codes are documented as examples, and an unknown value MUST be handled as each field says.</li>
         <li><b>Domain authority.</b> Every <code>cl.comercioia.*</code> schema is served from <code>comercioia.cl</code>, with no redirects and no CDN under another name. A schema fetched from another domain is ignored by agents.</li>
       </ul>
@@ -113,10 +116,10 @@
       "dev.ucp.shopping.checkout": [{ "version": "2026-08-25" }],
       "dev.ucp.shopping.order":    [{ "version": "2026-08-25" }],
       "cl.comercioia.shopping.tax_document": [{
-        "version": "2026-10-15",
+        "version": "2026-10-16",
         "extends": ["dev.ucp.shopping.checkout", "dev.ucp.shopping.order"],
         "spec":   "https://comercioia.cl/en/spec/#tax-document",
-        "schema": "https://comercioia.cl/ucp/schemas/tax_document/2026-10-15.json" }],
+        "schema": "https://comercioia.cl/ucp/schemas/tax_document/2026-10-16.json" }],
       "cl.comercioia.shopping.consumer_terms": [{
         "version": "2026-10-15",
         "extends": ["dev.ucp.shopping.checkout", "dev.ucp.shopping.order"],
@@ -147,21 +150,42 @@
       <div class="table-scroll"><table>
         <tr><th>Field</th><th>Rule</th><th>Source</th></tr>
         <tr><td><code>document_choice</code></td><td><code>boleta</code> (default) or <code>factura</code>. Boletas or facturas according to the operation and the buyer's tax status. The choice at checkout is subject to the legal requirements of the document (boleta 39, or 41 exempt; factura 33 or 34). An unknown value MUST be treated as a boleta, with a notice in <code>messages[]</code>.</td><td>DL 825 arts. 52–53</td></tr>
-        <tr><td><code>receiver</code></td><td>Required for a factura: <code>rut</code>, <code>razon_social</code> (≤100), <code>giro</code> (line of business, ≤40), <code>direccion</code> (≤70), <code>comuna</code> (≤20); optional <code>ciudad</code> and <code>email</code>.</td><td>SII DTE format; DS 55 art. 69</td></tr>
+        <tr><td><code>receiver</code></td><td>Who receives the document: the company on a factura, or the person who pays on a boleta. Required for a factura, with <code>rut</code>, <code>razon_social</code> (≤100), <code>giro</code> (line of business, ≤40), <code>direccion</code> (≤70) and <code>comuna</code> (≤20); optional <code>ciudad</code> and <code>email</code>. Required for a boleta above 135 UF, with at least <code>rut</code> and <code>razon_social</code> (for a person, their full name); optional on other boletas. The <code>rut</code> is the real RUT, never the generic <code>66666666-6</code>.</td><td>SII DTE format; DS 55 art. 69; SII Res. Ex. 44/2025</td></tr>
+        <tr><td><code>references</code></td><td>New in 2026-10-16. Up to 40 references the buyer requires on its document, usually a factura: <code>type</code>, <code>number</code>, <code>date</code> and <code>reason</code>. The store prints them or rejects the checkout with a message; it MUST NOT drop them silently. See <a href="#references">Sales to companies</a>.</td><td>DTE format, reference section</td></tr>
+        <tr><td><code>payment_method</code></td><td>New in 2026-10-16. Payment method printed on the boleta (SII <code>MedioPago</code>): <code>1</code> cash, <code>2</code> electronic payment, <code>3</code> electronic transfer, <code>4</code> cheque, <code>5</code> other. The store derives it from the payment handler used and SHOULD echo it in its responses when the total exceeds 135 UF. The agent sends it only when the buyer pays outside the negotiated payment handlers, for example cash on delivery. An unknown value is treated as <code>5</code>.</td><td>SII Electronic Boleta Format v4.2; SII Res. Ex. 44/2025</td></tr>
       </table></div>
       <h3>On the order: <code>tax_documents[]</code></h3>
       <div class="table-scroll"><table>
         <tr><th>Field</th><th>Rule</th><th>Source</th></tr>
         <tr><td><code>type</code>, <code>folio</code></td><td>DTE type and the folio number authorized by the SII.</td><td>DTE format</td></tr>
-        <tr><td><code>issuer_rut</code>, <code>receiver_rut</code></td><td>The generic RUT 66.666.666-6 is used in the cases the SII format allows, for non-periodic, non-residential sales or services when the RUT is unknown and no applicable internal identifier exists. It is not a universal rule for every boleta.</td><td>DTE format</td></tr>
+        <tr><td><code>issuer_rut</code>, <code>receiver_rut</code></td><td>The generic RUT 66.666.666-6 is used in the cases the SII format allows, for non-periodic, non-residential sales or services when the RUT is unknown and no applicable internal identifier exists. It is not a universal rule for every boleta. In sales covered by SII Res. Ex. 44/2025 whose value exceeds 135 UF, the boleta carries the RUT of the person who pays.</td><td>DTE format; SII Res. Ex. 44/2025</td></tr>
         <tr><td><code>issued_at</code>, <code>issue_trigger</code></td><td>In sales of goods, issuance is tied to their actual or symbolic delivery, under art. 55 of DL 825. For services, the boleta is issued when the remuneration is received or made available; the factura follows the rules of its tax period. <code>payment_confirmed</code> can be an operational option, but it does not replace those rules. If the factura for goods is lawfully postponed, the corresponding dispatch guide must be issued. The store must configure the applicable event.</td><td>DL 825 arts. 55 and 57</td></tr>
         <tr><td><code>total</code>, <code>net</code>, <code>iva</code>, <code>exempt</code></td><td>Integer pesos. The total includes VAT.</td><td>DL 825</td></tr>
+        <tr><td><code>payment_method</code></td><td>New in 2026-10-16. Payment method printed on the boleta, with the same codes as on checkout. Present on every boleta above 135 UF.</td><td>SII Electronic Boleta Format v4.2</td></tr>
+        <tr><td><code>references</code></td><td>New in 2026-10-16. The references as printed on the issued document, in line order (<code>NroLinRef</code>).</td><td>DTE format, reference section</td></tr>
         <tr><td><code>sii_track_id</code>, <code>sii_status</code></td><td>Each boleta reaches the SII within one hour of issue.</td><td>SII Res. Ex. 74/2020</td></tr>
         <tr><td><code>representation_url</code></td><td>An https link to a representation the buyer can keep, delivered immediately by email, chat, link or QR.</td><td>SII Res. Ex. 74/2020</td></tr>
       </table></div>
-      <h3>Sales to companies</h3>
+      <h3 id="boleta-135-uf">Boletas above 135 UF</h3>
+      <p>For sales covered by SII Resolution No. 44 of 2025 whose value exceeds the 135 UF threshold, the boleta must identify the payer by name and RUT, record the payment method and describe the goods (Tax Code art. 92 ter). The payer may be different from the buyer. The threshold in pesos is set each year using the UF value of 31 December of the previous year, not the UF of the purchase date; for 2025 it was CLP 5,186,253. More context in the <a href="/en/compliance/#generic-rut">compliance guide</a>.</p>
+      <ul>
+        <li>When the total exceeds 135 UF, the agent MUST collect the RUT and name of the person who pays before payment and send them in <code>tax_document.receiver</code>.</li>
+        <li>If they are missing, the store MUST NOT issue with the generic RUT or complete the checkout. It responds with an <code>error</code> message with <code>code: "cl.comercioia.tax_document.receiver_required"</code> and <code>path: "$.tax_document.receiver"</code>. The severity is <code>recoverable</code> if the agent negotiated this extension and can send the data, or <code>requires_buyer_input</code>, with a <code>continue_url</code> where the buyer enters it, if it did not.</li>
+        <li>The store prints the payment method according to the instrument actually used, for example <code>2</code> for a card (Webpay Plus, Oneclick Mall, Getnet) and <code>3</code> for a transfer (Khipu). With Mercado Pago it depends on the instrument the provider reports.</li>
+        <li>The name of each product in <code>line_items[]</code> goes onto the boleta (<code>NmbItem</code>), so it MUST describe the goods clearly.</li>
+      </ul>
+      <h3 id="references">Sales to companies</h3>
       <p>A factura (33 or 34) is for VAT-registered buyers: the agent sends <code>document_choice: "factura"</code> and a <code>receiver</code> with the company's RUT, legal name, line of business, address and comuna. Issuing a factura does not by itself decide whether the Consumer Law applies or is excluded. The buyer's status as final recipient must be reviewed and, where relevant, the protection that Ley 20.416 extends to micro and small businesses.</p>
-      <p>Credit payment terms, for example net 30, use the UCP core extension <code>dev.ucp.common.payment.terms</code>. Version <code>2026-10-16</code> proposes adding the references large buyers require: purchase order (801), HES, contract (803) and dispatch guide (52). <a href="https://github.com/Pintor-Project/comercioia/issues/1">Comment on the proposal</a>.</p>
+      <p>References to a purchase order, service entry sheet (HES, hoja de entrada de servicios) or contract depend on the operation and the applicable regime; large buyers and the State often reject a factura that does not include them. The agent asks for them in <code>tax_document.references[]</code>; each one is a line of the DTE reference section:</p>
+      <div class="table-scroll"><table>
+        <tr><th>Field</th><th>In the DTE</th><th>Rule</th></tr>
+        <tr><td><code>type</code></td><td><code>TpoDocRef</code> (≤3)</td><td>Document type code, as a string. A numeric one MUST be on the DTE format list: <code>801</code> purchase order, <code>802</code> order note (nota de pedido), <code>803</code> contract, <code>52</code> electronic dispatch guide or <code>33</code> electronic factura, among others. An alphabetic one, up to 3 letters, is not validated by the SII and covers documents outside that list, such as <code>HES</code>.</td></tr>
+        <tr><td><code>number</code></td><td><code>FolioRef</code> (≤18)</td><td>The document number exactly as the buyer issued it, with no added prefixes or characters. It can be alphanumeric only for non-tax documents (800 codes or alphabetic types); the folio of a tax document, such as a dispatch guide, is numeric.</td></tr>
+        <tr><td><code>date</code></td><td><code>FchRef</code></td><td>Date of the referenced document (YYYY-MM-DD). Mandatory on a factura; the boleta format has no reference date.</td></tr>
+        <tr><td><code>reason</code></td><td><code>RazonRef</code> (≤90)</td><td>Free text, optional.</td></tr>
+      </table></div>
+      <p class="note"><code>HES</code> is not an SII code. The DTE format accepts any alphabetic code without validating it, and each buyer decides how it wants its HES: some ask for <code>HES</code> as the type, others for the HES number under <code>801</code> or <code>802</code>. The store MUST use the code the buyer asked for, unchanged.</p>
+      <p>Credit payment terms, for example net 30, use the UCP core extension <code>dev.ucp.common.payment.terms</code>, with no fields of our own.</p>
     </section>
 
     <section id="consumer-terms">
@@ -323,6 +347,37 @@
     "delivery": { "cost": 4990, "estimated_delivery": "3 días hábiles" }
   }
 }</code></pre>
+      <h3>A company checkout with a purchase order and an HES</h3>
+<pre><code>"tax_document": {
+  "document_choice": "factura",
+  "receiver": { "rut": "12345678-5", "razon_social": "Comercial Ejemplo Limitada",
+                "giro": "Venta al por menor", "direccion": "Calle Ejemplo 100",
+                "comuna": "Providencia", "email": "facturas@comercial-ejemplo.cl" },
+  "references": [
+    { "type": "801", "number": "4500195544", "date": "2026-10-15" },
+    { "type": "HES", "number": "1001266280", "date": "2026-10-20",
+      "reason": "Recepción conforme del servicio" }
+  ]
+}</code></pre>
+      <h3>A boleta above 135 UF</h3>
+      <p>If the agent did not send the buyer's details, the store responds:</p>
+<pre><code>"messages": [
+  { "type": "error", "code": "cl.comercioia.tax_document.receiver_required",
+    "path": "$.tax_document.receiver", "severity": "recoverable",
+    "content": "Para esta compra, la boleta debe identificar a quien paga: su RUT y su nombre." }
+]</code></pre>
+      <p>The agent asks the buyer and updates the checkout:</p>
+<pre><code>"tax_document": {
+  "document_choice": "boleta",
+  "receiver": { "rut": "15987654-3", "razon_social": "María Fernanda Soto Rojas",
+                "email": "maria.soto@correo-ejemplo.cl" }
+}</code></pre>
+      <p>And the boleta issued on the order:</p>
+<pre><code>"tax_documents": [{
+  "type": 39, "folio": 4519877, "issuer_rut": "76123456-0", "receiver_rut": "15987654-3",
+  "issued_at": "2026-10-21T11:40:12-03:00", "total": 6489990, "net": 5453773, "iva": 1036217,
+  "payment_method": 2, "issue_trigger": "payment_confirmed", "sii_status": "accepted",
+  "representation_url": "https://tienda-ejemplo.cl/dte/39/4519877" }]</code></pre>
       <h3>The order after payment and after a withdrawal</h3>
 <pre><code>{
   "id": "ord_5521",
@@ -331,19 +386,19 @@
   "totals": [{ "type": "total", "amount": 194980 }],
   "tax_documents": [{
     "type": 39, "folio": 4512330, "issuer_rut": "76123456-0", "receiver_rut": "66666666-6",
-    "issued_at": "2026-12-03T14:22:05-03:00", "total": 194980, "net": 163849, "iva": 31131,
+    "issued_at": "2026-10-19T14:22:05-03:00", "total": 194980, "net": 163849, "iva": 31131,
     "issue_trigger": "payment_confirmed", "sii_status": "accepted",
     "representation_url": "https://tienda-ejemplo.cl/dte/39/4512330" }],
   "consumer_terms": {
-    "confirmation": { "channel": "email", "sent_at": "2026-12-03T14:22:40-03:00",
+    "confirmation": { "channel": "email", "sent_at": "2026-10-19T14:22:40-03:00",
                       "contract_copy_url": "https://tienda-ejemplo.cl/contrato/ord_5521" } },
   "adjustments": [{
     "id": "adj_1", "type": "refund", "status": "completed",
-    "occurred_at": "2026-12-09T10:00:00-03:00",
+    "occurred_at": "2026-10-25T10:00:00-03:00",
     "description": "Retracto dentro de 10 días",
-    "tax_document": { "type": 61, "folio": 88213, "issued_at": "2026-12-09T10:05:00-03:00",
+    "tax_document": { "type": 61, "folio": 88213, "issued_at": "2026-10-25T10:05:00-03:00",
                       "total": 194980, "ref_type": 39, "ref_folio": 4512330,
-                      "ref_date": "2026-12-03", "cod_ref": 1,
+                      "ref_date": "2026-10-19", "cod_ref": 1,
                       "razon": "Anula boleta por retracto" } }]
 }</code></pre>
     </section>
@@ -354,7 +409,7 @@
       <div class="table-scroll"><table>
         <tr><th>Piece</th><th>Already in ACP</th><th>What Comercio IA adds</th></tr>
         <tr><td>Boleta or factura</td><td><code>Order.confirmation</code> (<code>invoice_number</code>, <code>receipt_url</code>)</td><td>DTE type, folio, issuer RUT, SII status</td></tr>
-        <tr><td>Factura buyer</td><td><code>buyer.company.tax_id</code>, name</td><td>Line of business, address, comuna; boleta-or-factura choice</td></tr>
+        <tr><td>Factura buyer</td><td><code>buyer.company.tax_id</code>, name</td><td>Line of business, address, comuna; boleta-or-factura choice; references (purchase order, HES, contract)</td></tr>
         <tr><td>Right of withdrawal</td><td><code>return_policy</code> link; feed field <code>return_deadline_in_days</code></td><td>Structured withdrawal fields</td></tr>
         <tr><td>Legal warranty</td><td>Per-item <code>disclosures[]</code></td><td>Structured warranty fields</td></tr>
         <tr><td>Credit note</td><td><code>Order.adjustments[]</code></td><td>DTE 61 reference</td></tr>
@@ -367,7 +422,7 @@
       <p>JSON Schema draft 2020-12, self-describing (<code>$id</code>, <code>name</code>, <code>version</code>), with one <code>$defs</code> entry per capability they extend, composed with <code>allOf</code>, and a <code>requires</code> block with the minimum core version.</p>
       <div class="table-scroll"><table>
         <tr><th>Name</th><th>Schema</th></tr>
-        <tr><td><code>cl.comercioia.shopping.tax_document</code></td><td><a href="/ucp/schemas/tax_document/2026-10-15.json">/ucp/schemas/tax_document/2026-10-15.json</a></td></tr>
+        <tr><td><code>cl.comercioia.shopping.tax_document</code></td><td><a href="/ucp/schemas/tax_document/2026-10-16.json">/ucp/schemas/tax_document/2026-10-16.json</a><br>Previous: <a href="/ucp/schemas/tax_document/2026-10-15.json">2026-10-15</a></td></tr>
         <tr><td><code>cl.comercioia.shopping.consumer_terms</code></td><td><a href="/ucp/schemas/consumer_terms/2026-10-15.json">/ucp/schemas/consumer_terms/2026-10-15.json</a></td></tr>
         <tr><td><code>cl.comercioia.shopping.credit_note</code></td><td><a href="/ucp/schemas/credit_note/2026-10-15.json">/ucp/schemas/credit_note/2026-10-15.json</a></td></tr>
         <tr><td><code>cl.comercioia.webpay_plus</code></td><td><a href="/ucp/handlers/webpay_plus/2026-10-15.json">/ucp/handlers/webpay_plus/2026-10-15.json</a></td></tr>
@@ -404,7 +459,10 @@
         <li>Mercado Pago Developers Chile: <a href="https://www.mercadopago.cl/developers">mercadopago.cl/developers</a></li>
         <li>Getnet Web Checkout (PlacetoPay): <a href="https://docs.placetopay.dev/">docs.placetopay.dev</a></li>
         <li>Khipu API v3: <a href="https://docs.khipu.com/">docs.khipu.com</a></li>
-        <li>SII, Res. Ex. 74/2020 and DTE format: <a href="https://www.sii.cl/">sii.cl</a></li>
+        <li>SII, Res. Ex. 74/2020: <a href="https://www.sii.cl/normativa_legislacion/resoluciones/2020/reso74.pdf">sii.cl</a></li>
+        <li>SII, Electronic Tax Document Format v2.5 (2026-02), section E "Información de referencia" (<code>TpoDocRef</code>, <code>FolioRef</code>, <code>FchRef</code>, <code>RazonRef</code>): <a href="https://www.sii.cl/factura_electronica/factura_mercado/formato_dte_202602.pdf">sii.cl</a></li>
+        <li>SII, Electronic Boleta Format v4.2 (2025-09-08), fields <code>MedioPago</code>, <code>RUTRecep</code>, <code>RznSocRecep</code> and <code>NmbItem</code>: <a href="https://www.sii.cl/factura_electronica/factura_mercado/formato_boleta_electronica.pdf">sii.cl</a></li>
+        <li>SII, Res. Ex. 44/2025 (Tax Code art. 92 ter), boletas above 135 UF: <a href="https://www.sii.cl/normativa_legislacion/resoluciones/2025/reso44.pdf">sii.cl</a></li>
         <li>DL 825 (arts. 21, 53, 55, 57 and 70), Ley 19.496 (arts. 3 bis, 12 A, 20 and 21), Ley 20.416 (art. 9), Ley 21.398, DS 6/2021 and Ley 21.719: <a href="https://www.bcn.cl/leychile/">BCN Ley Chile</a></li>
         <li>SII FAQ 001.003.7335: <a href="https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_7335.htm">sii.cl/preguntas_frecuentes/factura_electronica/001_003_7335.htm</a></li>
         <li>Ley 21.521 and CMF NCG 514 and its amendments, including NCG 569/2026: <a href="https://www.cmfchile.cl/normativa/ncg_569_2026.pdf">cmfchile.cl/normativa/ncg_569_2026.pdf</a></li>

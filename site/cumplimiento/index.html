@@ -24,7 +24,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","@id":"https://comercioia.cl/cumplimiento/","url":"https://comercioia.cl/cumplimiento/","name":"Guía de cumplimiento · Comercio IA","description":"Seis reglas tributarias y de protección al consumidor de Chile que todo agente de IA debe respetar al vender, con su fuente oficial.","inLanguage":"es-CL","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"},"headline":"Guía de cumplimiento","datePublished":"2026-10-09","dateModified":"2026-10-15","author":{"@id":"https://comercioia.cl/#org"},"license":"https://www.apache.org/licenses/LICENSE-2.0"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","@id":"https://comercioia.cl/cumplimiento/","url":"https://comercioia.cl/cumplimiento/","name":"Guía de cumplimiento · Comercio IA","description":"Seis reglas tributarias y de protección al consumidor de Chile que todo agente de IA debe respetar al vender, con su fuente oficial.","inLanguage":"es-CL","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"},"headline":"Guía de cumplimiento","datePublished":"2026-10-09","dateModified":"2026-10-16","author":{"@id":"https://comercioia.cl/#org"},"license":"https://www.apache.org/licenses/LICENSE-2.0"}]}</script>
 <script src="/assets/site.js" defer></script>
 <!-- /seo -->
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -89,7 +89,7 @@
       <p>Para las ventas comprendidas en la Resolución SII N° 44 de 2025 cuyo valor exceda el umbral de 135 UF, corresponde identificar al pagador con su nombre y RUT, registrar la forma de pago y describir los bienes. El pagador puede ser distinto del comprador. El umbral en pesos se determina anualmente con la UF del 31 de diciembre anterior; no se recalcula con la UF del día de la compra. Teléfono y email son adicionales, no obligatorios por esta regla. La implementación debe recoger y distinguir estos datos antes de emitir el documento.</p>
       <dl class="kv">
         <dt>Qué significa para una venta con IA</dt><dd>En compras grandes el agente debe pedir los datos del comprador antes de pagar; si faltan, la tienda no emite con el RUT genérico.</dd>
-        <dt>En el estándar</dt><dd><code>tax_document.receiver</code> (ver la <a href="https://github.com/Pintor-Project/comercioia/issues/1">propuesta 2026-10-16</a>)</dd>
+        <dt>En el estándar</dt><dd><code>tax_document.receiver</code> y <code>payment_method</code>, desde la versión 2026-10-16 (ver <a href="/spec/#boleta-135-uf">Boletas sobre 135 UF</a>)</dd>
       </dl>
       <h3>Fuentes</h3>
       <ul>
@@ -116,13 +116,13 @@
       <p>El plazo general de pago es de 30 días corridos desde la recepción de la factura por el comprador, sujeto a las excepciones y condiciones legales. Las referencias a orden de compra, HES o contrato dependen de la operación y del régimen aplicable; no debe afirmarse que siempre son opcionales. Un agente puede apoyar actuaciones autorizadas, pero no sustituye la habilitación del comprador ni puede declarar una recepción inexistente.</p>
       <dl class="kv">
         <dt>Qué significa para una venta con IA</dt><dd>El acuse no lo da el agente de compras, sino la empresa compradora en el SII. Que el agente pueda pedir sus referencias evita rechazos comerciales.</dd>
-        <dt>En el estándar</dt><dd><code>tax_document.receiver</code>; referencias en la <a href="https://github.com/Pintor-Project/comercioia/issues/1">propuesta 2026-10-16</a></dd>
+        <dt>En el estándar</dt><dd><code>tax_document.receiver</code>; <code>tax_document.references[]</code>, desde la versión 2026-10-16 (ver <a href="/spec/#referencias">Ventas a empresas</a>)</dd>
       </dl>
       <h3>Fuentes</h3>
       <ul>
           <li><a href="https://www.bcn.cl/leychile/navegar?idNorma=233421">Ley 19.983 arts. 2, 3, 4 y 9</a></li>
           <li><a href="https://www.sii.cl/normativa_legislacion/circulares/2017/circu4.pdf">Circular SII N° 4 de 2017</a></li>
-          <li><a href="https://www.sii.cl/servicios_online/docs/formato_dte.pdf">SII, Formato DTE, zona de referencias</a></li>
+          <li><a href="https://www.sii.cl/factura_electronica/factura_mercado/formato_dte_202602.pdf">SII, Formato DTE v2.5, zona de referencias</a></li>
           <li><a href="https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_7004.htm">SII, pregunta frecuente 001.003.7004</a></li>
       </ul>
     </section>

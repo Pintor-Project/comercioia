@@ -3,7 +3,11 @@
     "document_choice": "factura",
     "receiver": { "rut": "12345678-5", "razon_social": "Comercial Ejemplo Limitada",
                   "giro": "Venta al por menor", "direccion": "Calle Ejemplo 100",
-                  "comuna": "Providencia", "email": "facturas@comercial-ejemplo.cl" }
+                  "comuna": "Providencia", "email": "facturas@comercial-ejemplo.cl" },
+    "references": [
+      { "type": "801", "number": "4500195544", "date": "2026-10-15" },
+      { "type": "HES", "number": "1001266280", "date": "2026-10-20", "reason": "Recepción conforme del servicio" }
+    ]
   },
   "consumer_terms": {
     "ai_disclosure": { "is_ai_agent": true, "agent_name": "Asistente de compras", "purpose": "purchase_assistance" }

@@ -24,7 +24,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","@id":"https://comercioia.cl/en/compliance/","url":"https://comercioia.cl/en/compliance/","name":"Compliance guide · Comercio IA","description":"Six Chilean tax and consumer-protection rules every AI agent must respect when selling, each with its official source.","inLanguage":"en","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"},"headline":"Compliance guide","datePublished":"2026-10-09","dateModified":"2026-10-15","author":{"@id":"https://comercioia.cl/#org"},"license":"https://www.apache.org/licenses/LICENSE-2.0"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","@id":"https://comercioia.cl/en/compliance/","url":"https://comercioia.cl/en/compliance/","name":"Compliance guide · Comercio IA","description":"Six Chilean tax and consumer-protection rules every AI agent must respect when selling, each with its official source.","inLanguage":"en","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"},"headline":"Compliance guide","datePublished":"2026-10-09","dateModified":"2026-10-16","author":{"@id":"https://comercioia.cl/#org"},"license":"https://www.apache.org/licenses/LICENSE-2.0"}]}</script>
 <script src="/assets/site.js" defer></script>
 <!-- /seo -->
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -89,7 +89,7 @@
       <p>For sales covered by SII Resolution No. 44 of 2025 whose value exceeds the 135 UF threshold, the payer must be identified by name and RUT, the payment method recorded and the goods described. The payer may be different from the buyer. The threshold in pesos is set each year using the UF value of 31 December of the previous year; it is not recalculated with the UF of the purchase date. Phone and email are additional, not required by this rule. The implementation must collect and tell apart these data before issuing the document.</p>
       <dl class="kv">
         <dt>What it means for an AI sale</dt><dd>For large purchases the agent must ask for the buyer's details before payment; if they are missing, the store does not issue with the generic RUT.</dd>
-        <dt>In the standard</dt><dd><code>tax_document.receiver</code> (see the <a href="https://github.com/Pintor-Project/comercioia/issues/1">2026-10-16 proposal</a>)</dd>
+        <dt>In the standard</dt><dd><code>tax_document.receiver</code> and <code>payment_method</code>, from version 2026-10-16 (see <a href="/en/spec/#boleta-135-uf">Boletas above 135 UF</a>)</dd>
       </dl>
       <h3>Sources</h3>
       <ul>
@@ -116,13 +116,13 @@
       <p>The general payment period is 30 calendar days from the buyer's receipt of the factura, subject to legal exceptions and conditions. References to a purchase order, HES or contract depend on the operation and the applicable regime; it must not be stated that they are always optional. An agent may support authorized actions, but it does not replace the buyer's authorization and cannot declare a receipt that did not happen.</p>
       <dl class="kv">
         <dt>What it means for an AI sale</dt><dd>The acknowledgement comes from the buying company in the SII, not from its purchasing agent. Letting the agent request references avoids commercial rejections.</dd>
-        <dt>In the standard</dt><dd><code>tax_document.receiver</code>; references in the <a href="https://github.com/Pintor-Project/comercioia/issues/1">2026-10-16 proposal</a></dd>
+        <dt>In the standard</dt><dd><code>tax_document.receiver</code>; <code>tax_document.references[]</code>, from version 2026-10-16 (see <a href="/en/spec/#references">Sales to companies</a>)</dd>
       </dl>
       <h3>Sources</h3>
       <ul>
           <li><a href="https://www.bcn.cl/leychile/navegar?idNorma=233421">Ley 19.983 arts. 2, 3, 4 and 9</a></li>
           <li><a href="https://www.sii.cl/normativa_legislacion/circulares/2017/circu4.pdf">SII Circular No. 4 of 2017</a></li>
-          <li><a href="https://www.sii.cl/servicios_online/docs/formato_dte.pdf">SII DTE Format, reference section</a></li>
+          <li><a href="https://www.sii.cl/factura_electronica/factura_mercado/formato_dte_202602.pdf">SII DTE Format v2.5, reference section</a></li>
           <li><a href="https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_7004.htm">SII FAQ 001.003.7004</a></li>
       </ul>
     </section>
