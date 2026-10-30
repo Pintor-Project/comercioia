@@ -1,0 +1,87 @@
+{
+  "ucp": {
+    "version": "2026-08-25",
+    "services": {
+      "dev.ucp.shopping": [
+        {
+          "version": "2026-08-25",
+          "transport": "rest",
+          "endpoint": "https://tienda-ejemplo.cl/ucp/v1",
+          "schema": "https://ucp.dev/2026-08-25/services/shopping/rest.openapi.json"
+        },
+        {
+          "version": "2026-08-25",
+          "transport": "mcp",
+          "endpoint": "https://tienda-ejemplo.cl/ucp/mcp",
+          "schema": "https://ucp.dev/2026-08-25/services/shopping/mcp.openrpc.json"
+        }
+      ]
+    },
+    "capabilities": {
+      "dev.ucp.shopping.checkout": [
+        {
+          "version": "2026-08-25",
+          "spec": "https://ucp.dev/2026-08-25/specification/shopping/checkout",
+          "schema": "https://ucp.dev/2026-08-25/schemas/shopping/checkout.json"
+        }
+      ],
+      "dev.ucp.shopping.order": [
+        {
+          "version": "2026-08-25",
+          "schema": "https://ucp.dev/2026-08-25/schemas/shopping/order.json"
+        }
+      ],
+      "cl.comercioia.shopping.tax_document": [
+        {
+          "version": "2026-10-30",
+          "extends": [
+            "dev.ucp.shopping.checkout",
+            "dev.ucp.shopping.order"
+          ],
+          "spec": "https://comercioia.cl/spec/#tax-document",
+          "schema": "https://comercioia.cl/ucp/schemas/tax_document/2026-10-30.json",
+          "config": {
+            "issuance_model": "payment_receipt"
+          }
+        }
+      ],
+      "cl.comercioia.shopping.consumer_terms": [
+        {
+          "version": "2026-10-15",
+          "extends": [
+            "dev.ucp.shopping.checkout",
+            "dev.ucp.shopping.order"
+          ],
+          "spec": "https://comercioia.cl/spec/#consumer-terms",
+          "schema": "https://comercioia.cl/ucp/schemas/consumer_terms/2026-10-15.json"
+        }
+      ],
+      "cl.comercioia.shopping.credit_note": [
+        {
+          "version": "2026-10-15",
+          "extends": "dev.ucp.shopping.order",
+          "spec": "https://comercioia.cl/spec/#credit-note",
+          "schema": "https://comercioia.cl/ucp/schemas/credit_note/2026-10-15.json"
+        }
+      ]
+    },
+    "payment_handlers": {
+      "cl.comercioia.mercadopago": [
+        {
+          "id": "mercadopago_1",
+          "version": "2026-10-15",
+          "spec": "https://comercioia.cl/spec/#mercadopago",
+          "schema": "https://comercioia.cl/ucp/handlers/mercadopago/2026-10-15.json",
+          "available_instruments": [
+            {
+              "type": "redirect"
+            }
+          ],
+          "config": {
+            "environment": "production"
+          }
+        }
+      ]
+    }
+  }
+}

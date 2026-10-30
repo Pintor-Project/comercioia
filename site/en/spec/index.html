@@ -24,7 +24,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","@id":"https://comercioia.cl/en/spec/","url":"https://comercioia.cl/en/spec/","name":"Specification · Comercio IA","description":"Open-proposal specification of the Comercio IA Chilean extension for UCP and ACP: tax documents, consumer terms, credit notes and Chilean payment methods.","inLanguage":"en","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"},"headline":"Specification","datePublished":"2026-10-09","dateModified":"2026-10-16","author":{"@id":"https://comercioia.cl/#org"},"license":"https://www.apache.org/licenses/LICENSE-2.0"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","@id":"https://comercioia.cl/en/spec/","url":"https://comercioia.cl/en/spec/","name":"Specification · Comercio IA","description":"Open-proposal specification of the Comercio IA Chilean extension for UCP and ACP: tax documents, consumer terms, credit notes and Chilean payment methods.","inLanguage":"en","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"},"headline":"Specification","datePublished":"2026-10-09","dateModified":"2026-10-30","author":{"@id":"https://comercioia.cl/#org"},"license":"https://www.apache.org/licenses/LICENSE-2.0"}]}</script>
 <script src="/assets/site.js" defer></script>
 <!-- /seo -->
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -79,16 +79,17 @@
 
   <main id="main" class="spec-body">
     <section id="introduction">
-      <p class="status">Open proposal · version 2026-10-16</p>
+      <p class="status">Open proposal · version 2026-10-30</p>
       <h1>Comercio IA specification</h1>
       <p class="lede">A Chilean extension to the Universal Commerce Protocol (UCP) and the Agentic Commerce Protocol (ACP). It defines how an AI agent and a store exchange the information Chilean law requires to close a distance sale, and how to pay with Chilean payment methods.</p>
       <dl class="kv">
-        <dt>Version</dt><dd><code>2026-10-16</code> (open proposal: ready to implement and comment on). The previous versions, <code>2026-10-15</code> and <code>2026-10-09</code>, stay published.</dd>
+        <dt>Version</dt><dd><code>2026-10-30</code> (open proposal: ready to implement and comment on). The previous versions, <code>2026-10-16</code>, <code>2026-10-15</code> and <code>2026-10-09</code>, stay published.</dd>
         <dt>Namespace</dt><dd><code>cl.comercioia.*</code></dd>
         <dt>Schemas served from</dt><dd><code>https://comercioia.cl/ucp/…</code></dd>
         <dt>Requires</dt><dd>UCP <code>2026-08-25</code> or later. ACP <code>2026-04-17</code> mapping in the <a href="#acp">ACP</a> section.</dd>
         <dt>License</dt><dd>Apache-2.0</dd>
       </dl>
+      <p class="note"><b>What's new in 2026-10-30.</b> Only <code>tax_document</code> changes, and only by adding: a 2026-10-16 implementation remains valid. Under art. 54 of the Ley del IVA and SII Res. Ex. 176/2020 the receipt of an electronic payment counts as a boleta, so this version lets a business <a href="#payment-receipt">declare its emission model</a> (<code>issuance_model</code>) and an order state that its document is the <a href="#payment-receipt">payment receipt</a> (<code>payment_receipt</code>). <code>credit_note</code>, <code>consumer_terms</code> and the payment handlers stay at <code>2026-10-15</code>; the refund prose in <a href="#credit-note">Credit notes</a> and the <a href="/en/compliance/#payment-receipt">compliance guide</a> is explanatory. History in the <a href="https://github.com/Pintor-Project/comercioia/blob/main/CHANGELOG.md">CHANGELOG</a>.</p>
       <p class="note"><b>What's new in 2026-10-16.</b> Only <code>tax_document</code> changes, with optional fields: a 2026-10-15 implementation remains valid. It adds the references business buyers require on their factura (<a href="#references"><code>references[]</code></a>, <a href="https://github.com/Pintor-Project/comercioia/issues/1">issue #1</a>) and the identification of the person who pays and the payment method on boletas above 135 UF (<a href="#boleta-135-uf"><code>receiver</code> on a boleta and <code>payment_method</code></a>). <code>consumer_terms</code>, <code>credit_note</code> and the payment handlers stay at <code>2026-10-15</code>. History in the <a href="https://github.com/Pintor-Project/comercioia/blob/main/CHANGELOG.md">CHANGELOG</a>.</p>
       <p class="warn">This specification describes tax and consumer-protection rules, but it is not legal advice. Each store is responsible for deciding which notices apply to it.</p>
     </section>
@@ -116,10 +117,11 @@
       "dev.ucp.shopping.checkout": [{ "version": "2026-08-25" }],
       "dev.ucp.shopping.order":    [{ "version": "2026-08-25" }],
       "cl.comercioia.shopping.tax_document": [{
-        "version": "2026-10-16",
+        "version": "2026-10-30",
         "extends": ["dev.ucp.shopping.checkout", "dev.ucp.shopping.order"],
         "spec":   "https://comercioia.cl/en/spec/#tax-document",
-        "schema": "https://comercioia.cl/ucp/schemas/tax_document/2026-10-16.json" }],
+        "schema": "https://comercioia.cl/ucp/schemas/tax_document/2026-10-30.json",
+        "config": { "issuance_model": "payment_receipt" } }],
       "cl.comercioia.shopping.consumer_terms": [{
         "version": "2026-10-15",
         "extends": ["dev.ucp.shopping.checkout", "dev.ucp.shopping.order"],
@@ -149,7 +151,7 @@
       <h3>On checkout: <code>tax_document</code></h3>
       <div class="table-scroll"><table>
         <tr><th>Field</th><th>Rule</th><th>Source</th></tr>
-        <tr><td><code>document_choice</code></td><td><code>boleta</code> (default) or <code>factura</code>. Boletas or facturas according to the operation and the buyer's tax status. The choice at checkout is subject to the legal requirements of the document (boleta 39, or 41 exempt; factura 33 or 34). An unknown value MUST be treated as a boleta, with a notice in <code>messages[]</code>.</td><td>DL 825 arts. 52–53</td></tr>
+        <tr><td><code>document_choice</code></td><td><code>boleta</code> (default) or <code>factura</code>. Boletas or facturas according to the operation and the buyer's tax status. The choice at checkout is subject to the legal requirements of the document (boleta 39, or 41 exempt; factura 33 or 34). From 2026-10-30, <code>boleta</code> means "not a factura": the consumer document, which at a <code>payment_receipt</code> business is the <a href="#payment-receipt">payment receipt</a> when the sale is paid electronically. When absent, the business issues the document it declares. An unknown value MUST be treated as a boleta, with a notice in <code>messages[]</code>.</td><td>DL 825 arts. 52–53</td></tr>
         <tr><td><code>receiver</code></td><td>Who receives the document: the company on a factura, or the person who pays on a boleta. Required for a factura, with <code>rut</code>, <code>razon_social</code> (≤100), <code>giro</code> (line of business, ≤40), <code>direccion</code> (≤70) and <code>comuna</code> (≤20); optional <code>ciudad</code> and <code>email</code>. Required for a boleta above 135 UF, with at least <code>rut</code> and <code>razon_social</code> (for a person, their full name); optional on other boletas. The <code>rut</code> is the real RUT, never the generic <code>66666666-6</code>.</td><td>SII DTE format; DS 55 art. 69; SII Res. Ex. 44/2025</td></tr>
         <tr><td><code>references</code></td><td>New in 2026-10-16. Up to 40 references the buyer requires on its document, usually a factura: <code>type</code>, <code>number</code>, <code>date</code> and <code>reason</code>. The store prints them or rejects the checkout with a message; it MUST NOT drop them silently. See <a href="#references">Sales to companies</a>.</td><td>DTE format, reference section</td></tr>
         <tr><td><code>payment_method</code></td><td>New in 2026-10-16. Payment method printed on the boleta (SII <code>MedioPago</code>): <code>1</code> cash, <code>2</code> electronic payment, <code>3</code> electronic transfer, <code>4</code> cheque, <code>5</code> other. The store derives it from the payment handler used and SHOULD echo it in its responses when the total exceeds 135 UF. The agent sends it only when the buyer pays outside the negotiated payment handlers, for example cash on delivery. An unknown value is treated as <code>5</code>.</td><td>SII Electronic Boleta Format v4.2; SII Res. Ex. 44/2025</td></tr>
@@ -163,9 +165,24 @@
         <tr><td><code>total</code>, <code>net</code>, <code>iva</code>, <code>exempt</code></td><td>Integer pesos. The total includes VAT.</td><td>DL 825</td></tr>
         <tr><td><code>payment_method</code></td><td>New in 2026-10-16. Payment method printed on the boleta, with the same codes as on checkout. Present on every boleta above 135 UF.</td><td>SII Electronic Boleta Format v4.2</td></tr>
         <tr><td><code>references</code></td><td>New in 2026-10-16. The references as printed on the issued document, in line order (<code>NroLinRef</code>).</td><td>DTE format, reference section</td></tr>
+        <tr><td><code>payment_receipt</code> (on the order, outside <code>tax_documents[]</code>)</td><td>New in 2026-10-30. Present when the document of the sale is the electronic payment receipt, which is not a DTE and has no folio: <code>operator</code>, <code>authorization_code</code>, <code>legend</code> and <code>amount_clp</code>. See <a href="#payment-receipt">The payment receipt as the document</a>.</td><td>DL 825 art. 54; SII Res. Ex. 176/2020</td></tr>
         <tr><td><code>sii_track_id</code>, <code>sii_status</code></td><td>Each boleta reaches the SII within one hour of issue.</td><td>SII Res. Ex. 74/2020</td></tr>
         <tr><td><code>representation_url</code></td><td>An https link to a representation the buyer can keep, delivered immediately by email, chat, link or QR.</td><td>SII Res. Ex. 74/2020</td></tr>
       </table></div>
+      <h3 id="payment-receipt">The payment receipt as the document</h3>
+      <p>Under art. 54 of the Ley del IVA (DL 825) and SII Res. Ex. 176/2020, the receipt of an electronic payment has "el valor de boleta de ventas y servicios para todos los efectos legales". The resolution's terminal definition includes internet sales. Each taxpayer declares one of two emission models to the SII, and the business states its own in <code>issuance_model</code>, inside the <code>config</code> of its <code>tax_document</code> entry in the profile (new in 2026-10-30; open vocabulary, the codes are examples):</p>
+      <ul>
+        <li><code>payment_receipt</code>: the receipt replaces the boleta for electronic payments. The order carries <code>payment_receipt</code> and no <code>tax_documents[]</code> entry for that sale.</li>
+        <li><code>always_boleta</code>: the boleta is the document for every sale, even when the business receives an electronic payment.</li>
+      </ul>
+      <ul>
+        <li>The declaration is made by the business and is not verified against the SII. A receiver MUST NOT assume a boleta when the business has not declared one.</li>
+        <li>Cash sales and bank transfers between accounts need a boleta even at a <code>payment_receipt</code> business.</li>
+        <li>Issuing both documents for one sale duplicates the Registro de Ventas.</li>
+        <li>The receipt is not a DTE and has no folio. In the Registro de Ventas it is a line with SII code 48, which is not a DTE type.</li>
+        <li>Whether a sale above 135 UF (SII Res. Ex. 44/2025) at a <code>payment_receipt</code> business must carry a boleta is left open by this version. The standard does not answer it.</li>
+        <li>A payment receipt is expressed on the order as <code>payment_receipt</code>: <code>operator</code> (for example <code>mercadopago</code>), <code>authorization_code</code>, <code>legend</code> ("Válido como Boleta") and <code>amount_clp</code>, in integer pesos with VAT included. An implementation that cannot capture these data does not fill the field.</li>
+      </ul>
       <h3 id="boleta-135-uf">Boletas above 135 UF</h3>
       <p>For sales covered by SII Resolution No. 44 of 2025 whose value exceeds the 135 UF threshold, the boleta must identify the payer by name and RUT, record the payment method and describe the goods (Tax Code art. 92 ter). The payer may be different from the buyer. The threshold in pesos is set each year using the UF value of 31 December of the previous year, not the UF of the purchase date; for 2025 it was CLP 5,186,253. More context in the <a href="/en/compliance/#generic-rut">compliance guide</a>.</p>
       <ul>
@@ -236,6 +253,7 @@
         <tr><td><code>cod_ref</code></td><td>1 cancels the document, 2 corrects text, 3 corrects amounts.</td></tr>
         <tr><td><code>razon</code></td><td>Reason printed on the document (≤90).</td></tr>
       </table></div>
+      <p>A sale documented by a <a href="#payment-receipt">payment receipt</a> is refunded by annulling the payment through the payment terminal. A credit note identifying the receipt is only the fallback (SII Res. Ex. 176/2020). The <code>credit_note</code> schema does not change in 2026-10-30.</p>
       <p>The tax effects of a credit note depend on its cause. For returns or mutual terminations, the six-month period for the adjustments provided in arts. 21 and 70 of DL 825 applies. It is not a general rule for every credit note: error corrections and exempt operations follow different rules. Issuing the document and reducing the VAT debit must be validated separately.</p>
     </section>
 
@@ -422,7 +440,7 @@
       <p>JSON Schema draft 2020-12, self-describing (<code>$id</code>, <code>name</code>, <code>version</code>), with one <code>$defs</code> entry per capability they extend, composed with <code>allOf</code>, and a <code>requires</code> block with the minimum core version.</p>
       <div class="table-scroll"><table>
         <tr><th>Name</th><th>Schema</th></tr>
-        <tr><td><code>cl.comercioia.shopping.tax_document</code></td><td><a href="/ucp/schemas/tax_document/2026-10-16.json">/ucp/schemas/tax_document/2026-10-16.json</a><br>Previous: <a href="/ucp/schemas/tax_document/2026-10-15.json">2026-10-15</a></td></tr>
+        <tr><td><code>cl.comercioia.shopping.tax_document</code></td><td><a href="/ucp/schemas/tax_document/2026-10-30.json">/ucp/schemas/tax_document/2026-10-30.json</a><br>Previous: <a href="/ucp/schemas/tax_document/2026-10-16.json">2026-10-16</a>, <a href="/ucp/schemas/tax_document/2026-10-15.json">2026-10-15</a></td></tr>
         <tr><td><code>cl.comercioia.shopping.consumer_terms</code></td><td><a href="/ucp/schemas/consumer_terms/2026-10-15.json">/ucp/schemas/consumer_terms/2026-10-15.json</a></td></tr>
         <tr><td><code>cl.comercioia.shopping.credit_note</code></td><td><a href="/ucp/schemas/credit_note/2026-10-15.json">/ucp/schemas/credit_note/2026-10-15.json</a></td></tr>
         <tr><td><code>cl.comercioia.webpay_plus</code></td><td><a href="/ucp/handlers/webpay_plus/2026-10-15.json">/ucp/handlers/webpay_plus/2026-10-15.json</a></td></tr>
@@ -462,8 +480,9 @@
         <li>SII, Res. Ex. 74/2020: <a href="https://www.sii.cl/normativa_legislacion/resoluciones/2020/reso74.pdf">sii.cl</a></li>
         <li>SII, Electronic Tax Document Format v2.5 (2026-02), section E "Información de referencia" (<code>TpoDocRef</code>, <code>FolioRef</code>, <code>FchRef</code>, <code>RazonRef</code>): <a href="https://www.sii.cl/factura_electronica/factura_mercado/formato_dte_202602.pdf">sii.cl</a></li>
         <li>SII, Electronic Boleta Format v4.2 (2025-09-08), fields <code>MedioPago</code>, <code>RUTRecep</code>, <code>RznSocRecep</code> and <code>NmbItem</code>: <a href="https://www.sii.cl/factura_electronica/factura_mercado/formato_boleta_electronica.pdf">sii.cl</a></li>
+        <li>SII, Res. Ex. 176/2020, electronic payment receipt with the value of a boleta (DL 825 art. 54): <a href="https://www.sii.cl/normativa_legislacion/resoluciones/2020/reso176.pdf">sii.cl</a></li>
         <li>SII, Res. Ex. 44/2025 (Tax Code art. 92 ter), boletas above 135 UF: <a href="https://www.sii.cl/normativa_legislacion/resoluciones/2025/reso44.pdf">sii.cl</a></li>
-        <li>DL 825 (arts. 21, 53, 55, 57 and 70), Ley 19.496 (arts. 3 bis, 12 A, 20 and 21), Ley 20.416 (art. 9), Ley 21.398, DS 6/2021 and Ley 21.719: <a href="https://www.bcn.cl/leychile/">BCN Ley Chile</a></li>
+        <li>DL 825 (arts. 21, 53, 54, 55, 57 and 70), Ley 19.496 (arts. 3 bis, 12 A, 20 and 21), Ley 20.416 (art. 9), Ley 21.398, DS 6/2021 and Ley 21.719: <a href="https://www.bcn.cl/leychile/">BCN Ley Chile</a></li>
         <li>SII FAQ 001.003.7335: <a href="https://www.sii.cl/preguntas_frecuentes/factura_electronica/001_003_7335.htm">sii.cl/preguntas_frecuentes/factura_electronica/001_003_7335.htm</a></li>
         <li>Ley 21.521 and CMF NCG 514 and its amendments, including NCG 569/2026: <a href="https://www.cmfchile.cl/normativa/ncg_569_2026.pdf">cmfchile.cl/normativa/ncg_569_2026.pdf</a></li>
         <li>SERNAC, Res. Ex. 33/2022 and 779/2023: <a href="https://www.sernac.cl/">sernac.cl</a></li>

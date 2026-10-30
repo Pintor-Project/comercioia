@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Guía de cumplimiento · Comercio IA</title>
-<meta name="description" content="Seis reglas tributarias y de protección al consumidor de Chile que todo agente de IA debe respetar al vender, con su fuente oficial.">
+<meta name="description" content="Siete reglas tributarias y de protección al consumidor de Chile que todo agente de IA debe respetar al vender, con su fuente oficial.">
 <link rel="alternate" hreflang="es-CL" href="https://comercioia.cl/cumplimiento/">
 <link rel="alternate" hreflang="en" href="https://comercioia.cl/en/compliance/">
 <link rel="alternate" hreflang="x-default" href="https://comercioia.cl/cumplimiento/">
@@ -13,7 +13,7 @@
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Comercio IA">
 <meta property="og:title" content="Guía de cumplimiento · Comercio IA">
-<meta property="og:description" content="Seis reglas tributarias y de protección al consumidor de Chile que todo agente de IA debe respetar al vender, con su fuente oficial.">
+<meta property="og:description" content="Siete reglas tributarias y de protección al consumidor de Chile que todo agente de IA debe respetar al vender, con su fuente oficial.">
 <meta property="og:url" content="https://comercioia.cl/cumplimiento/">
 <meta property="og:locale" content="es_CL">
 <meta property="og:locale:alternate" content="en_US">
@@ -24,7 +24,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","@id":"https://comercioia.cl/cumplimiento/","url":"https://comercioia.cl/cumplimiento/","name":"Guía de cumplimiento · Comercio IA","description":"Seis reglas tributarias y de protección al consumidor de Chile que todo agente de IA debe respetar al vender, con su fuente oficial.","inLanguage":"es-CL","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"},"headline":"Guía de cumplimiento","datePublished":"2026-10-09","dateModified":"2026-10-16","author":{"@id":"https://comercioia.cl/#org"},"license":"https://www.apache.org/licenses/LICENSE-2.0"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","@id":"https://comercioia.cl/cumplimiento/","url":"https://comercioia.cl/cumplimiento/","name":"Guía de cumplimiento · Comercio IA","description":"Siete reglas tributarias y de protección al consumidor de Chile que todo agente de IA debe respetar al vender, con su fuente oficial.","inLanguage":"es-CL","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"},"headline":"Guía de cumplimiento","datePublished":"2026-10-09","dateModified":"2026-10-30","author":{"@id":"https://comercioia.cl/#org"},"license":"https://www.apache.org/licenses/LICENSE-2.0"}]}</script>
 <script src="/assets/site.js" defer></script>
 <!-- /seo -->
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -64,8 +64,8 @@
 
   <main id="main" class="spec-body">
     <section id="intro">
-      <p class="status">Basada en fuentes oficiales · revisada al 15 de octubre de 2026</p>
-      <h1>Guía de cumplimiento<span class="sub">Seis reglas chilenas que todo agente de IA debe respetar al vender.</span></h1>
+      <p class="status">Basada en fuentes oficiales · reglas 1 a 6 revisadas al 15 de octubre de 2026, regla 7 al 30 de octubre de 2026</p>
+      <h1>Guía de cumplimiento<span class="sub">Siete reglas chilenas que todo agente de IA debe respetar al vender.</span></h1>
       <p class="lede">Reglas tributarias y de protección al consumidor que aplica Comercio IA, cada una con su fuente oficial del SII, el SERNAC o la ley.</p>
       <p class="warn">Esta guía resume normas tributarias y de protección al consumidor relevantes para implementar Comercio IA en Chile, revisadas al 15 de octubre de 2026. Su aplicación depende de la operación y del rol de cada participante. No reemplaza el análisis de una implementación concreta.</p>
     </section>
@@ -151,6 +151,21 @@
       <ul>
           <li><a href="https://www.diariooficial.interior.gob.cl/publicaciones/2024/08/27/43935/01/2535265.pdf">DS N° 52 de 2022, Ministerio de Economía (Diario Oficial 27-08-2024)</a></li>
           <li><a href="https://www.sernac.cl/portal/618/articles-84774_archivo_01.pdf">SERNAC, Res. Ex. N° 272 de 2025</a></li>
+      </ul>
+    </section>
+
+    <section id="comprobante-de-pago">
+      <h2>07. El comprobante de un pago electrónico puede valer como boleta</h2>
+      <p>Según el art. 54 de la Ley del IVA (DL 825) y la Res. Ex. SII 176/2020, el comprobante de un pago electrónico tiene <span lang="es">“el valor de boleta de ventas y servicios para todos los efectos legales”</span>, y la definición de terminal de la resolución incluye las ventas por internet. Cada contribuyente declara al SII uno de dos modelos de emisión: el comprobante reemplaza a la boleta en los pagos electrónicos, o el contribuyente emite siempre boleta aun cuando reciba un pago electrónico.</p>
+      <p>Las ventas en efectivo y las transferencias entre cuentas bancarias siempre llevan boleta. Emitir boleta y comprobante por una misma venta duplica el Registro de Ventas. Una devolución se anula a través del terminal de pago; una nota de crédito que identifique el comprobante es solo el recurso de respaldo. Si una venta sobre 135 UF en una tienda que usa el comprobante debe llevar boleta, aquí no se responde.</p>
+      <dl class="kv">
+        <dt>Qué significa para una venta con IA</dt><dd>El agente no promete una boleta que la tienda puede no emitir: informa al comprador el documento que la tienda declaró. La tienda declara su modelo; no se verifica con el SII.</dd>
+        <dt>En el estándar</dt><dd><code>issuance_model</code> y <code>payment_receipt</code>, desde la versión 2026-10-30 (ver <a href="/spec/#comprobante-de-pago">El comprobante de pago como documento</a>)</dd>
+      </dl>
+      <h3>Fuentes</h3>
+      <ul>
+          <li><a href="https://www.sii.cl/normativa_legislacion/resoluciones/2020/reso176.pdf">SII, Res. Ex. N° 176 de 2020</a></li>
+          <li>DL 825 (Ley del IVA), art. 54</li>
       </ul>
     </section>
 

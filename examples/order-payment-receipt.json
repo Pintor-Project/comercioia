@@ -1,0 +1,12 @@
+{
+  "id": "ord_6101",
+  "checkout_id": "chk_a7c4",
+  "currency": "CLP",
+  "totals": [{ "type": "total", "amount": 38990 }],
+  "payment_receipt": {
+    "operator": "mercadopago",
+    "authorization_code": "1234567890",
+    "legend": "Válido como Boleta",
+    "amount_clp": 38990
+  }
+}

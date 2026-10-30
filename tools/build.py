@@ -5,7 +5,7 @@ import html, json, os, random, re, sys
 
 SITE = sys.argv[1]
 BASE = "https://comercioia.cl"
-LASTMOD = "2026-10-16"
+LASTMOD = "2026-10-30"
 # Self-hosted (assets/fonts, OFL): no request leaves for a font CDN before consent.
 FONTS = ('<link rel="preload" href="/assets/fonts/hanken-grotesk-400-latin.woff2" as="font" type="font/woff2" crossorigin>\n'
          '<link rel="preload" href="/assets/fonts/hanken-grotesk-300-latin.woff2" as="font" type="font/woff2" crossorigin>')
@@ -567,7 +567,7 @@ def landing(lang):
         T.update(
             title="Comercio IA · La extensión chilena abierta para UCP y ACP",
             desc="Boleta, retracto, garantía legal, notas de crédito y medios de pago chilenos para que cualquier agente de IA cierre una venta legal en Chile, sobre UCP y ACP.",
-            label="Propuesta abierta · versión 2026-10-16",
+            label="Propuesta abierta · versión 2026-10-30",
             h1="Comercio IA", h1sub="Boletas o facturas según la operación y la calidad tributaria del comprador. Para cualquier agente de IA.",
             lead="Cuando un asistente de IA vende por una tienda chilena, la venta tiene que cumplir la ley: boleta o factura del SII, derecho a retracto, garantía legal y medios de pago locales. La elección en el checkout está sujeta a los requisitos legales del documento. Comercio IA son las reglas abiertas para hacerlo, como complemento de los estándares de compra por IA de Google, Shopify, OpenAI y Stripe.",
             cta="Leer la especificación", cta_href="/spec/", alt_link="Ver una compra paso a paso", alt_href="#demo",
@@ -580,7 +580,7 @@ def landing(lang):
         T.update(
             title="Comercio IA · The open Chilean extension for UCP and ACP",
             desc="Chilean tax receipts, withdrawal rights, legal warranty, credit notes and payment methods, so any AI agent can make a legal sale in Chile. On UCP and ACP.",
-            label="Open proposal · version 2026-10-16",
+            label="Open proposal · version 2026-10-30",
             h1="Comercio IA", h1sub="Boletas or facturas according to the operation and the buyer's tax status. For any AI agent.",
             lead="When an AI assistant sells on behalf of a Chilean store, the sale has to follow Chilean law: an SII tax receipt (boleta or factura), the right of withdrawal, the legal warranty and local payment methods. Comercio IA is the open set of rules to do that, as an add-on to the AI shopping standards from Google, Shopify, OpenAI and Stripe.",
             cta="Read the specification", cta_href="/en/spec/", alt_link="See a purchase step by step", alt_href="#demo",
@@ -606,7 +606,7 @@ def landing(lang):
                ("UCP · ACP", "Plataformas y ERP", "Implementa los esquemas en tus endpoints y ofrécelo a todas tus tiendas con tu propia marca."),
                ("document_choice", "Agentes de IA", "Asistentes personales y agentes de compra de empresas: anuncia las extensiones que soportas, pide boleta o factura y muestra cada aviso legal sin ocultarlo."),
                ("payment_handlers", "Proveedores de pago", "Publicamos tu medio de pago hasta que publiques el tuyo. Revísalo, cofírmalo o asúmelo.")]
-        kv = [("Versión", '<code>2026-10-16</code>: <a href="/spec/#referencias">referencias B2B</a> (orden de compra, HES, contrato) y <a href="/spec/#boleta-135-uf">boletas sobre 135 UF</a>'), ("Estado", "Propuesta abierta: lista para implementar y comentar"), ("Espacio de nombres", "<code>cl.comercioia.*</code>"),
+        kv = [("Versión", '<code>2026-10-30</code>: <a href="/spec/#comprobante-de-pago">comprobante de pago como boleta</a> y modelo de emisión declarado; antes, <a href="/spec/#referencias">referencias B2B</a> y <a href="/spec/#boleta-135-uf">boletas sobre 135 UF</a>'), ("Estado", "Propuesta abierta: lista para implementar y comentar"), ("Espacio de nombres", "<code>cl.comercioia.*</code>"),
               ("Requiere", "UCP <code>2026-08-25</code> o posterior"), ("Licencia", "Apache-2.0"), ("Versión estable", "Enero de 2027, al cumplir el camino a la 1.0"), ("Comentarios", 'Abiertos hasta el 30 de noviembre de 2026 (<a href="https://github.com/Pintor-Project/comercioia/blob/main/CHANGELOG.md">historial de versiones</a>)'),
               ("Contacto", '<a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a>')]
         asks = [("Comenta.", "Errores, campos que faltan, casos de tu negocio. Todo comentario se responde antes de la versión estable."),
@@ -647,7 +647,7 @@ def landing(lang):
                ("UCP · ACP", "Platforms and ERPs", "Implement the schemas in your endpoints and offer it to all your stores under your own brand."),
                ("document_choice", "AI agents", "Personal assistants and corporate purchasing agents: announce the extensions you support, ask for a boleta or factura, and show every legal notice without hiding it."),
                ("payment_handlers", "Payment providers", "We publish your payment method until you publish your own. Review it, co-sign it or take it over.")]
-        kv = [("Version", '<code>2026-10-16</code>: <a href="/en/spec/#references">B2B references</a> (purchase order, HES, contract) and <a href="/en/spec/#boleta-135-uf">boletas above 135 UF</a>'), ("Status", "Open proposal: ready to implement and comment on"), ("Namespace", "<code>cl.comercioia.*</code>"),
+        kv = [("Version", '<code>2026-10-30</code>: <a href="/en/spec/#payment-receipt">payment receipt as a boleta</a> and declared emission model; earlier, <a href="/en/spec/#references">B2B references</a> and <a href="/en/spec/#boleta-135-uf">boletas above 135 UF</a>'), ("Status", "Open proposal: ready to implement and comment on"), ("Namespace", "<code>cl.comercioia.*</code>"),
               ("Requires", "UCP <code>2026-08-25</code> or later"), ("License", "Apache-2.0"), ("Stable release", "January 2027, once the path to 1.0 is complete"), ("Comments", 'Open until 30 November 2026 (<a href="https://github.com/Pintor-Project/comercioia/blob/main/CHANGELOG.md">version history</a>)'),
               ("Contact", '<a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a>')]
         asks = [("Comment.", "Errors, missing fields, cases from your business. Every comment gets an answer before the stable release."),

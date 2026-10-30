@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-10-30 · Propuesta abierta · Open proposal
+
+Nueva versión de `cl.comercioia.shopping.tax_document`, sobre la `2026-10-16`. Solo agrega campos opcionales y precisa texto: todo lo válido en `2026-10-16` sigue siendo válido. `consumer_terms`, `credit_note` y los medios de pago siguen en `2026-10-15`, y las versiones anteriores de `tax_document` siguen publicadas sin cambios.
+
+New version of `cl.comercioia.shopping.tax_document`, built on `2026-10-16`. It only adds optional fields and clarifies prose: everything valid under `2026-10-16` remains valid. `consumer_terms`, `credit_note` and the payment handlers stay at `2026-10-15`, and the earlier `tax_document` versions stay published unchanged.
+
+- Comprobante de pago electrónico · Electronic payment receipt: según el art. 54 de la Ley del IVA y la Res. Ex. SII 176/2020, el comprobante de un pago electrónico tiene el valor de boleta de ventas y servicios para todos los efectos legales, también en ventas por internet · under art. 54 of the Ley del IVA and SII Res. Ex. 176/2020, the receipt of an electronic payment has the value of a boleta for all legal purposes, internet sales included.
+- Modelo de emisión · Emission model: `issuance_model` en el `config` de la entrada `tax_document` del perfil (`payment_receipt`, `always_boleta`; vocabulario abierto, declarado por la tienda y no verificado con el SII) · in the `config` of the profile's `tax_document` entry (open vocabulary, declared by the business and not verified against the SII).
+- Pedido · Order: `payment_receipt` con `operator`, `authorization_code`, `legend` («Válido como Boleta») y `amount_clp`. No es un DTE y no tiene folio; el código SII 48 es una línea del Registro de Ventas, no un tipo de DTE · not a DTE and no folio; SII code 48 is a Registro de Ventas line, not a DTE type.
+- Texto · Prose: `document_choice` `boleta` pasa a significar «no es factura», el documento de consumo, que en una tienda `payment_receipt` es el comprobante de pago; «si falta, la tienda emite una boleta» pasa a «el documento que tiene declarado» · `boleta` now means "not a factura", the consumer document, which at a `payment_receipt` business is the payment receipt; "when absent, the business issues a boleta" becomes "the document it declares".
+- Guía de cumplimiento (regla 7) y especificación · Compliance guide (rule 7) and specification: las ventas en efectivo y las transferencias entre cuentas llevan boleta; emitir ambos documentos duplica el Registro de Ventas; una devolución se anula en el terminal de pago y una nota de crédito que identifique el comprobante es solo el respaldo · cash sales and bank transfers between accounts need a boleta; issuing both documents duplicates the Registro de Ventas; a refund is annulled through the payment terminal and a credit note identifying the receipt is only the fallback. El esquema `credit_note` no cambia · The `credit_note` schema does not change.
+- Abierto · Left open: si una venta sobre 135 UF en una tienda `payment_receipt` debe llevar boleta no se responde en esta versión · whether a sale above 135 UF at a `payment_receipt` business must carry a boleta is not answered in this version.
+- Ejemplos · Examples: `order-payment-receipt.json`, `profile-payment-receipt.json`. `tools/validate.py` comprueba que `issuance_model` no sea una lista cerrada · checks that `issuance_model` is not a closed list.
+
 ## 2026-10-16 · Propuesta abierta · Open proposal
 
 Nueva versión de `cl.comercioia.shopping.tax_document`, sobre la `2026-10-15`. Solo agrega campos opcionales: todo lo válido en `2026-10-15` sigue siendo válido. `consumer_terms`, `credit_note` y los medios de pago siguen en `2026-10-15`, y las versiones `2026-10-09` y `2026-10-15` de `tax_document` siguen publicadas sin cambios.

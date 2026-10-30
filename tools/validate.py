@@ -151,6 +151,28 @@ for fname in ("order-boleta-135uf.json", "order-factura.json"):
             fail(f"{fname}: a boleta above 135 UF must carry the buyer's RUT and the payment method")
 
 
+pr = ex("order-payment-receipt.json")
+check(TD, "payment_receipt", pr["payment_receipt"], "order-payment-receipt.payment_receipt")
+rejects(TD, "payment_receipt", {"operator": "mercadopago"}, "payment receipt without amount_clp")
+rejects(TD, "payment_receipt", {"amount_clp": 38990}, "payment receipt without operator")
+if "tax_documents" in pr:
+    fail("order-payment-receipt: a sale carries the receipt or a boleta, not both")
+
+prof_pr = ex("profile-payment-receipt.json")["ucp"]
+cfg = prof_pr["capabilities"][TD][0].get("config", {})
+check(TD, "tax_document_config", cfg, "profile-payment-receipt.tax_document.config")
+check(TD, "tax_document_config", {"issuance_model": "always_boleta"}, "tax_document_config always_boleta")
+check(TD, "tax_document_config", {"issuance_model": "a_future_model"}, "tax_document_config with an unknown issuance_model (open vocabulary)")
+check(TD, "tax_document_config", {}, "tax_document_config empty")
+im = schemas[TD][0]["$defs"]["tax_document_config"]["properties"]["issuance_model"]
+if "enum" in im or "const" in im or schemas[TD][0]["$defs"]["tax_document_config"].get("additionalProperties") is False:
+    fail("issuance_model must not be a closed enum")
+else:
+    print("ok   issuance_model is not a closed enum")
+if schemas[TD][0]["version"] != "2026-10-30":
+    fail(f"latest tax_document is {schemas[TD][0]['version']}, expected 2026-10-30")
+
+
 # 4: RUT check digits
 def dv(body):
     s, m = 0, 2
@@ -168,14 +190,19 @@ for path in sorted(glob.glob(os.path.join(EXAMPLES, "*.json"))):
             fail(f"{os.path.basename(path)}: RUT {rut} has a wrong check digit (expected {dv(body)})")
 
 # 5: profile URLs
-prof = ex("profile.json")["ucp"]
-for section in ("capabilities", "payment_handlers"):
-    for name, decls in prof[section].items():
-        if name in schemas:
-            for d in decls:
-                want = schemas[name][0]["$id"]
-                if d.get("schema") != want:
-                    fail(f"profile.{section}.{name}: schema {d.get('schema')} != {want}")
+for pname in ("profile.json", "profile-payment-receipt.json"):
+    prof = ex(pname)["ucp"]
+    for section in ("capabilities", "payment_handlers"):
+        for name, decls in prof[section].items():
+            if name in schemas:
+                for d in decls:
+                    # A profile may declare any published version; profile-payment-receipt.json must declare the latest.
+                    want = schemas[name][0]["$id"]
+                    ok = d.get("schema") == want if pname != "profile.json" else (
+                        str(d.get("schema", "")).startswith("https://comercioia.cl/")
+                        and os.path.exists(os.path.join(SITE, d["schema"][len("https://comercioia.cl/"):])))
+                    if not ok:
+                        fail(f"{pname}.{section}.{name}: schema {d.get('schema')} != {want}")
 
 print()
 if errors:
