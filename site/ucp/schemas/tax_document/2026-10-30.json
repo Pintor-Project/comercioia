@@ -4,7 +4,7 @@
   "name": "cl.comercioia.shopping.tax_document",
   "version": "2026-10-30",
   "title": "Chilean Tax Document (boleta / factura)",
-  "description": "OPEN PROPOSAL, ready to implement and open for comment. Not yet stable: fields may change before the first stable release. Lets the buyer choose a boleta or a factura at checkout (according to the operation and the buyer's tax status, subject to the legal requirements of the document) and returns the SII electronic tax documents (DTE) issued for the order. Amounts are integer CLP (CLP has no minor unit). Version 2026-10-30 adds the declaration of how the business documents its sales (issuance_model) and the electronic payment receipt as the document of a sale: under art. 54 of the Ley del IVA and SII Res. Ex. 176/2020 the receipt of an electronic payment has the value of a boleta for all legal purposes. It only adds optional fields and prose to 2026-10-16. Spec: https://comercioia.cl/spec/#tax-document",
+  "description": "OPEN PROPOSAL, ready to implement and open for comment. Not yet stable: fields may change before the first stable release. Lets the buyer choose a boleta or a factura at checkout (according to the operation and the buyer's tax status, subject to the legal requirements of the document) and returns the SII electronic tax documents (DTE) issued for the order. Amounts are integer CLP (CLP has no minor unit). Version 2026-10-30 adds the declaration of how the business documents its sales (issuance_model) and the electronic payment receipt as the document of a sale: under SII Res. Ex. 176/2020, which applies art. 54 of the Ley del IVA, the receipt of an electronic payment has the value of a boleta for all legal purposes. It only adds optional fields and prose to 2026-10-16. Spec: https://comercioia.cl/spec/#tax-document",
   "requires": {
     "protocol": { "min": "2026-08-25" },
     "capabilities": {
@@ -160,18 +160,18 @@
     },
     "tax_document_config": {
       "type": "object",
-      "description": "Business configuration of the extension: the content of the config member of the tax_document entry in the business profile (capabilities). The business declares it; it is not verified against the SII.",
+      "description": "Business configuration of the extension: documents the shape of the config member of the tax_document entry in the business profile (capabilities). The capability entry does not enforce this $ref. The business declares it; it is not verified against the SII.",
       "properties": {
         "issuance_model": {
           "type": "string",
-          "description": "The emission model the business declared to the SII. 'payment_receipt': the receipt of an electronic payment replaces the boleta for electronic payments (art. 54 of the Ley del IVA; SII Res. Ex. 176/2020); cash and bank transfers between accounts still need a boleta. 'always_boleta': the business issues a boleta for every sale, even when it receives an electronic payment. Issuing both documents for one sale duplicates the Registro de Ventas. Open vocabulary: receivers MUST treat unknown values as unknown and not assume a boleta.",
+          "description": "The emission model the business declared to the SII. 'payment_receipt': the receipt of an electronic payment replaces the boleta for electronic payments (SII Res. Ex. 176/2020, applying art. 54 of the Ley del IVA); cash and bank transfers between accounts still need a boleta. 'always_boleta': the business issues a boleta for every sale, even when it receives an electronic payment. Issuing both documents for one sale duplicates the Registro de Ventas. Open vocabulary: receivers MUST treat unknown values as unknown and not assume a boleta.",
           "examples": ["payment_receipt", "always_boleta"]
         }
       }
     },
     "payment_receipt": {
       "type": "object",
-      "description": "The electronic payment receipt that is the document of a sale at a business whose issuance_model is payment_receipt. It has the value of a boleta de ventas y servicios for all legal purposes (art. 54 of the Ley del IVA; SII Res. Ex. 176/2020, whose terminal definition includes internet sales). It is not a DTE and has no folio. In the Registro de Ventas it is a line with SII code 48, which is not a DTE type. A refund is annulled through the payment terminal; a credit note (DTE 61) identifying the receipt is only the fallback. Whether a sale above 135 UF (SII Res. Ex. 44/2025) at a payment_receipt business must carry a boleta is left open by this version.",
+      "description": "The electronic payment receipt that is the document of a sale at a business whose issuance_model is payment_receipt. It has the value of a boleta de ventas y servicios for all legal purposes (SII Res. Ex. 176/2020, which applies art. 54 of the Ley del IVA and whose terminal definition includes internet sales). It is not a DTE and has no folio. In the Registro de Ventas it is a line with SII code 48, which is not a DTE type. A refund is annulled through the payment terminal; a credit note (DTE 61) identifying the receipt is only the fallback. Whether a sale above 135 UF (SII Res. Ex. 44/2025) at a payment_receipt business must carry a boleta is left open by this version.",
       "required": ["operator", "amount_clp"],
       "properties": {
         "operator": {
@@ -192,7 +192,7 @@
         "amount_clp": {
           "type": "integer",
           "minimum": 0,
-          "description": "Amount of the receipt in integer CLP, VAT included."
+          "description": "Total of the receipt in integer CLP."
         }
       }
     },

@@ -6,7 +6,7 @@
 
 - [Especificación (español)](https://comercioia.cl/spec/): full specification
 - [Specification (English)](https://comercioia.cl/en/spec/): full specification
-- [Guía de cumplimiento](https://comercioia.cl/cumplimiento/): seven Chilean tax and consumer rules for AI sales, with official sources (rules 1 to 6 reviewed as of 15 October 2026, rule 7 as of 30 October 2026)
+- [Guía de cumplimiento](https://comercioia.cl/cumplimiento/): seven Chilean tax and consumer rules for AI sales, with official sources (rules 1 to 6 reviewed as of 15 October 2026; rule 7 added on 30 October 2026, pending legal review)
 - [Compliance guide (English)](https://comercioia.cl/en/compliance/)
 
 ## Schemas
