@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Compliance guide · Comercio IA</title>
-<meta name="description" content="Six Chilean tax and consumer-protection rules every AI agent must respect when selling, each with its official source.">
+<meta name="description" content="Seven Chilean tax and consumer-protection rules every AI agent must respect when selling, each with its official source.">
 <link rel="alternate" hreflang="es-CL" href="https://comercioia.cl/cumplimiento/">
 <link rel="alternate" hreflang="en" href="https://comercioia.cl/en/compliance/">
 <link rel="alternate" hreflang="x-default" href="https://comercioia.cl/cumplimiento/">
@@ -13,7 +13,7 @@
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Comercio IA">
 <meta property="og:title" content="Compliance guide · Comercio IA">
-<meta property="og:description" content="Six Chilean tax and consumer-protection rules every AI agent must respect when selling, each with its official source.">
+<meta property="og:description" content="Seven Chilean tax and consumer-protection rules every AI agent must respect when selling, each with its official source.">
 <meta property="og:url" content="https://comercioia.cl/en/compliance/">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="es_CL">
@@ -24,7 +24,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","@id":"https://comercioia.cl/en/compliance/","url":"https://comercioia.cl/en/compliance/","name":"Compliance guide · Comercio IA","description":"Six Chilean tax and consumer-protection rules every AI agent must respect when selling, each with its official source.","inLanguage":"en","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"},"headline":"Compliance guide","datePublished":"2026-10-09","dateModified":"2026-10-16","author":{"@id":"https://comercioia.cl/#org"},"license":"https://www.apache.org/licenses/LICENSE-2.0"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","@id":"https://comercioia.cl/en/compliance/","url":"https://comercioia.cl/en/compliance/","name":"Compliance guide · Comercio IA","description":"Seven Chilean tax and consumer-protection rules every AI agent must respect when selling, each with its official source.","inLanguage":"en","isPartOf":{"@id":"https://comercioia.cl/#website"},"publisher":{"@id":"https://comercioia.cl/#org"},"headline":"Compliance guide","datePublished":"2026-10-09","dateModified":"2026-10-30","author":{"@id":"https://comercioia.cl/#org"},"license":"https://www.apache.org/licenses/LICENSE-2.0"}]}</script>
 <script src="/assets/site.js" defer></script>
 <!-- /seo -->
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -59,15 +59,16 @@
       <li><a href="#factura-acceptance">04 · Factura: the buyer accepts or claims within 8 days</a></li>
       <li><a href="#ai-notice">05 · When an AI sells, the consumer must know</a></li>
       <li><a href="#withdrawal-exclusions">06 · For goods, withdrawal can be excluded in only four cases, disclosed next to the price</a></li>
+      <li><a href="#payment-receipt">07 · The receipt of an electronic payment can count as the boleta</a></li>
     </ol>
   </nav>
 
   <main id="main" class="spec-body">
     <section id="intro">
-      <p class="status">Based on official sources · reviewed as of 15 October 2026</p>
-      <h1>Compliance guide<span class="sub">Six Chilean rules every AI agent must respect when selling.</span></h1>
+      <p class="status">Based on official sources · rules 1 to 6 reviewed as of 15 October 2026; rule 7 added on 30 October 2026, pending legal review</p>
+      <h1>Compliance guide<span class="sub">Seven Chilean rules every AI agent must respect when selling.</span></h1>
       <p class="lede">Tax and consumer-protection rules that Comercio IA applies, each with its official source from the SII, SERNAC or the law.</p>
-      <p class="warn">This guide summarises tax and consumer-protection rules relevant to implementing Comercio IA in Chile, reviewed as of 15 October 2026. Their application depends on the operation and on each participant's role. It does not replace the analysis of a specific implementation.</p>
+      <p class="warn">This guide summarises tax and consumer-protection rules relevant to implementing Comercio IA in Chile. Rules 1 to 6 were reviewed as of 15 October 2026; rule 7 was added on 30 October 2026 and has not yet been legally reviewed. Their application depends on the operation and on each participant's role. It does not replace the analysis of a specific implementation.</p>
     </section>
 
     <section id="one-hour">
@@ -151,6 +152,22 @@
       <ul>
           <li><a href="https://www.diariooficial.interior.gob.cl/publicaciones/2024/08/27/43935/01/2535265.pdf">DS No. 52 of 2022, Ministry of Economy (Diario Oficial 27-08-2024)</a></li>
           <li><a href="https://www.sernac.cl/portal/618/articles-84774_archivo_01.pdf">SERNAC Res. Ex. No. 272 of 2025</a></li>
+      </ul>
+    </section>
+
+    <section id="payment-receipt">
+      <h2>07. The receipt of an electronic payment can count as the boleta</h2>
+      <p>SII Res. Ex. 176/2020 (resolutive 1°), applying art. 54 of the Ley del IVA (DL 825), gives the receipt of an electronic payment <span lang="es">“el valor de boleta de ventas y servicios para todos los efectos legales”</span>, and the resolution's terminal definition includes <span lang="es">“ventas por internet”</span>. Each taxpayer declares one of two emission models to the SII (per the <a href="https://www.sii.cl/destacados/boleta_electronica_voucher/index.html">SII page on the electronic payment voucher</a>): the receipt replaces the boleta for electronic payments, or the taxpayer always issues a boleta even when it receives an electronic payment.</p>
+      <p>Cash sales and bank transfers between accounts always need a boleta. Issuing both a boleta and the receipt for one sale duplicates the Registro de Ventas. A refund is annulled through the payment terminal; a credit note identifying the receipt is only the fallback. Whether a sale above 135 UF at a store that uses the receipt must carry a boleta is not answered here.</p>
+      <dl class="kv">
+        <dt>What it means for an AI sale</dt><dd>The agent does not promise a boleta the store may not issue: it tells the buyer the document the store declared. The store states its model; it is not verified against the SII.</dd>
+        <dt>In the standard</dt><dd><code>issuance_model</code> and <code>payment_receipt</code>, from version 2026-10-30 (see <a href="/en/spec/#payment-receipt">The payment receipt as the document</a>)</dd>
+      </dl>
+      <h3>Sources</h3>
+      <ul>
+          <li><a href="https://www.sii.cl/normativa_legislacion/resoluciones/2020/reso176.pdf">SII Res. Ex. No. 176 of 2020</a></li>
+          <li>DL 825 (Ley del IVA), art. 54</li>
+          <li><a href="https://www.sii.cl/destacados/boleta_electronica_voucher/index.html">SII, electronic payment voucher (the two emission models)</a></li>
       </ul>
     </section>
 

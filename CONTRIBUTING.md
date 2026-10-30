@@ -2,9 +2,9 @@
 
 ## Comentarios · Comments
 
-El periodo de comentarios de la versión `2026-10-16` (sobre la `2026-10-15`, que corrige a la `2026-10-09`) está abierto hasta el **30 de noviembre de 2026**. Abre un issue con la plantilla «Comentario». Todo comentario recibe respuesta antes de la versión estable.
+El periodo de comentarios de la versión `2026-10-30` (sobre la `2026-10-16`, que se apoya en la `2026-10-15`, que corrige a la `2026-10-09`) está abierto hasta el **30 de noviembre de 2026**. Abre un issue con la plantilla «Comentario». Todo comentario recibe respuesta antes de la versión estable.
 
-The comment period for version `2026-10-16` (built on `2026-10-15`, which corrects `2026-10-09`) is open until **30 November 2026**. Open an issue with the "Comentario" template. Every comment gets an answer before the stable release.
+The comment period for version `2026-10-30` (built on `2026-10-16`, which builds on `2026-10-15`, which corrects `2026-10-09`) is open until **30 November 2026**. Open an issue with the "Comentario" template. Every comment gets an answer before the stable release.
 
 ## Cambios · Changes
 

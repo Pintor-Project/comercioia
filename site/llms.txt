@@ -1,17 +1,17 @@
 # Comercio IA
 
-> The open Chilean extension for UCP (Universal Commerce Protocol) and ACP (Agentic Commerce Protocol). It adds what Chilean law requires and the standards don't cover, so any AI agent can complete a legal sale in Chile: an SII boleta or factura (according to the operation and the buyer's tax status), the right of withdrawal (retracto), the legal warranty, credit notes (DTE 61) and Chilean payment methods (Oneclick Mall is a proposal). Open proposal, version 2026-10-16 (supersedes 2026-10-15 and 2026-10-09, which stay published), Apache-2.0. Namespace `cl.comercioia.*`. Requires UCP 2026-08-25.
+> The open Chilean extension for UCP (Universal Commerce Protocol) and ACP (Agentic Commerce Protocol). It adds what Chilean law requires and the standards don't cover, so any AI agent can complete a legal sale in Chile: an SII boleta or factura (according to the operation and the buyer's tax status), the right of withdrawal (retracto), the legal warranty, credit notes (DTE 61) and Chilean payment methods (Oneclick Mall is a proposal). Open proposal, version 2026-10-30 (supersedes 2026-10-16, 2026-10-15 and 2026-10-09, which stay published), Apache-2.0. Namespace `cl.comercioia.*`. Requires UCP 2026-08-25.
 
 ## Specification
 
 - [Especificación (español)](https://comercioia.cl/spec/): full specification
 - [Specification (English)](https://comercioia.cl/en/spec/): full specification
-- [Guía de cumplimiento](https://comercioia.cl/cumplimiento/): six Chilean tax and consumer rules for AI sales, with official sources (reviewed as of 15 October 2026)
+- [Guía de cumplimiento](https://comercioia.cl/cumplimiento/): seven Chilean tax and consumer rules for AI sales, with official sources (rules 1 to 6 reviewed as of 15 October 2026; rule 7 added on 30 October 2026, pending legal review)
 - [Compliance guide (English)](https://comercioia.cl/en/compliance/)
 
 ## Schemas
 
-- [cl.comercioia.shopping.tax_document](https://comercioia.cl/ucp/schemas/tax_document/2026-10-16.json): boleta or factura at checkout, with B2B references (purchase order, HES) and buyer identification above 135 UF; SII documents on the order (previous: [2026-10-15](https://comercioia.cl/ucp/schemas/tax_document/2026-10-15.json))
+- [cl.comercioia.shopping.tax_document](https://comercioia.cl/ucp/schemas/tax_document/2026-10-30.json): boleta or factura at checkout, with B2B references (purchase order, HES), buyer identification above 135 UF, the business's declared emission model (`issuance_model`) and the electronic payment receipt as the document of a sale; SII documents on the order (previous: [2026-10-16](https://comercioia.cl/ucp/schemas/tax_document/2026-10-16.json), [2026-10-15](https://comercioia.cl/ucp/schemas/tax_document/2026-10-15.json))
 - [cl.comercioia.shopping.consumer_terms](https://comercioia.cl/ucp/schemas/consumer_terms/2026-10-15.json): seller identity, AI notice, delivery, installments, written confirmation; retracto and legal warranty policies
 - [cl.comercioia.shopping.credit_note](https://comercioia.cl/ucp/schemas/credit_note/2026-10-15.json): credit note on every order adjustment
 - [cl.comercioia.webpay_plus](https://comercioia.cl/ucp/handlers/webpay_plus/2026-10-15.json): Webpay Plus (Transbank)
