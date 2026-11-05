@@ -109,12 +109,12 @@ A11Y_ICON = ('<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"
 
 def masthead(lang, current):
     if lang == "es":
-        links = [("/spec/", "Especificación", "spec"), ("/spec/#esquemas", "Esquemas", "schemas"), ("/cumplimiento/", "Cumplimiento", "compliance"), ("/#participa", "Participa", "join")]
-        other = {"spec": "/en/spec/", "compliance": "/en/compliance/", "privacy": "/en/privacy/", "accessibility": "/en/accessibility/"}.get(current, "/en/")
+        links = [("/spec/", "Especificación", "spec"), ("/spec/#esquemas", "Esquemas", "schemas"), ("/cumplimiento/", "Cumplimiento", "compliance"), ("/#participa", "Participa", "join"), ("/prensa/", "Prensa", "press")]
+        other = {"spec": "/en/spec/", "compliance": "/en/compliance/", "privacy": "/en/privacy/", "accessibility": "/en/accessibility/", "press": "/en/press/"}.get(current, "/en/")
         home, other_label, other_lang = "/", "English", "en"
     else:
-        links = [("/en/spec/", "Specification", "spec"), ("/en/spec/#schemas", "Schemas", "schemas"), ("/en/compliance/", "Compliance", "compliance"), ("/en/#participate", "Participate", "join")]
-        other = {"spec": "/spec/", "compliance": "/cumplimiento/", "privacy": "/privacidad/", "accessibility": "/accesibilidad/"}.get(current, "/")
+        links = [("/en/spec/", "Specification", "spec"), ("/en/spec/#schemas", "Schemas", "schemas"), ("/en/compliance/", "Compliance", "compliance"), ("/en/#participate", "Participate", "join"), ("/en/press/", "Press", "press")]
+        other = {"spec": "/spec/", "compliance": "/cumplimiento/", "privacy": "/privacidad/", "accessibility": "/accesibilidad/", "press": "/prensa/"}.get(current, "/")
         home, other_label, other_lang = "/en/", "Español", "es-CL"
     cur = ' aria-current="page"'
     a11y_label = "Ajustes de accesibilidad" if lang == "es" else "Accessibility settings"
@@ -137,7 +137,7 @@ def footer(lang):
         return '''<footer class="footer">
   <div class="wrap">
     <p>Iniciativa abierta impulsada por <a href="https://pintorproject.cl">Pintor Project</a>. Implementación de referencia: <a href="https://synaptiktech.com/es/product/checkout-ia">Synaptik Checkout IA</a>, producto comercial de Pintor Project.</p>
-    <p><a href="/spec/">Especificación</a> · <a href="/spec/#esquemas">Esquemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
+    <p><a href="/spec/">Especificación</a> · <a href="/spec/#esquemas">Esquemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="/prensa/">Prensa</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
     <p class="links"><a href="/privacidad/">Privacidad</a> <a href="/accesibilidad/">Accesibilidad</a> <button type="button" class="linkish" data-cookie-settings hidden>Preferencias de cookies</button></p>
     <p class="legal">Especificación y esquemas bajo licencia Apache-2.0. No es asesoría legal. Comercio IA no está afiliado a Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu, el SII ni el SERNAC, ni cuenta con su respaldo; las marcas pertenecen a sus dueños.</p>
   </div>
@@ -145,7 +145,7 @@ def footer(lang):
     return '''<footer class="footer">
   <div class="wrap">
     <p>An open initiative led by <a href="https://pintorproject.cl">Pintor Project</a>. Reference implementation: <a href="https://synaptiktech.com/en/product/checkout-ia">Synaptik Checkout IA</a>, a commercial product of Pintor Project.</p>
-    <p><a href="/en/spec/">Specification</a> · <a href="/en/spec/#schemas">Schemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
+    <p><a href="/en/spec/">Specification</a> · <a href="/en/spec/#schemas">Schemas</a> · <a href="https://github.com/Pintor-Project/comercioia">GitHub</a> · <a href="/en/press/">Press</a> · <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a></p>
     <p class="links"><a href="/en/privacy/">Privacy</a> <a href="/en/accessibility/">Accessibility</a> <button type="button" class="linkish" data-cookie-settings hidden>Cookie preferences</button></p>
     <p class="legal">Specification and schemas under the Apache-2.0 license. Not legal advice. Comercio IA is not affiliated with or endorsed by Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu, the SII or SERNAC; trademarks belong to their owners.</p>
   </div>
@@ -567,7 +567,8 @@ def landing(lang):
         T.update(
             title="Comercio IA · La extensión chilena abierta para UCP y ACP",
             desc="Boleta, retracto, garantía legal, notas de crédito y medios de pago chilenos para que cualquier agente de IA cierre una venta legal en Chile, sobre UCP y ACP.",
-            label="Propuesta abierta · versión 2026-10-30",
+            label="Propuesta abierta · versión 2026-10-30 · impulsada por Pintor Project",
+            comment='Abierta a comentarios hasta el 30 de noviembre de 2026. <a href="https://github.com/Pintor-Project/comercioia/issues/new/choose">Comenta en GitHub</a> o escribe a <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a>.',
             h1="Comercio IA", h1sub="Boletas o facturas según la operación y la calidad tributaria del comprador. Para cualquier agente de IA.",
             lead="Cuando un asistente de IA vende por una tienda chilena, la venta tiene que cumplir la ley: boleta o factura del SII, derecho a retracto, garantía legal y medios de pago locales. La elección en el checkout está sujeta a los requisitos legales del documento. Comercio IA son las reglas abiertas para hacerlo, como complemento de los estándares de compra por IA de Google, Shopify, OpenAI y Stripe.",
             cta="Leer la especificación", cta_href="/spec/", alt_link="Ver una compra paso a paso", alt_href="#demo",
@@ -580,7 +581,8 @@ def landing(lang):
         T.update(
             title="Comercio IA · The open Chilean extension for UCP and ACP",
             desc="Chilean tax receipts, withdrawal rights, legal warranty, credit notes and payment methods, so any AI agent can make a legal sale in Chile. On UCP and ACP.",
-            label="Open proposal · version 2026-10-30",
+            label="Open proposal · version 2026-10-30 · led by Pintor Project",
+            comment='Open for comment until 30 November 2026. <a href="https://github.com/Pintor-Project/comercioia/issues/new/choose">Comment on GitHub</a> or write to <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a>.',
             h1="Comercio IA", h1sub="Boletas or facturas according to the operation and the buyer's tax status. For any AI agent.",
             lead="When an AI assistant sells on behalf of a Chilean store, the sale has to follow Chilean law: an SII tax receipt (boleta or factura), the right of withdrawal, the legal warranty and local payment methods. Comercio IA is the open set of rules to do that, as an add-on to the AI shopping standards from Google, Shopify, OpenAI and Stripe.",
             cta="Read the specification", cta_href="/en/spec/", alt_link="See a purchase step by step", alt_href="#demo",
@@ -699,6 +701,7 @@ def landing(lang):
             <a class="btn" href="{T["cta_href"]}">{T["cta"]} <span aria-hidden="true">→</span></a>
             <a class="btn ghost" href="{T["alt_href"]}">{T["alt_link"]}</a>
           </div>
+          <p class="hero-note">{T["comment"]}</p>
         </div>
         {hero_art(lang, version)}
       </div>
@@ -957,6 +960,138 @@ DOCS = {
         ]),
 }
 
+# ---------------------------------------------------------------- press pages
+# Filled in on the day of the announcement, with Tomás's approval of the quote and the bio.
+PRESS_DATE = {"es": "[fecha del anuncio]", "en": "[announcement date]"}
+SPOKES_ROLE = {"es": "[cargo]", "en": "[role]"}
+SPOKES_BIO = {"es": "[Biografía breve de Tomás Stevanovic, por completar.]", "en": "[Short bio of Tomás Stevanovic, to be completed.]"}
+GH = "https://github.com/Pintor-Project/comercioia"
+GH_COMMENT = GH + "/issues/new/choose"
+NOT_AFFILIATED = {
+    "es": "Comercio IA no está afiliado a Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu, el SII ni el SERNAC, ni cuenta con su respaldo; las marcas pertenecen a sus dueños.",
+    "en": "Comercio IA is not affiliated with or endorsed by Google, Shopify, OpenAI, Stripe, Transbank, Mercado Pago, Getnet, Khipu, the SII or SERNAC; trademarks belong to their owners.",
+}
+
+DOCS[("es", "press")] = dict(
+    path="prensa/index.html", url=BASE + "/prensa/", alt=BASE + "/en/press/",
+    title="Prensa · Comercio IA",
+    desc="Información para medios sobre Comercio IA: qué es, datos clave, comunicado de prensa, vocero, logos y contacto.",
+    status="Kit de prensa", h1="Prensa", sub="Comercio IA en pocas palabras.",
+    lede="Información para periodistas y medios. Puedes usar los textos y las imágenes de esta página citando a Comercio IA o a Pintor Project.",
+    sections=[
+        ("resumen", "En pocas palabras",
+         "<p>Los asistentes de IA, como ChatGPT o Gemini, ya pueden buscar productos en una tienda en línea, armar el carro y pagar por cuenta de una persona. "
+         "Para que eso funcione en cualquier tienda, Google y Shopify publicaron un estándar abierto, el Universal Commerce Protocol (UCP), y OpenAI y Stripe otro, el Agentic Commerce Protocol (ACP). "
+         "Los dos fueron pensados para Estados Unidos y no incluyen lo que necesita una venta en Chile: la boleta o factura del SII, el derecho a retracto, la garantía legal, las notas de crédito y los medios de pago chilenos.</p>"
+         "<p>Comercio IA es una extensión abierta y gratuita de esos dos estándares que agrega esas piezas. "
+         "Cualquier tienda, plataforma de comercio electrónico o asistente de IA la puede usar sin pedir permiso. "
+         "La impulsa Pintor Project, empresa chilena de software, y está abierta a comentarios hasta el 30 de noviembre de 2026.</p>"),
+        ("datos", "Datos clave",
+         '<dl class="kv">'
+         "<dt>Qué es</dt><dd>Una extensión abierta de UCP (Universal Commerce Protocol) y ACP (Agentic Commerce Protocol), los estándares para que asistentes de IA compren en tiendas en línea.</dd>"
+         "<dt>Qué agrega</dt><dd>Boleta o factura del SII, derecho a retracto, garantía legal, notas de crédito y los medios de pago Webpay Plus, Oneclick Mall (propuesto), Mercado Pago, Getnet y Khipu.</dd>"
+         "<dt>Quién la impulsa</dt><dd>Pintor Project SpA, Santiago de Chile.</dd>"
+         "<dt>Licencia</dt><dd>Apache-2.0. Es gratuita y cualquiera la implementa sin pedir permiso.</dd>"
+         "<dt>Publicada</dt><dd>9 de octubre de 2026.</dd>"
+         "<dt>Estado</dt><dd>Propuesta abierta, versión <code>2026-10-30</code>.</dd>"
+         f'<dt>Comentarios</dt><dd>Abiertos hasta el 30 de noviembre de 2026, en <a href="{GH_COMMENT}">GitHub</a> o en <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a>.</dd>'
+         '<dt>Versión estable</dt><dd>Prevista para enero de 2027, al cumplir el <a href="/#participa">camino a la 1.0</a>.</dd>'
+         f'<dt>Enlaces</dt><dd><a href="/">comercioia.cl</a> · <a href="/spec/">Especificación</a> · <a href="{GH}">Código en GitHub</a></dd>'
+         "</dl>"
+         f'<p class="dim">{NOT_AFFILIATED["es"]}</p>'),
+        ("comunicado", "Comunicado de prensa",
+         "<h3>Pintor Project publica Comercio IA, una extensión abierta para que los asistentes de IA vendan en Chile con boleta, retracto y medios de pago locales</h3>"
+         "<p><em>La propuesta, gratuita y de código abierto, recibe comentarios de tiendas, plataformas, medios de pago y desarrolladores hasta el 30 de noviembre de 2026.</em></p>"
+         f"<p>Santiago, {PRESS_DATE['es']}. Pintor Project, empresa chilena de software, publicó Comercio IA (comercioia.cl), una extensión abierta de los estándares con que los asistentes de inteligencia artificial compran en tiendas en línea por cuenta de las personas. "
+         "La extensión agrega lo que una venta en Chile necesita y esos estándares no incluyen: la boleta o factura del Servicio de Impuestos Internos (SII), el derecho a retracto, la garantía legal, las notas de crédito y los medios de pago chilenos.</p>"
+         "<p>Asistentes como ChatGPT, Gemini o Claude ya pueden buscar productos, armar un carro y pagar. Para que funcionen en cualquier tienda, Google y Shopify publicaron el Universal Commerce Protocol (UCP), y OpenAI y Stripe el Agentic Commerce Protocol (ACP). "
+         "Son reglas públicas y gratuitas que siguen tanto las tiendas como los asistentes. Fueron pensadas para Estados Unidos, así que no piden boleta ni factura, no informan el derecho a retracto y no conocen Webpay, Mercado Pago, Getnet ni Khipu.</p>"
+         "<p>Con Comercio IA, el asistente pide boleta o factura al crear la compra, el comprador recibe los avisos legales antes de pagar y el pago llega a la cuenta de la propia tienda. "
+         "El pedido vuelve con el folio del documento y su estado en el SII, y cada devolución o retracto queda con su nota de crédito. "
+         "Un asistente que todavía no conoce la extensión sigue funcionando, y los avisos legales igual le llegan.</p>"
+         f"<p>«Las compras hechas por asistentes de IA van a llegar a las tiendas chilenas. Queremos que lleguen con su boleta, con el derecho a retracto y con los medios de pago que la gente ya usa. Por eso la publicamos abierta y pedimos a tiendas, plataformas, medios de pago y desarrolladores que la revisen antes de la versión estable», dijo Tomás Stevanovic, {SPOKES_ROLE['es']} de Pintor Project.</p>"
+         f'<p>La versión actual es una propuesta abierta. Los comentarios se reciben hasta el 30 de noviembre de 2026 en el repositorio público <a href="{GH}">github.com/Pintor-Project/comercioia</a> o en <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a>, y todos reciben respuesta. '
+         "La primera versión estable está prevista para enero de 2027, cuando se cumplan cinco condiciones publicadas en el sitio, entre ellas las primeras ventas reales con boleta, factura y retracto, y una revisión legal y validación externa. "
+         "Pintor Project prepara además Synaptik Checkout IA, su producto comercial y la implementación de referencia de la extensión.</p>"
+         "<p><strong>Sobre Pintor Project.</strong> Pintor Project SpA es una empresa chilena de software, con sede en Santiago, que desarrolla software para empresas desde 2007 y hoy se centra en sistemas de inteligencia artificial.</p>"
+         f'<p class="dim">{NOT_AFFILIATED["es"]}</p>'
+         '<p>Contacto de prensa: Tomás Stevanovic, <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a>.</p>'),
+        ("vocero", "Vocero",
+         f"<p><strong>Tomás Stevanovic</strong>, {SPOKES_ROLE['es']} de Pintor Project.</p>"
+         f"<p>{SPOKES_BIO['es']}</p>"
+         "<p>Entrevistas en español e inglés, a <a href=\"mailto:contacto@comercioia.cl\">contacto@comercioia.cl</a>.</p>"),
+        ("imagenes", "Logos e imágenes",
+         "<p>Puedes usar estas imágenes en notas sobre Comercio IA, sin cambiar sus colores ni sus proporciones.</p>"
+         "<ul>"
+         '<li><a href="/assets/prensa/comercioia-logo.svg" download>Logo (SVG)</a> · <a href="/assets/prensa/comercioia-logo.png" download>Logo (PNG, fondo blanco)</a></li>'
+         '<li><a href="/assets/og-es.png" download>Imagen para notas, en español (PNG, 1200 × 630)</a></li>'
+         '<li><a href="/assets/og-en.png" download>Imagen para notas, en inglés (PNG, 1200 × 630)</a></li>'
+         "</ul>"),
+        ("contacto", "Contacto",
+         '<p>Escribe a <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a> para entrevistas, datos o imágenes.</p>'),
+    ],
+)
+
+DOCS[("en", "press")] = dict(
+    path="en/press/index.html", url=BASE + "/en/press/", alt=BASE + "/prensa/",
+    title="Press · Comercio IA",
+    desc="Information for the media about Comercio IA: what it is, key facts, press release, spokesperson, logos and contact.",
+    status="Press kit", h1="Press", sub="Comercio IA in a few words.",
+    lede="Information for journalists and the media. You can use the texts and images on this page, crediting Comercio IA or Pintor Project.",
+    sections=[
+        ("summary", "In a few words",
+         "<p>AI assistants such as ChatGPT or Gemini can already search an online store, fill a cart and pay on a person's behalf. "
+         "So that this works in any store, Google and Shopify published an open standard, the Universal Commerce Protocol (UCP), and OpenAI and Stripe another, the Agentic Commerce Protocol (ACP). "
+         "Both were designed for the United States and leave out what a sale in Chile needs: the SII tax receipt (boleta or factura), the right of withdrawal, the legal warranty, credit notes and Chilean payment methods.</p>"
+         "<p>Comercio IA is an open, free extension of both standards that adds those pieces. "
+         "Any store, e-commerce platform or AI assistant can use it without asking. "
+         "It is led by Pintor Project, a Chilean software company, and is open for comment until 30 November 2026.</p>"),
+        ("facts", "Key facts",
+         '<dl class="kv">'
+         "<dt>What it is</dt><dd>An open extension of UCP (Universal Commerce Protocol) and ACP (Agentic Commerce Protocol), the standards for AI assistants that buy from online stores.</dd>"
+         "<dt>What it adds</dt><dd>SII tax receipts (boleta or factura), the right of withdrawal, the legal warranty, credit notes, and the payment methods Webpay Plus, Oneclick Mall (proposed), Mercado Pago, Getnet and Khipu.</dd>"
+         "<dt>Led by</dt><dd>Pintor Project SpA, Santiago, Chile.</dd>"
+         "<dt>License</dt><dd>Apache-2.0. It is free, and anyone can implement it without asking.</dd>"
+         "<dt>Published</dt><dd>9 October 2026.</dd>"
+         "<dt>Status</dt><dd>Open proposal, version <code>2026-10-30</code>.</dd>"
+         f'<dt>Comments</dt><dd>Open until 30 November 2026, on <a href="{GH_COMMENT}">GitHub</a> or at <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a>.</dd>'
+         '<dt>Stable release</dt><dd>Planned for January 2027, once the <a href="/en/#participate">path to 1.0</a> is complete.</dd>'
+         f'<dt>Links</dt><dd><a href="/en/">comercioia.cl</a> · <a href="/en/spec/">Specification</a> · <a href="{GH}">Code on GitHub</a></dd>'
+         "</dl>"
+         f'<p class="dim">{NOT_AFFILIATED["en"]}</p>'),
+        ("release", "Press release",
+         "<h3>Pintor Project publishes Comercio IA, an open extension so AI assistants can sell in Chile with tax receipts, withdrawal rights and local payment methods</h3>"
+         "<p><em>The free, open-source proposal takes comments from stores, platforms, payment providers and developers until 30 November 2026.</em></p>"
+         f"<p>Santiago, {PRESS_DATE['en']}. Pintor Project, a Chilean software company, has published Comercio IA (comercioia.cl), an open extension of the standards that AI assistants use to buy from online stores on people's behalf. "
+         "The extension adds what a sale in Chile needs and those standards leave out: the tax receipt (boleta or factura) from Chile's tax service (SII), the right of withdrawal, the legal warranty, credit notes and Chilean payment methods.</p>"
+         "<p>Assistants such as ChatGPT, Gemini or Claude can already search for products, fill a cart and pay. So that they work in any store, Google and Shopify published the Universal Commerce Protocol (UCP), and OpenAI and Stripe the Agentic Commerce Protocol (ACP). "
+         "These are public, free rules that both stores and assistants follow. They were designed for the United States, so they don't ask for a boleta or factura, don't tell the buyer about the right of withdrawal, and don't know Webpay, Mercado Pago, Getnet or Khipu.</p>"
+         "<p>With Comercio IA, the assistant asks for a boleta or factura when it creates the purchase, the buyer receives the legal notices before paying, and the payment goes to the store's own account. "
+         "The order comes back with the document's folio number and its status at the SII, and every return or withdrawal gets its credit note. "
+         "An assistant that doesn't know the extension yet keeps working, and the legal notices still reach it.</p>"
+         f"<p>“Purchases made by AI assistants are coming to Chilean stores. We want them to arrive with a proper tax receipt, with the right of withdrawal and with the payment methods people already use. That's why we published it openly and are asking stores, platforms, payment providers and developers to review it before the stable release,” said Tomás Stevanovic, {SPOKES_ROLE['en']} at Pintor Project.</p>"
+         f'<p>The current version is an open proposal. Comments are accepted until 30 November 2026 in the public repository <a href="{GH}">github.com/Pintor-Project/comercioia</a> or at <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a>, and every comment gets an answer. '
+         "The first stable release is planned for January 2027, once five conditions published on the site are met, including the first real sales with a boleta, a factura and a withdrawal, and a legal review and external validation. "
+         "Pintor Project is also preparing Synaptik Checkout IA, its commercial product and the extension's reference implementation.</p>"
+         "<p><strong>About Pintor Project.</strong> Pintor Project SpA is a Chilean software company based in Santiago. It has built software for businesses since 2007 and now focuses on artificial intelligence systems.</p>"
+         f'<p class="dim">{NOT_AFFILIATED["en"]}</p>'
+         '<p>Press contact: Tomás Stevanovic, <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a>.</p>'),
+        ("spokesperson", "Spokesperson",
+         f"<p><strong>Tomás Stevanovic</strong>, {SPOKES_ROLE['en']} at Pintor Project.</p>"
+         f"<p>{SPOKES_BIO['en']}</p>"
+         "<p>Interviews in Spanish and English, at <a href=\"mailto:contacto@comercioia.cl\">contacto@comercioia.cl</a>.</p>"),
+        ("images", "Logos and images",
+         "<p>You can use these images in coverage of Comercio IA, without changing their colours or proportions.</p>"
+         "<ul>"
+         '<li><a href="/assets/prensa/comercioia-logo.svg" download>Logo (SVG)</a> · <a href="/assets/prensa/comercioia-logo.png" download>Logo (PNG, white background)</a></li>'
+         '<li><a href="/assets/og-en.png" download>Image for articles, in English (PNG, 1200 × 630)</a></li>'
+         '<li><a href="/assets/og-es.png" download>Image for articles, in Spanish (PNG, 1200 × 630)</a></li>'
+         "</ul>"),
+        ("contact", "Contact",
+         '<p>Write to <a href="mailto:contacto@comercioia.cl">contacto@comercioia.cl</a> for interviews, facts or images.</p>'),
+    ],
+)
+
 def doc_page(lang, kind, d):
     es = lang == "es"
     toc = "\n".join(f'      <li><a href="#{i}">{h}</a></li>' for i, h, _ in d["sections"])
@@ -1020,7 +1155,7 @@ for rel, lang, cur in (("spec/index.html", "es", "spec"), ("en/spec/index.html",
 
 # ---------------------------------------------------------------- sitemap
 PAIRS = [("/", "/en/"), ("/spec/", "/en/spec/"), ("/cumplimiento/", "/en/compliance/"),
-         ("/privacidad/", "/en/privacy/"), ("/accesibilidad/", "/en/accessibility/")]
+         ("/privacidad/", "/en/privacy/"), ("/accesibilidad/", "/en/accessibility/"), ("/prensa/", "/en/press/")]
 urls = []
 for es_p, en_p in PAIRS:
     alts = (f'    <xhtml:link rel="alternate" hreflang="es-CL" href="{BASE}{es_p}"/>\n'
