@@ -219,7 +219,7 @@ INTRO = {
         h2='Cómo compra una IA, <span class="sub">y qué le falta en Chile.</span>',
         steps=[
             ("01", "Los asistentes de IA empiezan a comprar",
-             "ChatGPT, Gemini o Claude ya no solo recomiendan productos: pueden buscar en una tienda, armar el carro y llevar al cliente a pagar. Para eso, el asistente y la tienda tienen que hablar el mismo idioma."),
+             "ChatGPT, Gemini o Claude ya no solo recomiendan productos: pueden buscar en una tienda, armar el carro y llevar al cliente a pagar. Muse, el agente personal de Meta, ya hace compras con la aprobación de la persona en Estados Unidos y otros países, aunque todavía no en Chile. Para eso, el asistente y la tienda tienen que hablar el mismo idioma."),
             ("02", "Ese idioma ya existe: UCP y ACP",
              'Google y Shopify publicaron el <a href="https://ucp.dev">Universal Commerce Protocol (UCP)</a>; OpenAI y Stripe, el <a href="https://www.agenticcommerce.dev">Agentic Commerce Protocol (ACP)</a>. Son estándares abiertos: reglas públicas para que cualquier asistente pueda comprar en cualquier tienda, igual que una tarjeta funciona en cualquier máquina de pago.'),
             ("03", "Pero no conocen Chile",
@@ -227,10 +227,11 @@ INTRO = {
         ],
         terms_title="Palabras que vas a ver",
         terms=[
-            ("Agente de IA", "Un asistente como ChatGPT, Gemini o Claude que hace tareas por una persona, como buscar y comprar."),
+            ("Agente de IA", "Un asistente como ChatGPT, Gemini, Claude o Muse, de Meta, que hace tareas por una persona, como buscar y comprar."),
             ("Estándar o protocolo", "Reglas públicas y gratuitas que siguen todos los que quieren entenderse, como el formato de una factura electrónica."),
             ("Extensión", "Un agregado a un estándar para un caso que el estándar no cubre. Quien no la conoce sigue funcionando."),
             ("Esquema", "El archivo técnico que dice exactamente qué datos viajan y en qué formato. Es lo que leen los programadores."),
+            ("Otros estándares de agentes", 'El <a href="https://personalagentprotocol.org/">Personal Agent Protocol (PAP)</a>, de Meta y Sierra, define cómo un agente inicia sesión en una tienda y qué puede hacer por la persona. El <a href="https://ap2-protocol.org/">Agent Payments Protocol (AP2)</a>, de Google, define cómo la persona autoriza los pagos de su agente. Comercio IA se usa junto con ellos: agrega las reglas chilenas de la compra.'),
         ],
         who="Esta página es para quien implementa: plataformas de e-commerce, ERPs, proveedores de pago y equipos técnicos de tiendas. Si tienes una tienda y solo quieres vender por IA, tu plataforma o tu proveedor debería encargarse.",
     ),
@@ -238,7 +239,7 @@ INTRO = {
         h2='How AI shopping works, <span class="sub">and what Chile adds.</span>',
         steps=[
             ("01", "AI assistants are starting to shop",
-             "ChatGPT, Gemini and Claude no longer just recommend products: they can search a store, build a cart and take the buyer to pay. For that, the assistant and the store need to speak the same language."),
+             "ChatGPT, Gemini and Claude no longer just recommend products: they can search a store, build a cart and take the buyer to pay. Muse, Meta's personal agent, already buys with the person's approval in the United States and other countries, though not yet in Chile. For that, the assistant and the store need to speak the same language."),
             ("02", "That language exists: UCP and ACP",
              'Google and Shopify published the <a href="https://ucp.dev">Universal Commerce Protocol (UCP)</a>; OpenAI and Stripe, the <a href="https://www.agenticcommerce.dev">Agentic Commerce Protocol (ACP)</a>. They are open standards: public rules so any assistant can buy from any store, the way a card works on any payment terminal.'),
             ("03", "But they don't know Chile",
@@ -250,6 +251,7 @@ INTRO = {
             ("Standard or protocol", "Free, public rules that everyone who wants to interoperate follows, like the format of an electronic invoice."),
             ("Extension", "An addition to a standard for a case the standard doesn't cover. Anyone who doesn't know it keeps working."),
             ("Schema", "The technical file that says exactly which data travels and in what format. It's what developers read."),
+            ("Other agent standards", 'The <a href="https://personalagentprotocol.org/">Personal Agent Protocol (PAP)</a>, from Meta and Sierra, defines how an agent signs in to a store and what it may do for the person. The <a href="https://ap2-protocol.org/">Agent Payments Protocol (AP2)</a>, from Google, defines how the person authorizes their agent\'s payments. Comercio IA works alongside them: it adds the Chilean rules of the sale.'),
         ],
         who="This page is for implementers: e-commerce platforms, ERPs, payment providers and stores' technical teams. If you run a store and just want to sell through AI, your platform or provider should handle it.",
     ),
@@ -981,6 +983,7 @@ DOCS[("es", "press")] = dict(
     sections=[
         ("resumen", "En pocas palabras",
          "<p>Los asistentes de IA, como ChatGPT o Gemini, ya pueden buscar productos en una tienda en línea, armar el carro y pagar por cuenta de una persona. "
+         "Muse, el agente personal de Meta, ya hace compras con la aprobación de la persona en Estados Unidos y otros países, aunque todavía no en Chile. "
          "Para que eso funcione en cualquier tienda, Google y Shopify publicaron un estándar abierto, el Universal Commerce Protocol (UCP), y OpenAI y Stripe otro, el Agentic Commerce Protocol (ACP). "
          "Los dos fueron pensados para Estados Unidos y no incluyen lo que necesita una venta en Chile: la boleta o factura del SII, el derecho a retracto, la garantía legal, las notas de crédito y los medios de pago chilenos.</p>"
          "<p>Comercio IA es una extensión abierta y gratuita de esos dos estándares que agrega esas piezas. "
@@ -1006,6 +1009,7 @@ DOCS[("es", "press")] = dict(
          "La extensión agrega lo que una venta en Chile necesita y esos estándares no incluyen: la boleta o factura del Servicio de Impuestos Internos (SII), el derecho a retracto, la garantía legal, las notas de crédito y los medios de pago chilenos.</p>"
          "<p>Asistentes como ChatGPT, Gemini o Claude ya pueden buscar productos, armar un carro y pagar. Para que funcionen en cualquier tienda, Google y Shopify publicaron el Universal Commerce Protocol (UCP), y OpenAI y Stripe el Agentic Commerce Protocol (ACP). "
          "Son reglas públicas y gratuitas que siguen tanto las tiendas como los asistentes. Fueron pensadas para Estados Unidos, así que no piden boleta ni factura, no informan el derecho a retracto y no conocen Webpay, Mercado Pago, Getnet ni Khipu.</p>"
+         "<p>Meta también entró en este tema. Su agente personal, Muse, ya hace compras con la aprobación de la persona en Estados Unidos y otros países, aunque todavía no en Chile. Meta integra además el consejo técnico de UCP y publicó con Sierra el Personal Agent Protocol (PAP), que define cómo un agente inicia sesión en una tienda. Comercio IA se usa junto con esos estándares y agrega las reglas chilenas de la compra.</p>"
          "<p>Con Comercio IA, el asistente pide boleta o factura al crear la compra, el comprador recibe los avisos legales antes de pagar y el pago llega a la cuenta de la propia tienda. "
          "El pedido vuelve con el folio del documento y su estado en el SII, y cada devolución o retracto queda con su nota de crédito. "
          "Un asistente que todavía no conoce la extensión sigue funcionando, y los avisos legales igual le llegan.</p>"
@@ -1041,6 +1045,7 @@ DOCS[("en", "press")] = dict(
     sections=[
         ("summary", "In a few words",
          "<p>AI assistants such as ChatGPT or Gemini can already search an online store, fill a cart and pay on a person's behalf. "
+         "Muse, Meta's personal agent, already buys with the person's approval in the United States and other countries, though not yet in Chile. "
          "So that this works in any store, Google and Shopify published an open standard, the Universal Commerce Protocol (UCP), and OpenAI and Stripe another, the Agentic Commerce Protocol (ACP). "
          "Both were designed for the United States and leave out what a sale in Chile needs: the SII tax receipt (boleta or factura), the right of withdrawal, the legal warranty, credit notes and Chilean payment methods.</p>"
          "<p>Comercio IA is an open, free extension of both standards that adds those pieces. "
@@ -1066,6 +1071,7 @@ DOCS[("en", "press")] = dict(
          "The extension adds what a sale in Chile needs and those standards leave out: the tax receipt (boleta or factura) from Chile's tax service (SII), the right of withdrawal, the legal warranty, credit notes and Chilean payment methods.</p>"
          "<p>Assistants such as ChatGPT, Gemini or Claude can already search for products, fill a cart and pay. So that they work in any store, Google and Shopify published the Universal Commerce Protocol (UCP), and OpenAI and Stripe the Agentic Commerce Protocol (ACP). "
          "These are public, free rules that both stores and assistants follow. They were designed for the United States, so they don't ask for a boleta or factura, don't tell the buyer about the right of withdrawal, and don't know Webpay, Mercado Pago, Getnet or Khipu.</p>"
+         "<p>Meta has entered this field too. Its personal agent, Muse, already buys with the person's approval in the United States and other countries, though not yet in Chile. Meta also sits on UCP's technical council and, with Sierra, published the Personal Agent Protocol (PAP), which defines how an agent signs in to a store. Comercio IA works alongside those standards and adds the Chilean rules of the sale.</p>"
          "<p>With Comercio IA, the assistant asks for a boleta or factura when it creates the purchase, the buyer receives the legal notices before paying, and the payment goes to the store's own account. "
          "The order comes back with the document's folio number and its status at the SII, and every return or withdrawal gets its credit note. "
          "An assistant that doesn't know the extension yet keeps working, and the legal notices still reach it.</p>"
