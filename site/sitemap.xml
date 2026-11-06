@@ -70,4 +70,18 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://comercioia.cl/en/accessibility/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://comercioia.cl/accesibilidad/"/>
   </url>
+  <url>
+    <loc>https://comercioia.cl/prensa/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="es-CL" href="https://comercioia.cl/prensa/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://comercioia.cl/en/press/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://comercioia.cl/prensa/"/>
+  </url>
+  <url>
+    <loc>https://comercioia.cl/en/press/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="es-CL" href="https://comercioia.cl/prensa/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://comercioia.cl/en/press/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://comercioia.cl/prensa/"/>
+  </url>
 </urlset>
