@@ -961,10 +961,10 @@ DOCS = {
 }
 
 # ---------------------------------------------------------------- press pages
-# Filled in on the day of the announcement, with Tomás's approval of the quote and the bio.
-PRESS_DATE = {"es": "[fecha del anuncio]", "en": "[announcement date]"}
-SPOKES_ROLE = {"es": "[cargo]", "en": "[role]"}
-SPOKES_BIO = {"es": "[Biografía breve de Tomás Stevanovic, por completar.]", "en": "[Short bio of Tomás Stevanovic, to be completed.]"}
+# The quote and the bio were approved by Tomás on 5 November 2026.
+PRESS_DATE = {"es": "6 de noviembre de 2026", "en": "6 November 2026"}
+SPOKES_ROLE = {"es": "fundador y CEO", "en": "founder and CEO"}
+SPOKES_BIO = {"es": "Tomás Stevanovic fundó Pintor Project en 2007. La empresa empezó construyendo plataformas de comercio electrónico e integraciones con sistemas de gestión (ERP), y hoy desarrolla sistemas de inteligencia artificial para empresas, como Auralytik, D-Board, Ergonik y Umiq.", "en": "Tomás Stevanovic founded Pintor Project in 2007. The company started by building e-commerce platforms and integrations with business management systems (ERP), and today builds artificial intelligence systems for businesses, such as Auralytik, D-Board, Ergonik and Umiq."}
 GH = "https://github.com/Pintor-Project/comercioia"
 GH_COMMENT = GH + "/issues/new/choose"
 NOT_AFFILIATED = {
